@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class EventsCalendar extends Model
+{
+    use HasFactory;
+    
+    // Указываем точное имя таблицы, как создано в миграции
+    protected $table = 'events_calendar';
+
+    protected $fillable = [
+        'institution_id', 'event_name', 'event_date', 'description'
+    ];
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+}
