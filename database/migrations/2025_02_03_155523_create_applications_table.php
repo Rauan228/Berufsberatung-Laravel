@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             // Добавляем столбец event_id перед созданием внешнего ключа
-            $table->foreignId('event_id')->constrained('events_calendars')->onDelete('cascade');
+            $table->foreignId('event_id')->constrained('events_calendar')->onDelete('cascade');
             $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');
             $table->timestamps();
         });

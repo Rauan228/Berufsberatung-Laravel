@@ -6,6 +6,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -27,3 +28,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth:admin')->get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::resource('notifications', NotificationController::class);
+
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 5. Создаем мероприятия (events_calendars)
-        DB::table('events_calendars')->insert([
+        DB::table('events_calendar')->insert([
             [
                 'institution_id' => 1,
                 'event_name'     => 'Tech Career Fair',

@@ -10,13 +10,78 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
+            background-color: #f4f6f9;
         }
 
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для списка уведомлений */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            color: #e67e22;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для кнопок */
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #1f618d;
+        }
+
+        button:active {
+            background-color: #1a5276;
+        }
+
+        /* Стили для формы удаления */
+        form {
+            display: inline;
+        }
+
+        /* Стили для бокового меню */
         .sidebar {
             width: 250px;
             background-color: #2c3e50;
@@ -42,22 +107,29 @@
             background: #2980b9;
         }
 
+        /* Главный контент */
         .main-content {
-            flex-grow: 1;
+            margin-left: 350px;
             padding: 20px;
-            margin: 0 0 0 300px
+            flex-grow: 1;
         }
 
         .navbar {
             display: flex;
             align-items: center;
             background-color: #2c3e50;
-            colo r: red;
-            font-weight: bold;
-            font-size: 20px;
+            color: white;
             padding: 10px;
         }
 
+        .delete {
+            background-color: red;
+        }
+
+        .delete:hover {
+            background-color: rgb(153, 12, 12);
+            transition: 0.2s;
+        }
         .logout {
             background-color: red !important
         }
@@ -65,56 +137,6 @@
         .logout:hover {
 
             background-color: rgb(169, 24, 24) !important
-        }
-
-        .institutes-count,
-        .latest_grade,
-        .users-count,
-        .specialties-count {
-            background: #f0f0f0;
-            padding: 0 5% 0 5%;
-            margin: 30px 10px 0 10px;
-            text-align: center;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .counts {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            max-width: 100%;
-            margin: auto;
-        }
-
-        .chart-btn {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            text-align: left;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .chart-btn:hover {
-            background: #2980b9;
-        }
-
-        .chart-btn.active {
-            background-color: green;
-            color: white;
-        }
-
-        .charts {
-            margin: 50px 240px 0 0;
-            width: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
     </style>
 </head>
@@ -129,7 +151,7 @@
             </svg>
             Berufsberatung
         </div>
-        <p>Admin: {{ $admin->name }}</p>  <!-- Выведет имя текущего админа -->
+        <p>Admin: {{ $admin->name }}</p>  
 
         <button class="sidebar-home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-house" viewBox="0 0 19 13">
@@ -202,122 +224,25 @@
 
 
     </div>
+
     <div class="main-content">
-        <h1>Welcome to Admin Panel</h1>
-
-        <div class="counts">
-            <div class="institutes-count">
-                <p>Institutes</p>
-                <p>{{ $institutesCount }}</p>
-            </div>
-            <div class="users-count">
-                <p>Users</p>
-                <p>{{ $usersCount }}</p>
-            </div>
-            <div class="specialties-count">
-                <p>Specialties</p>
-                <p>{{ $specialtiesCount }}</p>
-            </div>
-            <div class="latest_grade">
-                <!-- Проверяем, есть ли отзыв и есть ли у него связанный пользователь -->
-                @if ($latestReview && $latestReview->user)
-                    <!-- Выводим username пользователя сверху -->
-                    <p><strong>{{ $latestReview->user->username }}</strong></p>
-                
-                    <!-- Текст отзыва -->
-                    <p>{{ $latestReview->comment }}</p>
-                @else
-                    <p>No reviews yet</p>
-                @endif
-            </div>
-            
-            
-            
-            
-            
-            
-            
-            
-        </div>
-        
-        
-
-
-
-        <div class="charts">
-            <div style="width: calc(100% - 300px); margin-left: 300px; height: 400px;">
-                <canvas id="visitChart"></canvas>
-            </div>
-            <div style="text-align: center; margin: 10px 0 0 320px;">
-                <button onclick="loadChart('days')" id="daysBtn" class="chart-btn">Days</button>
-                <button onclick="loadChart('weeks')" id="weeksBtn" class="chart-btn">Weeks</button>
-                <button onclick="loadChart('months')" id="monthsBtn" class="chart-btn">Months</button>
-            </div>
-        </div>
-
-
+        <h1>Уведомления</h1>
+        <a href="{{ route('notifications.create') }}">Добавить новое уведомление</a>
+        <ul>
+            @foreach($notifications as $notification)
+            <li>
+                <strong style="font-size: 22px">{{ $notification->user->username }}</strong> <span style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
+                {{ $notification->message }}
+                <a href="{{ route('notifications.edit', $notification) }}">Редактировать</a>
+                <form action="{{ route('notifications.destroy', $notification) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete">Удалить</button>
+                </form>
+            </li>
+            @endforeach
+        </ul>
     </div>
-
-
-
-    <script>
-        let visitChart;
-
-        function loadChart(type, updateUrl = true) {
-            fetch(`/chart-data?type=${type}`)
-                .then(response => response.json())
-                .then(data => {
-                    const ctx = document.getElementById('visitChart').getContext('2d');
-
-                    if (visitChart) {
-                        visitChart.destroy();
-                    }
-
-                    visitChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Посещения',
-                                data: data.data,
-                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: { beginAtZero: true }
-                            }
-                        }
-                    });
-
-                    // Убираем активный класс со всех кнопок
-                    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
-
-                    // Добавляем активный класс к текущей кнопке
-                    document.getElementById(type + 'Btn').classList.add('active');
-
-                    if (updateUrl) {
-                        history.pushState(null, '', `?chart=${type}`);
-                    }
-                });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const chartType = params.get('chart') || 'days';
-            loadChart(chartType, false);
-        });
-
-        window.addEventListener('popstate', () => {
-            const params = new URLSearchParams(window.location.search);
-            const chartType = params.get('chart') || 'days';
-            loadChart(chartType, false);
-        });
-    </script>
 </body>
 
 </html>
