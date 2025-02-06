@@ -216,13 +216,22 @@
                 <p>{{ $specialtiesCount }}</p>
             </div>
             <div class="latest_grade">
-                <!-- Проверяем наличие отзыва, и если он есть, выводим имя пользователя -->
+                <!-- Проверяем, есть ли отзыв и есть ли у него связанный пользователь -->
                 @if ($latestReview && $latestReview->user)
-                    <p>{{ $latestReview->user->name }}</p>
+                    <!-- Выводим username пользователя сверху -->
+                    <p><strong>{{ $latestReview->user->username }}</strong></p>
+                
+                    <!-- Текст отзыва -->
+                    <p>{{ $latestReview->comment }}</p>
                 @else
                     <p>No reviews yet</p>
                 @endif
             </div>
+            
+            
+            
+            
+            
             
             
             
