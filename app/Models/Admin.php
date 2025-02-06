@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasFactory;
+    protected $table = 'admins'; // Явно указываем таблицу
 
-    // Указываем, что это за таблица
-    protected $table = 'admins';
+    protected $guarded = [];
 
-    // Поля, которые можно массово заполнять
-    protected $fillable = ['name', 'email', 'password'];
-
-    // Для безопасного хранения пароля
     protected $hidden = ['password'];
 }

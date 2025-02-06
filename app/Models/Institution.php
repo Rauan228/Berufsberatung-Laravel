@@ -9,6 +9,7 @@ class Institution extends Model
 {
     use HasFactory;
 
+    protected $table = 'institutions';
     protected $fillable = [
         'name', 'description', 'location', 'website',
     ];
@@ -37,4 +38,6 @@ class Institution extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    
 }

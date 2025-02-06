@@ -7,6 +7,7 @@
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -21,7 +22,8 @@
             background-color: #2c3e50;
             color: white;
             padding: 20px;
-            height: 1000%;
+            height: 100%;
+            position: fixed;
         }
 
         .sidebar button {
@@ -43,20 +45,26 @@
         .main-content {
             flex-grow: 1;
             padding: 20px;
+            margin: 0 0 0 300px
         }
 
         .navbar {
             display: flex;
             align-items: center;
             background-color: #2c3e50;
-            color: red;
+            colo r: red;
             font-weight: bold;
             font-size: 20px;
             padding: 10px;
         }
 
+        .logout {
+            background-color: red !important
+        }
+
         .logout:hover {
-            background-color: rgb(169, 24, 24)
+
+            background-color: rgb(169, 24, 24) !important
         }
 
         .institutes-count,
@@ -79,7 +87,35 @@
             max-width: 100%;
             margin: auto;
         }
-        
+
+        .chart-btn {
+            background: #34495e;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .chart-btn:hover {
+            background: #2980b9;
+        }
+
+        .chart-btn.active {
+            background-color: green;
+            color: white;
+        }
+
+        .charts {
+            margin: 50px 240px 0 0;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -93,7 +129,8 @@
             </svg>
             Berufsberatung
         </div>
-        <p>Admin Username</p>
+        <p>Admin: {{ $admin->name }}</p>  <!-- Выведет имя текущего админа -->
+
         <button class="sidebar-home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-house" viewBox="0 0 19 13">
                 <path
@@ -153,9 +190,13 @@
                 src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/FFFFFF/external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector.png"
                 alt="external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector" />
             Grants</button>
-        <button class="logout"><img src="" alt="">
-            <i class="bi bi-box-arrow-right"></i>
-            Logout</button>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="logout">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </form>
+
 
     </div>
     <div class="main-content">
@@ -164,22 +205,107 @@
         <div class="counts">
             <div class="institutes-count">
                 <p>Institutes</p>
-                <p>22</p>
+                <p>{{ $institutesCount }}</p>
             </div>
             <div class="users-count">
                 <p>Users</p>
-                <p>12</p>
+                <p>{{ $usersCount }}</p>
             </div>
             <div class="specialties-count">
                 <p>Specialties</p>
-                <p>52</p>
+                <p>{{ $specialtiesCount }}</p>
             </div>
             <div class="latest_grade">
-                <p>User1</p>
-                <p>Wow! Super!</p>
+                <!-- Проверяем наличие отзыва, и если он есть, выводим имя пользователя -->
+                @if ($latestReview && $latestReview->user)
+                    <p>{{ $latestReview->user->name }}</p>
+                @else
+                    <p>No reviews yet</p>
+                @endif
+            </div>
+            
+            
+            
+        </div>
+        
+        
+
+
+
+        <div class="charts">
+            <div style="width: calc(100% - 300px); margin-left: 300px; height: 400px;">
+                <canvas id="visitChart"></canvas>
+            </div>
+            <div style="text-align: center; margin: 10px 0 0 320px;">
+                <button onclick="loadChart('days')" id="daysBtn" class="chart-btn">Days</button>
+                <button onclick="loadChart('weeks')" id="weeksBtn" class="chart-btn">Weeks</button>
+                <button onclick="loadChart('months')" id="monthsBtn" class="chart-btn">Months</button>
             </div>
         </div>
+
+
     </div>
+
+
+
+    <script>
+        let visitChart;
+
+        function loadChart(type, updateUrl = true) {
+            fetch(`/chart-data?type=${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('visitChart').getContext('2d');
+
+                    if (visitChart) {
+                        visitChart.destroy();
+                    }
+
+                    visitChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Посещения',
+                                data: data.data,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: { beginAtZero: true }
+                            }
+                        }
+                    });
+
+                    // Убираем активный класс со всех кнопок
+                    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+
+                    // Добавляем активный класс к текущей кнопке
+                    document.getElementById(type + 'Btn').classList.add('active');
+
+                    if (updateUrl) {
+                        history.pushState(null, '', `?chart=${type}`);
+                    }
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const chartType = params.get('chart') || 'days';
+            loadChart(chartType, false);
+        });
+
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const chartType = params.get('chart') || 'days';
+            loadChart(chartType, false);
+        });
+    </script>
 </body>
 
 </html>
