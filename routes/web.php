@@ -7,6 +7,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ApplicationController;
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -32,3 +37,12 @@ Route::resource('notifications', NotificationController::class);
 
 
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('applications', ApplicationController::class);
+});
+Route::post('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
+Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
+Route::put('/applications/{id}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
