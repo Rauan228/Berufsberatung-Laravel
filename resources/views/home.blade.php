@@ -1,13 +1,18 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css">
+
+    
 
     <style>
         body {
@@ -56,8 +61,8 @@
             font-weight: bold;
             font-size: 20px;
             padding: 10px;
-            
-            color: #bc0404 !important; 
+
+            color: #bc0404 !important;
         }
 
         .logout {
@@ -118,10 +123,47 @@
             flex-direction: column;
             align-items: center;
         }
+        .calendar-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #calendar {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    /* Styling for event blocks */
+    .fc-daygrid-event {
+      background: rgba(0, 123, 255, 0.5) !important;  /* Semi-transparent blue */
+      border: none;
+      border-radius: 4px;
+      padding: 5px;
+      transition: background 0.3s;
+    }
+    .fc-daygrid-event:hover {
+      background: rgba(0, 123, 255, 0.8) !important;
+      color: #fff;
+    }
+    /* Styling for the FullCalendar toolbar buttons */
+    .fc .fc-button {
+      background: #007bff !important;
+      color: #fff !important;
+      border-radius: 5px !important;
+      transition: background 0.3s;
+    }
+    .fc .fc-button:hover {
+      background: #0056b3 !important;
+    }
     </style>
 </head>
 
 <body>
+
     <div class="sidebar">
         <div class="navbar"><svg width="40" height="40" style="margin: 0 20px 0 0" viewBox="0 0 65 40" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -131,7 +173,7 @@
             </svg>
             Berufsberatung
         </div>
-        <p>Admin: {{ $admin->name }}</p>  <!-- Выведет имя текущего админа -->
+        <p>Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа -->
 
         <button class="sidebar-home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-house" viewBox="0 0 19 13">
@@ -139,38 +181,42 @@
                     d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
             </svg>
             Home</button>
-            <a href="{{ route('notifications.index') }}">
-                <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 19 13">
-                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
-                    </svg>
-                    Notifications
-                </button>
-            </a>
-            
-            <a href="{{ route('applications.index') }}">
-                <button>
-                    <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <g id="layer1">
-                            <path d="M 4 3 L 4 9 L 5 9 L 5 7 L 19 7 L 19 16 L 5 16 L 5 14 L 4 14 L 4 17 L 20 17 L 20 3 L 4 3 z M 5 4 L 19 4 L 19 6 L 5 6 L 5 4 z M 8 8 L 11 11 L 0 11 L 0 12 L 11 12 L 8 15 L 9.5 15 L 13 11.5 L 9.5 8 L 8 8 z"
-                                  style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-                        </g>
-                    </svg>
-                    Applications
-                </button>
-            </a>
-            
-            <a href="{{ route('users.index') }}">
-                <button>
-                    <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
-                            style="fill:#fff; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    Users
-                </button>
-            </a>
-            
+        <a href="{{ route('notifications.index') }}">
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
+                    viewBox="0 0 19 13">
+                    <path
+                        d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+                </svg>
+                Notifications
+            </button>
+        </a>
+
+        <a href="{{ route('applications.index') }}">
+            <button>
+                <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g id="layer1">
+                        <path
+                            d="M 4 3 L 4 9 L 5 9 L 5 7 L 19 7 L 19 16 L 5 16 L 5 14 L 4 14 L 4 17 L 20 17 L 20 3 L 4 3 z M 5 4 L 19 4 L 19 6 L 5 6 L 5 4 z M 8 8 L 11 11 L 0 11 L 0 12 L 11 12 L 8 15 L 9.5 15 L 13 11.5 L 9.5 8 L 8 8 z"
+                            style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
+                    </g>
+                </svg>
+                Applications
+            </button>
+        </a>
+
+        <a href="{{ route('users.index') }}">
+            <button>
+                <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
+                        style="fill:#fff; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Users
+            </button>
+        </a>
+
         <button>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-calendar-event" viewBox="0 0 19 13">
@@ -233,27 +279,23 @@
                 @if ($latestReview && $latestReview->user)
                     <!-- Выводим username пользователя сверху -->
                     <p><strong>{{ $latestReview->user->username }}</strong></p>
-                
+
                     <!-- Текст отзыва -->
                     <p>{{ $latestReview->comment }}</p>
                 @else
                     <p>No reviews yet</p>
                 @endif
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
+        </div>
+
+        
+        
+        <div class="calendar-container">
+            <div id="calendar"></div>
         </div>
         
         
-
-
-
+        
         <div class="charts">
             <div style="width: calc(100% - 300px); margin-left: 300px; height: 400px;">
                 <canvas id="visitChart"></canvas>
@@ -264,12 +306,13 @@
                 <button onclick="loadChart('months')" id="monthsBtn" class="chart-btn">Months</button>
             </div>
         </div>
-
-
+        
+        
     </div>
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    
     <script>
         let visitChart;
 
@@ -327,6 +370,43 @@
             const chartType = params.get('chart') || 'days';
             loadChart(chartType, false);
         });
+
+
+        // скрипт для календаря
+        document.addEventListener('DOMContentLoaded', function () {
+      // Check if FullCalendar is loaded
+      if (typeof FullCalendar === "undefined") {
+        console.error("FullCalendar is not loaded!");
+        return;
+      }
+
+      var calendarEl = document.getElementById('calendar');
+      if (!calendarEl) {
+        console.error("Calendar element not found!");
+        return;
+      }
+
+      // Pass the events data from the controller (ensure $events is available)
+      var events = {!! json_encode($events, JSON_UNESCAPED_UNICODE) !!};
+
+      // Initialize FullCalendar
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'en',  // Use English
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: events,
+        eventDidMount: function(info) {
+          // Show event title as tooltip on hover
+          info.el.setAttribute("title", info.event.title);
+        }
+      });
+
+      calendar.render();
+    });
     </script>
 </body>
 

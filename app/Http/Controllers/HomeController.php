@@ -8,29 +8,29 @@ use App\Models\Institution;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\InstitutionSpecialty;
+use App\Models\EventsCalendar;
 
 class HomeController extends Controller
 {
+
     public function index()
-{
-    // Подсчитываем количество университетов (институтов)
-    $institutesCount = Institution::count();
+    {
+        $institutesCount = Institution::count();
+        $usersCount = User::count();
+        $specialtiesCount = InstitutionSpecialty::count();
+        $latestReview = Review::latest()->with('user')->first();
+        $admin = Auth::guard('admin')->user();
+        $events = EventsCalendar::all()->map(function ($event) {
+            return [
+                'title' => $event->event_name,
+                'start' => $event->event_date,
+                'description' => $event->description,
+            ];
+        });
 
-    // Подсчитываем количество пользователей
-    $usersCount = User::count();
-
-    // Подсчитываем количество специальностей
-    $specialtiesCount = InstitutionSpecialty::count();
-
-    // Получаем последний отзыв с подгрузкой пользователя
-    $latestReview = Review::latest()->with('user')->first();
-
-    // Получаем текущего вошедшего админа
-    $admin = Auth::guard('admin')->user();
-
-    // Передаем данные в представление
-    return view('home', compact('admin', 'institutesCount', 'usersCount', 'specialtiesCount', 'latestReview'));
-}
+        return view('home', ['events' => $events],compact('admin', 'institutesCount', 'usersCount', 'specialtiesCount', 'latestReview', 'events'));
+    }
+    
 
     
 
