@@ -46,3 +46,10 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
 Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 Route::put('/applications/{id}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
+
+
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::post('/users/{id}/ban', [UserController::class, 'toggleBan'])->name('users.toggleBan');
+
+

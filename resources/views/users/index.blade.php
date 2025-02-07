@@ -1,159 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('content')
 
-    <style>
-        /* Общие стили */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f9;
-        }
+<div class="container">
+    <h1 style="margin: 40px 0 0 350px;">Users</h1>
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Стили для списка уведомлений */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            background-color: #fff;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        li a {
-            color: #e67e22;
-            margin-left: 10px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Стили для кнопок */
-        button {
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        button:hover {
-            background-color: #1f618d;
-        }
-
-        button:active {
-            background-color: #1a5276;
-        }
-
-        /* Стили для формы удаления */
-        form {
-            display: inline;
-        }
-
-        /* Стили для бокового меню */
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            position: fixed;
-        }
-
-        .sidebar button {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .sidebar button:hover {
-            background: #2980b9;
-        }
-
-        /* Главный контент */
-        .main-content {
-            margin-left: 350px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px;
-        }
-
-        .delete {
-            background-color: red;
-        }
-
-        .delete:hover {
-            background-color: rgb(153, 12, 12);
-            transition: 0.2s;
-        }
-
-        .logout {
-            background-color: red !important
-        }
-
-        .logout:hover {
-
-            background-color: rgb(169, 24, 24) !important
-        }
-
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            color: red;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 10px;
-            color: #bc0404;
-        }
-    </style>
-</head>
-
-<body>
     <div class="sidebar">
         <div class="navbar"><svg width="40" height="40" style="margin: 0 20px 0 0" viewBox="0 0 65 40" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -163,17 +14,16 @@
             </svg>
             Berufsberatung
         </div>
-        <p>Admin: {{ $admin->name }}</p>
+        <p style="color:#fff; font-size: 20px;">Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа -->
 
         <button class="sidebar-home-btn" onclick="window.location.href='{{ route('home') }}'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
-                viewBox="0 0 19 13">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-house" viewBox="0 0 19 13">
                 <path
                     d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
             </svg>
             Home
         </button>
-
         <a href="{{ route('notifications.index') }}">
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
@@ -197,17 +47,18 @@
                 Applications
             </button>
         </a>
+
         <a href="{{ route('users.index') }}">
             <button>
                 <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
+                    <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
                         style="fill:#fff; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 Users
             </button>
         </a>
+
         <button>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-calendar-event" viewBox="0 0 19 13">
@@ -249,27 +100,186 @@
 
 
     </div>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
 
     <div class="main-content">
-        <h1>Notifications</h1>
-        <a href="{{ route('notifications.create') }}">Add new notification</a>
-        <ul>
-            @foreach($notifications as $notification)
-                <li>
-                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong> <span
-                        style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
-                    {{ $notification->message }}
-                    <a href="{{ route('notifications.edit', $notification) }}">Edit</a>
-                    <form action="{{ route('notifications.destroy', $notification) }}" method="POST"
-                        style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="delete">Delete</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
+        <h1>Users</h1>
+    
+        <div class="users-container">
+            <!-- Список активных пользователей -->
+            <div class="users-list active-users">
+                <h3 style="color: #3498db;">Active users</h3>
+                <ul>
+                    @foreach ($users->where('is_banned', false) as $user)
+                        <li>
+                            <strong style="font-size: 22px">{{ $user->username }}</strong><br>
+                            <span>Date added: {{ $user->created_at->format('d.m.Y H:i') }}</span><br>
+                            <form action="{{ route('users.toggleBan', ['id' => $user->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" style="margin: 5px 0 0 0">Ban</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+    
+            <!-- Список забаненных пользователей -->
+            <div class="users-list banned-users">
+                <h3 style="color: #e74c3c;">Banned users</h3>
+                <ul>
+                    @foreach ($users->where('is_banned', true) as $user)
+                        <li>
+                            <strong style="font-size: 22px">{{ $user->username }}</strong><br>
+                            <span>Date added: {{ $user->created_at->format('d.m.Y H:i') }}</span><br>
+                            <form action="{{ route('users.toggleBan', ['id' => $user->id]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-success" style="margin: 5px 0 0 0">Unban</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
-</body>
+</div>
 
-</html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        /* Ширина боковой панели */
+        height: 100vh;
+        /* Полная высота экрана */
+        background-color: #2c3e50;
+        /* Цвет фона */
+        padding: 20px;
+        /* Внутренний отступ */
+    }
+
+    h2 {
+        margin-left: 280px;
+        /* Отступ заголовка от sidebar */
+        margin-top: 20px;
+        /* Отступ сверху */
+    }
+
+
+    .sidebar button {
+        background: #34495e;
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .sidebar button:hover {
+        background: #2980b9;
+    }
+
+    .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #2c3e50;
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 10px;
+            color: #bc0404;
+        }
+
+
+    .logout {
+        background-color: red !important
+    }
+
+    .logout:hover {
+
+        background-color: rgb(169, 24, 24) !important
+    }
+
+    /* Стили для контейнера пользователей */
+    .users-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin:0 0 50px 350px;
+    }
+
+    /* Стили для списков */
+    .users-list {
+        width: 48%;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Стили заголовков */
+    h3 {
+        margin-bottom: 10px;
+    }
+
+    /* Стили списка пользователей */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        background-color: #f9f9f9;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Стили кнопок */
+    button {
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background-color: #1f618d;
+    }
+
+    /* Красная кнопка */
+    .btn-danger {
+        background-color: red;
+    }
+
+    .btn-danger:hover {
+        background-color: darkred;
+    }
+
+    /* Зелёная кнопка */
+    .btn-success {
+        background-color: green;
+    }
+
+    .btn-success:hover {
+        background-color: darkgreen;
+    }
+</style>
+@endsection

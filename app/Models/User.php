@@ -36,4 +36,20 @@ class User extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function ban()
+    {
+        $this->update(['is_banned' => true]);
+    }
+
+    public function unban()
+    {
+        $this->update(['is_banned' => false]);
+    }
+
+    public function isBanned()
+    {
+        return $this->is_banned;
+    }
+
 }

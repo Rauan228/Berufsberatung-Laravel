@@ -31,8 +31,8 @@ public function updateStatus(Request $request, $id)
     $application->save();
 
     // Создаем уведомление для пользователя
-    $message = ($request->status == 'Pending') ? "Ваша заявка на событие {$application->event->name} была отменена." : 
-    "Ваша заявка на событие {$application->event->name} была {$application->status}.";
+    $message = ($request->status == 'Pending') ? "Your event request {$application->event->name} was canceled." : 
+    "Your event request {$application->event->name} was {$application->status}.";
 
     Notification::create([
         'user_id' => $application->user_id, // Пользователь заявки

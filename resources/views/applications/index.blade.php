@@ -12,12 +12,14 @@
     </div>
     <p>Admin: {{ $admin->name }}</p>  <!-- Выведет имя текущего админа -->
 
-    <button class="sidebar-home-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+    <button class="sidebar-home-btn" onclick="window.location.href='{{ route('home') }}'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
             fill="currentColor" class="bi bi-house" viewBox="0 0 19 13">
             <path
                 d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
         </svg>
-        Home</button>
+        Home
+    </button>
         <a href="{{ route('notifications.index') }}">
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 19 13">
@@ -39,13 +41,16 @@
             </button>
         </a>
         
-    <button> <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
-                style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        Users</button>
+        <a href="{{ route('users.index') }}">
+            <button>
+                <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
+                        style="fill:#fff; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Users
+            </button>
+        </a>
     <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-calendar-event" viewBox="0 0 19 13">
@@ -89,21 +94,21 @@
 </div>
 
     <div class="main-content">
-        <h1>Заявки</h1>
+        <h1>Applications</h1>
         <ul>
             @foreach($applications as $application)
             <li>
                 <strong style="font-size: 22px">{{ $application->user->username }}</strong> 
                 <span style="font-size: 22px">- {{ $application->event->event_name }}</span><br>
-                Статус: {{ $application->status }}
+                Status: {{ $application->status }}
                 <form action="{{ route('applications.updateStatus', $application) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('PUT')
                     @if($application->status == 'Pending')
-                        <button type="submit" name="status" value="Accepted" class="btn-accept">Принять</button>
-                        <button type="submit" name="status" value="Rejected" class="btn-reject">Отклонить</button>
+                        <button type="submit" name="status" value="Accepted" class="btn-accept">Accept</button>
+                        <button type="submit" name="status" value="Rejected" class="btn-reject">Reject</button>
                     @else
-                        <button type="submit" name="status" value="Pending" class="btn-cancel">Отменить</button>
+                        <button type="submit" name="status" value="Pending" class="btn-cancel">Cancel</button>
                     @endif
                 </form>
             </li>
