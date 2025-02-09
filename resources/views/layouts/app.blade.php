@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>@yield('title', 'My App')</title>
-    <!-- Include your styles and scripts here -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title')</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    @yield('content')
-    
+    <div class="container">
+        @include('layouts.sidebar') <!-- Подключаем сайдбар -->
+        <div class="content">
+            @yield('content') <!-- Здесь будет отображаться контент страницы -->
+        </div>
+    </div>
 </body>
 </html>

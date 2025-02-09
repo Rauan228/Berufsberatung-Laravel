@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -59,71 +61,45 @@
         }
 
         /* Контейнер для кнопок */
-.event-card .button-group {
-    gap: 5px;
-}
+        .event-card .button-group {
+            gap: 5px;
+        }
 
-/* Общий стиль для кнопок */
-.event-card .btn {
-    flex: 1;
-    font-size: 0.6rem;
-    padding: 8px 12px;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    text-transform: uppercase;
-}
+        /* Общий стиль для кнопок */
+        .event-card .btn {
+            flex: 1;
+            font-size: 0.6rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
 
-.event-card .btn-warning:hover {
-    background: linear-gradient(135deg, #d39e00, #c69500);
-    box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
-    transform: scale(1.07);
-}
+        .event-card .btn-warning:hover {
+            background: linear-gradient(135deg, #d39e00, #c69500);
+            box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
+            transform: scale(1.07);
+        }
 
-.event-card .btn-danger:hover {
-    background: linear-gradient(135deg, #c82333, #a71d2a);
-    box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
-    transform: scale(1.07);
-}
+        .event-card .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333, #a71d2a);
+            box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
+            transform: scale(1.07);
+        }
 
-/* Анимация нажатия */
-.event-card .btn:active {
-    transform: scale(0.95);
-}
+        /* Анимация нажатия */
+        .event-card .btn:active {
+            transform: scale(0.95);
+        }
 
-.event-card .btn:hover {
-    transform: scale(1.05);
-}
+        .event-card .btn:hover {
+            transform: scale(1.05);
+        }
 
         /* Стили для формы удаления */
         form {
             display: inline;
-        }
-
-        /* Стили для бокового меню */
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            position: fixed;
-        }
-
-        .sidebar button {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .sidebar button:hover {
-            background: #2980b9;
         }
 
         /* Главный контент */
@@ -133,14 +109,6 @@
             flex-grow: 1;
         }
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px;
-        }
-
         .delete {
             background-color: red;
         }
@@ -148,26 +116,6 @@
         .delete:hover {
             background-color: rgb(153, 12, 12);
             transition: 0.2s;
-        }
-
-        .logout {
-            background-color: red !important
-        }
-
-        .logout:hover {
-
-            background-color: rgb(169, 24, 24) !important
-        }
-
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            color: red;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 10px;
-            color: #bc0404;
         }
     </style>
 </head>
@@ -229,14 +177,14 @@
         </a>
         <a href="{{ url('/events') }}">
             <button>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-calendar-event" viewBox="0 0 19 13">
-                <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
-                    style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-                <path
-                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-            </svg>
-            Events Calendar</button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-calendar-event" viewBox="0 0 19 13">
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
+                        style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
+                    <path
+                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                </svg>
+                Events Calendar</button>
         </a>
         <button>
             <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
@@ -277,10 +225,10 @@
         <ul>
             @foreach($notifications as $notification)
                 <li class="event-card">
-                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong> 
+                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong>
                     <span style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
                     {{ $notification->message }}
-    
+
                     <div class="button-group">
                         <!-- Кнопка "Редактировать" -->
                         <a href="{{ route('notifications.edit', $notification->id) }}">
@@ -288,9 +236,10 @@
                                 <i class="fas fa-edit"></i> Редактировать
                             </button>
                         </a>
-    
+
                         <!-- Кнопка "Удалить" -->
-                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST" class="delete-form">
+                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST"
+                            class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
@@ -302,8 +251,10 @@
             @endforeach
         </ul>
     </div>
-    
-    
+
+
 </body>
 
 </html>
+
+@endsection

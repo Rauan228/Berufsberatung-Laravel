@@ -1,6 +1,8 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="UTF-8">
@@ -19,56 +21,13 @@
             padding: 0;
             display: flex;
         }
-
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            position: fixed;
-        }
-
-        .sidebar button {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .sidebar button:hover {
-            background: #2980b9;
-        }
-
         .main-content {
             flex-grow: 1;
             padding: 20px;
             margin: 0 0 0 300px
         }
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 10px;
-            color: #bc0404 !important;
-        }
-
-        .logout {
-            background-color: red !important
-        }
-
-        .logout:hover {
-
-            background-color: rgb(169, 24, 24) !important
-        }
+        
 
         .institutes-count,
         .latest_grade,
@@ -279,7 +238,7 @@
 
 <body>
 
-    <div class="sidebar">
+    {{-- <div class="sidebar">
         <div class="navbar"><svg width="40" height="40" style="margin: 0 20px 0 0" viewBox="0 0 65 40" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -377,7 +336,7 @@
         </form>
 
 
-    </div>
+    </div> --}}
     <div class="main-content">
         <h1>Welcome to Admin Panel</h1>
 
@@ -609,3 +568,4 @@
 </body>
 
 </html>
+@endsection
