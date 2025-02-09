@@ -4,65 +4,75 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<div class="container" style="margin-left: 350px">
-    <h1 class="text-center mb-4">Список событий</h1>
-    
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="{{ route('events.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Добавить событие
-        </a>
-        <input type="text" id="search" class="form-control w-50" style="margin-left: 20px" placeholder="🔍 Поиск по событиям...">
-    </div>
+<div class="container" style="margin:50px 0 0 50px">
 
-    <div class="row" id="event-list" style="margin-top: 35px;">
-        @foreach($events as $event)
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card event-card shadow-sm mb-4">
-                    <div class="card-body" >
-                        <h5 class="card-title text-primary fw-bold">{{ $event->event_name }}</h5>
-                        <p class="card-text text-muted"><strong>📅 Дата:</strong> {{ \Carbon\Carbon::parse($event->event_date)->format('d.m.Y H:i') }}</p>
-                        
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('events.show', $event->id) }}"><button class="btn btn-sm btn-info">
-                                <i class="fas fa-eye"></i> Подробнее
-                            </button></a>
-                            <a href="{{ route('events.edit', $event->id) }}"><button href="{{ route('events.edit', $event->id) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Редактировать
-                            </button></a>
-                            <form action="{{ route('events.destroy', $event->id) }}" method="POST" class="delete-form">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i> Удалить
-                                </button>
-                            </form>
+    <div class="main-content">
+        <h1 class="text-center mb-4">Список событий</h1>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="{{ route('events.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Добавить событие
+            </a>
+            <input type="text" id="search" class="form-control w-50" style="margin-left: 20px"
+                placeholder="🔍 Поиск по событиям...">
+        </div>
+
+        <div class="row" id="event-list" style="margin-top: 35px;">
+            @foreach($events as $event)
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card event-card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold">{{ $event->event_name }}</h5>
+                            <p class="card-text text-muted"><strong>📅 Дата:</strong>
+                                {{ \Carbon\Carbon::parse($event->event_date)->format('d.m.Y H:i') }}</p>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('events.show', $event->id) }}"><button class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Подробнее
+                                    </button></a>
+                                <a href="{{ route('events.edit', $event->id) }}"><button
+                                        href="{{ route('events.edit', $event->id) }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Редактировать
+                                    </button></a>
+                                <form action="{{ route('events.destroy', $event->id) }}" method="POST" class="delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Удалить
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 </div>
 
 <style>
     body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
     /* Контейнер для карточек */
     #event-list {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        justify-content: center; /* Выравнивание по центру */
+        justify-content: center;
+        /* Выравнивание по центру */
     }
 
     /* Карточка события */
     .event-card {
-        width: 300px; /* Фиксированная ширина */
-        height: 230px; /* Фиксированная высота */
+        width: 300px;
+        /* Фиксированная ширина */
+        height: 230px;
+        /* Фиксированная высота */
         border-radius: 12px;
         overflow: hidden;
         background: #fff;
@@ -103,49 +113,53 @@
         gap: 5px;
     }
 
-   /* Общий стиль для кнопок */
-.event-card .btn {
-    flex: 1;
-    font-size: 0.6rem;
-    padding: 8px 12px;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    text-transform: uppercase;
-}
+    /* Общий стиль для кнопок */
+    .event-card .btn {
+        flex: 1;
+        font-size: 0.6rem;
+        padding: 8px 12px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        text-transform: uppercase;
+    }
 
 
 
-.event-card .btn-info:hover {
-    background: linear-gradient(135deg, #138496, #117a8b);
-    box-shadow: 0 5px 10px rgba(23, 162, 184, 0.5);
-    transform: scale(1.07);
-}
+    .event-card .btn-info:hover {
+        background: linear-gradient(135deg, #138496, #117a8b);
+        box-shadow: 0 5px 10px rgba(23, 162, 184, 0.5);
+        transform: scale(1.07);
+    }
 
 
 
-.event-card .btn-warning:hover {
-    background: linear-gradient(135deg, #d39e00, #c69500);
-    box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
-    transform: scale(1.07);
-}
+    .event-card .btn-warning:hover {
+        background: linear-gradient(135deg, #d39e00, #c69500);
+        box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
+        transform: scale(1.07);
+    }
 
 
 
-.event-card .btn-danger:hover {
-    background: linear-gradient(135deg, #c82333, #a71d2a);
-    box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
-    transform: scale(1.07);
-}
+    .event-card .btn-danger:hover {
+        background: linear-gradient(135deg, #c82333, #a71d2a);
+        box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
+        transform: scale(1.07);
+    }
 
-/* Анимация нажатия */
-.event-card .btn:active {
-    transform: scale(0.95);
-}
+    /* Анимация нажатия */
+    .event-card .btn:active {
+        transform: scale(0.95);
+    }
 
 
     .event-card .btn:hover {
         transform: scale(1.05);
+    }
+
+    .main-content{
+        margin-left: 300px
     }
 </style>
 

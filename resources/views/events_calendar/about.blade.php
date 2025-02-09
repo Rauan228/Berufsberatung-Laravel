@@ -1,6 +1,4 @@
-@extends('layouts.app')
 
-@section('content')
 <div class="container">
    
 
@@ -26,4 +24,3 @@
 
     <a href="{{ route('events.index') }}" class="btn btn-primary mt-3">Назад</a>
 </div>
-@endsection

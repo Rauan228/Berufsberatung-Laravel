@@ -1,6 +1,4 @@
-@extends('layouts.app')
 
-@section('content')
 <div class="container">
     <h2>Создать событие</h2>
     <form action="{{ route('events.store') }}" method="POST">
@@ -26,4 +24,3 @@
     </form>
     
 </div>
-@endsection

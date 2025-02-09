@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\EventsCalendarController;
+use App\Http\Controllers\ReviewController;
 
 
 
@@ -59,4 +60,8 @@ Route::resource('events', EventsCalendarController::class);
 Route::middleware(['auth'])->group(function () {
     Route::resource('events', EventsCalendarController::class);
 });
+
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
 

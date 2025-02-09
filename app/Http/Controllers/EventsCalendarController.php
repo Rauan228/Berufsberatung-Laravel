@@ -21,7 +21,8 @@ class EventsCalendarController extends Controller
     public function create()
     {
         $institutions = Institution::all();
-        return view('events_calendar.create', compact('institutions'));
+        $admin = Auth::guard('admin')->user();
+        return view('events_calendar.create', compact('admin','institutions'));
     }
     
     
