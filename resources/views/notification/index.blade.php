@@ -7,6 +7,7 @@
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -57,24 +58,42 @@
             text-decoration: underline;
         }
 
-        /* Стили для кнопок */
-        button {
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
+        /* Контейнер для кнопок */
+.event-card .button-group {
+    gap: 5px;
+}
 
-        button:hover {
-            background-color: #1f618d;
-        }
+/* Общий стиль для кнопок */
+.event-card .btn {
+    flex: 1;
+    font-size: 0.6rem;
+    padding: 8px 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
 
-        button:active {
-            background-color: #1a5276;
-        }
+.event-card .btn-warning:hover {
+    background: linear-gradient(135deg, #d39e00, #c69500);
+    box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
+    transform: scale(1.07);
+}
+
+.event-card .btn-danger:hover {
+    background: linear-gradient(135deg, #c82333, #a71d2a);
+    box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
+    transform: scale(1.07);
+}
+
+/* Анимация нажатия */
+.event-card .btn:active {
+    transform: scale(0.95);
+}
+
+.event-card .btn:hover {
+    transform: scale(1.05);
+}
 
         /* Стили для формы удаления */
         form {
@@ -208,7 +227,8 @@
                 Users
             </button>
         </a>
-        <button>
+        <a href="{{ url('/events') }}">
+            <button>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-calendar-event" viewBox="0 0 19 13">
                 <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
@@ -217,6 +237,7 @@
                     d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
             </svg>
             Events Calendar</button>
+        </a>
         <button>
             <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
                 alt="Review">
@@ -252,24 +273,37 @@
 
     <div class="main-content">
         <h1>Notifications</h1>
-        <a href="{{ route('notifications.create') }}">Add new notification</a>
+        <a href="{{ route('notifications.create') }}" class="btn btn-primary">Add new notification</a>
         <ul>
             @foreach($notifications as $notification)
-                <li>
-                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong> <span
-                        style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
+                <li class="event-card">
+                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong> 
+                    <span style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
                     {{ $notification->message }}
-                    <a href="{{ route('notifications.edit', $notification) }}">Edit</a>
-                    <form action="{{ route('notifications.destroy', $notification) }}" method="POST"
-                        style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="delete">Delete</button>
-                    </form>
+    
+                    <div class="button-group">
+                        <!-- Кнопка "Редактировать" -->
+                        <a href="{{ route('notifications.edit', $notification->id) }}">
+                            <button class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Редактировать
+                            </button>
+                        </a>
+    
+                        <!-- Кнопка "Удалить" -->
+                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Удалить
+                            </button>
+                        </form>
+                    </div>
                 </li>
             @endforeach
         </ul>
     </div>
+    
+    
 </body>
 
 </html>

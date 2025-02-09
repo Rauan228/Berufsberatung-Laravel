@@ -8,6 +8,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\EventsCalendarController;
+
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -52,4 +55,8 @@ Route::put('/applications/{id}/status', [ApplicationController::class, 'updateSt
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::post('/users/{id}/ban', [UserController::class, 'toggleBan'])->name('users.toggleBan');
 
+Route::resource('events', EventsCalendarController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('events', EventsCalendarController::class);
+});
 

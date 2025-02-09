@@ -30,4 +30,10 @@ class EventsCalendar extends Model
     {
         return $this->hasMany(Notification::class);
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
 }
