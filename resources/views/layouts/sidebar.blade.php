@@ -65,15 +65,15 @@
         Events Calendar</button>
     </a>
     
-    <button>
+    <a href="{{ route('reviews.index') }}"><button>
         <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
             alt="Review">
         <span>Reviews</span>
-    </button>
-    <button>
+    </button></a>
+    <a href="{{ route('institutions.index') }}"><button>
         <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/university.png" alt="university" />
         Institutions</button>
-    <button>
+    <button></a>
         <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
             alt="facebook-like--v1" />
         Likes</button>

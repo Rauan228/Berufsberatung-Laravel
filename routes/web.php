@@ -10,7 +10,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\EventsCalendarController;
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\InstitutionController;
 
 
 Route::get('/', function () {
@@ -65,3 +65,11 @@ Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index'
 Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 
+
+Route::get('/institutions', [InstitutionController::class, 'index'])->name('institutions.index');
+Route::get('/institutions/create', [InstitutionController::class, 'create'])->name('institutions.create');
+Route::post('/institutions', [InstitutionController::class, 'store'])->name('institutions.store');
+Route::get('/institutions/{id}', [InstitutionController::class, 'show'])->name('institutions.show');
+Route::get('/institutions/{id}/edit', [InstitutionController::class, 'edit'])->name('institutions.edit');
+Route::put('/institutions/{id}', [InstitutionController::class, 'update'])->name('institutions.update');
+Route::delete('/institutions/{id}', [InstitutionController::class, 'destroy'])->name('institutions.destroy');

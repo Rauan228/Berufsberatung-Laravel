@@ -51,30 +51,7 @@
             margin: 0 0 0 300px;
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            position: fixed;
-        }
-
-        .sidebar button {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .sidebar button:hover {
-            background: #2980b9;
-        }
+       
 
         h1 {
             font-size: 2rem;
@@ -185,14 +162,5 @@
 }
 
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 10px;
-            color: #bc0404;
-        }
     </style>
 @endsection
