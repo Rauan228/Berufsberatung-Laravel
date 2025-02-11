@@ -7,14 +7,14 @@
 <div class="container" style="margin:50px 0 0 50px">
 
     <div class="main-content">
-        <h1 class="text-center mb-4">Список событий</h1>
+        <h1 class="text-center mb-4">Events list</h1>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <a href="{{ route('events.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Добавить событие
+                <i class="fas fa-plus"></i> Add event
             </a>
             <input type="text" id="search" class="form-control w-50" style="margin-left: 20px"
-                placeholder="🔍 Поиск по событиям...">
+                placeholder="🔍 Search by events...">
         </div>
 
         <div class="row" id="event-list" style="margin-top: 35px;">
@@ -23,22 +23,22 @@
                     <div class="card event-card shadow-sm mb-4">
                         <div class="card-body">
                             <h5 class="card-title text-primary fw-bold">{{ $event->event_name }}</h5>
-                            <p class="card-text text-muted"><strong>📅 Дата:</strong>
+                            <p class="card-text text-muted"><strong>📅 Date:</strong>
                                 {{ \Carbon\Carbon::parse($event->event_date)->format('d.m.Y H:i') }}</p>
 
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route('events.show', $event->id) }}"><button class="btn btn-sm btn-info">
-                                        <i class="fas fa-eye"></i> Подробнее
+                                        <i class="fas fa-eye"></i> Detail
                                     </button></a>
                                 <a href="{{ route('events.edit', $event->id) }}"><button
                                         href="{{ route('events.edit', $event->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Редактировать
+                                        <i class="fas fa-edit"></i> Edit
                                     </button></a>
                                 <form action="{{ route('events.destroy', $event->id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Удалить
+                                        <i class="fas fa-trash"></i> Delete
                                     </button>
                                 </form>
                             </div>

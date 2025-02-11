@@ -11,7 +11,8 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\EventsCalendarController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\InstitutionController;
-
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\InstitutionSpecialtyController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -73,3 +74,12 @@ Route::get('/institutions/{id}', [InstitutionController::class, 'show'])->name('
 Route::get('/institutions/{id}/edit', [InstitutionController::class, 'edit'])->name('institutions.edit');
 Route::put('/institutions/{id}', [InstitutionController::class, 'update'])->name('institutions.update');
 Route::delete('/institutions/{id}', [InstitutionController::class, 'destroy'])->name('institutions.destroy');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/likes', [LikeController::class, 'index'])->name('likes.index');
+    Route::delete('/likes/{id}', [LikeController::class, 'destroy'])->name('likes.destroy');
+});
+
+Route::resource('institution_specialties', InstitutionSpecialtyController::class);
+

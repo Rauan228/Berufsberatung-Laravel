@@ -52,6 +52,7 @@
         margin-left: 300px;
         padding: 20px;
         flex-grow: 1;
+        width: 80%;
     }
 
     ul {
@@ -65,6 +66,7 @@
         padding: 10px;
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 50%;
     }
 
     /* Стили для звездочек */

@@ -19,14 +19,14 @@
                 
                     @if($application->status == 'Pending')
                         <button type="submit" name="status" value="Accepted" class="btn btn-sm btn-success">
-                            <i class="fas fa-check"></i> Принять
+                            <i class="fas fa-check"></i> Accept
                         </button>
                         <button type="submit" name="status" value="Rejected" class="btn btn-sm btn-danger">
-                            <i class="fas fa-times"></i> Отклонить
+                            <i class="fas fa-times"></i> Reject
                         </button>
                     @else
                         <button type="submit" name="status" value="Pending" class="btn btn-sm btn-warning">
-                            <i class="fas fa-undo"></i> Отменить
+                            <i class="fas fa-undo"></i> Cancel
                         </button>
                     @endif
                 </form>

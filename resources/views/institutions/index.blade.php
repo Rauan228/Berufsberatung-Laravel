@@ -3,15 +3,16 @@
 @section('content')
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <div class="container" style="margin:50px 0 0 50px">
     <div class="main-content">
-        <h1 class="text-center mb-4">Список институтов</h1>
+        <h1 class="text-center mb-4">Institutions list</h1>
         <a href="{{ route('institutions.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Добавить новый институт
+            <i class="fas fa-plus"></i> Add new institution
         </a>
 
-        <input type="text" id="search" class="form-control w-50 mb-4" placeholder="🔍 Поиск по институтам...">
+        <input type="text" id="search" class="form-control w-50 mb-4" placeholder="🔍 Search by Institute...">
 
         <div class="row" id="institution-list">
             @foreach($institutions as $institution)
@@ -19,31 +20,37 @@
                     <div class="card institution-card shadow-sm mb-4">
                         <div class="card-body">
                             <h5 class="card-title text-primary fw-bold">{{ $institution->name }}</h5>
-                            <p class="card-text text-muted"><strong>📍 Локация:</strong> {{ $institution->location }}</p>
+                            <p class="card-text text-muted"><strong>📍 Location:</strong> {{ $institution->location }}</p>
                             <p class="card-text text-muted">
-                                {{ \Illuminate\Support\Str::limit($institution->description, 100) }}</p>
+                                {{ \Illuminate\Support\Str::limit($institution->description, 100) }}
+                            </p>
 
                             @if($institution->website)
                                 <p><a href="{{ $institution->website }}" target="_blank" class="text-info"><i
-                                            class="fas fa-globe"></i> Перейти на сайт</a></p>
+                                            class="fas fa-globe"></i> Go to website</a></p>
                             @endif
 
-                            <div class="d-flex justify-content-between">
-                                <a href="{{ route('institutions.show', $institution->id) }}" class="btn btn-sm btn-info">
-                                    <i class="fas fa-eye"></i> Подробнее
+                            <div class="d-flex justify-content-between button-group">
+                                <a href="{{ route('institutions.show', $institution->id) }}">
+                                    <button class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </button>
                                 </a>
-                                <a href="{{ route('institutions.edit', $institution->id) }}" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i> Редактировать
+                                <a href="{{ route('institutions.edit', $institution->id) }}">
+                                    <button class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
                                 </a>
                                 <form action="{{ route('institutions.destroy', $institution->id) }}" method="POST"
                                     class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Удалить
+                                        <i class="fas fa-trash"></i> Delete
                                     </button>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -95,11 +102,49 @@
         color: #6c757d;
     }
 
-    .institution-card .btn {
-        font-size: 0.8rem;
-        padding: 6px 10px;
+    /* Контейнер для кнопок */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+    }
+
+    /* Общий стиль для кнопок */
+    .button-group .btn {
+        flex: 1;
+        font-size: 0.6rem;
+        padding: 8px 12px;
         font-weight: bold;
         border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        text-transform: uppercase;
+    }
+
+    .button-group .btn-info:hover {
+        background: linear-gradient(135deg, #138496, #117a8b);
+        box-shadow: 0 5px 10px rgba(23, 162, 184, 0.5);
+        transform: scale(1.07);
+    }
+
+    .button-group .btn-warning:hover {
+        background: linear-gradient(135deg, #d39e00, #c69500);
+        box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
+        transform: scale(1.07);
+    }
+
+    .button-group .btn-danger:hover {
+        background: linear-gradient(135deg, #c82333, #a71d2a);
+        box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
+        transform: scale(1.07);
+    }
+
+    /* Анимация нажатия */
+    .button-group .btn:active {
+        transform: scale(0.95);
+    }
+
+    .button-group .btn:hover {
+        transform: scale(1.05);
     }
 </style>
 

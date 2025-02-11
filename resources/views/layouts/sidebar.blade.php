@@ -72,14 +72,14 @@
     </button></a>
     <a href="{{ route('institutions.index') }}"><button>
         <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/university.png" alt="university" />
-        Institutions</button>
-    <button></a>
+        Institutions</button></a>
+        <a href="{{ route('likes.index') }}"><button>
         <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
             alt="facebook-like--v1" />
-        Likes</button>
-    <button>
+        Likes</button></a>
+    <a href="{{ route('institution_specialties.index') }}"><button>
         <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png" alt="education" />
-        Institution Specialties</button>
+        Institution Specialties</button></a>
     <button>
         <i class="bi bi-briefcase"></i>
         Global specialties</button>

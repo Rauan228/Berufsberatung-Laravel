@@ -7,11 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Institution Specialties</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -36,7 +35,6 @@
             text-decoration: underline;
         }
 
-        /* Стили для списка уведомлений */
         ul {
             list-style-type: none;
             padding: 0;
@@ -50,22 +48,10 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        li a {
-            color: #e67e22;
-            margin-left: 10px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Контейнер для кнопок */
         .event-card .button-group {
             gap: 5px;
         }
 
-        /* Общий стиль для кнопок */
         .event-card .btn {
             flex: 1;
             font-size: 0.6rem;
@@ -88,7 +74,6 @@
             transform: scale(1.07);
         }
 
-        /* Анимация нажатия */
         .event-card .btn:active {
             transform: scale(0.95);
         }
@@ -97,53 +82,35 @@
             transform: scale(1.05);
         }
 
-        /* Стили для формы удаления */
         form {
             display: inline;
         }
 
-        /* Главный контент */
         .main-content {
             margin-left: 300px;
             padding: 20px;
             flex-grow: 1;
         }
-
-        .delete {
-            background-color: red;
-        }
-
-        .delete:hover {
-            background-color: rgb(153, 12, 12);
-            transition: 0.2s;
-        }
     </style>
 </head>
 
 <body>
-
-
     <div class="main-content">
-        <h1>Notifications</h1>
-        <a href="{{ route('notifications.create') }}" class="btn btn-primary">Add new notification</a>
+        <h1>Institution Specialties</h1>
+        <a href="{{ route('institution_specialties.create') }}" class="btn btn-primary">Add New Specialty</a>
         <ul>
-            @foreach($notifications as $notification)
+            @foreach($specialties as $specialty)
                 <li class="event-card">
-                    <strong style="font-size: 22px">{{ $notification->user->username }}</strong>
-                    <span style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
-                    {{ $notification->message }}
-
+                    <span style="font-size: 22px">{{ $specialty->specialty_name }}</span>
+                    <span style="font-size: 22px"> - Specialty: {{ $specialty->specialty->specialty_name ?? 'N/A' }}</span><br>
+                    <strong style="font-size: 16px">{{ $specialty->institution->name ?? 'Unknown Institution' }}</strong>
                     <div class="button-group">
-                        <!-- Кнопка "Редактировать" -->
-                        <a href="{{ route('notifications.edit', $notification->id) }}">
+                        <a href="{{ route('institution_specialties.edit', $specialty->id) }}">
                             <button class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                         </a>
-
-                        <!-- Кнопка "Удалить" -->
-                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST"
-                            class="delete-form">
+                        <form action="{{ route('institution_specialties.destroy', $specialty->id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
@@ -155,10 +122,7 @@
             @endforeach
         </ul>
     </div>
-
-
 </body>
 
 </html>
-
 @endsection

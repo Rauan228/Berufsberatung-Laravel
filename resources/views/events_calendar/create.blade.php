@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создать событие</title>
+    <title>Create event</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -96,27 +96,27 @@
 
 <body>
     <div class="container">
-        <h2>Создать событие</h2>
+        <h2>Create an event</h2>
         <form action="{{ route('events.store') }}" method="POST">
             @csrf
-            <label for="institution_id">Выберите университет:</label>
+            <label for="institution_id">Select institution:</label>
             <select id="institution_id" name="institution_id">
-                <option value="">-- Выберите университет --</option>
+                <option value="">-- Select institution --</option>
                 @foreach ($institutions as $institution)
                     <option value="{{ $institution->id }}">{{ $institution->name }}</option>
                 @endforeach
             </select>
 
-            <label for="event_name">Название события:</label>
+            <label for="event_name">Event name:</label>
             <input type="text" name="event_name" required>
 
-            <label for="event_date">Дата события:</label>
+            <label for="event_date">Event date:</label>
             <input type="datetime-local" name="event_date" required>
 
-            <label for="description">Описание:</label>
+            <label for="description">Description:</label>
             <textarea name="description" rows="3"></textarea>
 
-            <button type="submit">Добавить событие</button>
+            <button type="submit">Add event</button>
         </form>
     </div>
 </body>

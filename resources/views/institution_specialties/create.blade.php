@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit event</title>
+    <title>Add New Specialty</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,7 +33,6 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -52,8 +51,7 @@
         }
 
         input,
-        select,
-        textarea {
+        select {
             width: 100%;
             padding: 10px;
             border: none;
@@ -66,8 +64,7 @@
         }
 
         input:focus,
-        select:focus,
-        textarea:focus {
+        select:focus {
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             background: rgba(255, 255, 255, 0.1);
         }
@@ -81,14 +78,12 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
-            background: #ffc107;
-            /* Желтый цвет */
+            background: #28a745;
             color: white;
         }
 
         button:hover {
-            background: #e0a800;
-            /* Темно-желтый при наведении */
+            background: #218838;
             transform: scale(1.05);
         }
     </style>
@@ -96,31 +91,29 @@
 
 <body>
     <div class="container">
-        <h2>Edit event</h2>
-        <form action="{{ route('events.update', $event->id) }}" method="POST">
+        <h2>Add New Specialty</h2>
+        <form action="{{ route('institution_specialties.store') }}" method="POST">
             @csrf
-            @method('PUT')
-
-            <label for="event_name">Event name:</label>
-            <input type="text" name="event_name" value="{{ $event->event_name }}" required>
-
-            <label for="event_date">Event date:</label>
-            <input type="datetime-local" name="event_date" value="{{ $event->event_date }}" required>
-
-            <label for="institution_id">Institution:</label>
-            <select name="institution_id">
+            <label for="institution_id">Select Institution:</label>
+            <select id="institution_id" name="institution_id" required>
+                <option value="">-- Select Institution --</option>
                 @foreach ($institutions as $institution)
-                    <option value="{{ $institution->id }}" 
-                        {{ $event->institution_id == $institution->id ? 'selected' : '' }}>
-                        {{ $institution->name }}
-                    </option>
+                    <option value="{{ $institution->id }}">{{ $institution->name }}</option>
                 @endforeach
             </select>
 
-            <label for="description">Discription:</label>
-            <textarea name="description" rows="3">{{ $event->description }}</textarea>
+            <label for="specialty_id">Select Specialty:</label>
+            <select id="specialty_id" name="specialty_id" required>
+                <option value="">-- Select Specialty --</option>
+                @foreach ($globalSpecialties as $specialty)
+                    <option value="{{ $specialty->id }}">{{ $specialty->specialty_name }}</option>
+                @endforeach
+            </select>
 
-            <button type="submit">Update</button>
+            <label for="specialty_name">Custom Specialty Name:</label>
+            <input type="text" id="specialty_name" name="specialty_name" required>
+
+            <button type="submit">Save</button>
         </form>
     </div>
 </body>
