@@ -19,6 +19,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f6f9;
+            height: 300px;
         }
 
         h1 {
@@ -36,37 +37,24 @@
             text-decoration: underline;
         }
 
-        /* Стили для списка уведомлений */
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .notifications-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        li {
+        .notification-item {
             background-color: #fff;
-            margin: 10px 0;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        li a {
-            color: #e67e22;
-            margin-left: 10px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            text-decoration: underline;
-        }
-
-        /* Контейнер для кнопок */
-        .event-card .button-group {
+        .button-group {
             gap: 5px;
         }
 
-        /* Общий стиль для кнопок */
-        .event-card .btn {
+        .btn {
             flex: 1;
             font-size: 0.6rem;
             padding: 8px 12px;
@@ -76,37 +64,35 @@
             text-transform: uppercase;
         }
 
-        .event-card .btn-warning:hover {
+        .btn-warning:hover {
             background: linear-gradient(135deg, #d39e00, #c69500);
             box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
             transform: scale(1.07);
         }
 
-        .event-card .btn-danger:hover {
+        .btn-danger:hover {
             background: linear-gradient(135deg, #c82333, #a71d2a);
             box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
             transform: scale(1.07);
         }
 
-        /* Анимация нажатия */
-        .event-card .btn:active {
+        .btn:active {
             transform: scale(0.95);
         }
 
-        .event-card .btn:hover {
+        .btn:hover {
             transform: scale(1.05);
         }
 
-        /* Стили для формы удаления */
         form {
             display: inline;
         }
 
-        /* Главный контент */
         .main-content {
             margin-left: 300px;
             padding: 20px;
             flex-grow: 1;
+            height: 200px;
         }
 
         .delete {
@@ -117,18 +103,77 @@
             background-color: rgb(153, 12, 12);
             transition: 0.2s;
         }
+
+        .pagination {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination-info {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .pagination-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .page-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .pagination-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .page-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .page-btn.disabled {
+        background-color: #ccc;
+        pointer-events: none;
+    }
     </style>
 </head>
 
 <body>
-
-
     <div class="main-content">
         <h1>Notifications</h1>
-        <a href="{{ route('notifications.create') }}" class="btn btn-primary">Add new notification</a>
-        <ul>
+        <a href="{{ route('notifications.create') }}"  class="btn btn-primary">Add new notification</a>
+        
+        <div class="notifications-grid" style="margin-top: 30px">
             @foreach($notifications as $notification)
-                <li class="event-card">
+                <div class="notification-item">
                     <strong style="font-size: 22px">{{ $notification->user->username }}</strong>
                     <span style="font-size: 22px">- {{ $notification->event->event_name }}</span><br>
                     {{ $notification->message }}
@@ -142,8 +187,7 @@
                         </a>
 
                         <!-- Кнопка "Удалить" -->
-                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST"
-                            class="delete-form">
+                        <form action="{{ route('notifications.destroy', $notification->id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
@@ -151,14 +195,33 @@
                             </button>
                         </form>
                     </div>
-                </li>
+                </div>
             @endforeach
-        </ul>
+        </div>
+
+        <div class="pagination d-flex align-items-center justify-content-center mt-4">
+            @if ($notifications->total() > 0)
+            <p class="pagination-info">
+                Showing {{ $notifications->firstItem() }} to {{ $notifications->lastItem() }} of {{ $notifications->total() }} results
+            </p>
+            @endif
+            
+            <div class="pagination-buttons">
+            @if ($notifications->onFirstPage())
+                <span class="page-btn disabled">←</span>
+            @else
+                <a href="{{ $notifications->previousPageUrl() }}" class="page-btn">←</a>
+            @endif
+    
+            @if ($notifications->hasMorePages())
+                <a href="{{ $notifications->nextPageUrl() }}" class="page-btn">→</a>
+            @else
+                <span class="page-btn disabled">→</span>
+            @endif
+        </div>
+        </div>
     </div>
-
-
 </body>
 
 </html>
-
 @endsection

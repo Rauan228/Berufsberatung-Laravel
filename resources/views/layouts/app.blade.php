@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         @include('layouts.sidebar') <!-- Подключаем сайдбар -->
-        <div class="content">
+        <div class="content" style="height: 80%">
             @yield('content') <!-- Здесь будет отображаться контент страницы -->
         </div>
     </div>

@@ -13,6 +13,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\InstitutionSpecialtyController;
+use App\Http\Controllers\GlobalSpecialtyController;
+use App\Http\Controllers\GrantController;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -83,3 +86,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('institution_specialties', InstitutionSpecialtyController::class);
 
+Route::resource('global_specialties', GlobalSpecialtyController::class);
+
+Route::resource('grants', GrantController::class);

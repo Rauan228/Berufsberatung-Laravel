@@ -10,13 +10,13 @@ class NotificationController extends Controller
     // Просмотр всех уведомлений
     public function index()
 {
-    $notifications = Notification::with(['user', 'event'])->get(); // Используем eager loading для загрузки связанных данных
+    $notifications = Notification::with(['user', 'event'])->paginate(15); // Используем eager loading для загрузки связанных данных
+
     // Получаем текущего вошедшего админа
     $admin = Auth::guard('admin')->user();
     
     return view('notification.index', compact('admin', 'notifications'));
 }
-
 
     // Добавление нового уведомления
     public function create()

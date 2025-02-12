@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Institution Specialties</title>
+    <title>Global Specialties</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -96,24 +96,22 @@
 
 <body>
     <div class="main-content">
-        <h1>Institution Specialties</h1>
-        <a href="{{ route('institution_specialties.create') }}" class="btn btn-primary">Add New Specialty</a>
+        <h1>Global Specialties</h1>
+        <a href="{{ route('global_specialties.create') }}" class="btn btn-primary">Add New Global speciality</a>
         <ul>
-            @foreach($specialties as $specialty)
+            @foreach($globalSpecialties as $specialty)
                 <li class="event-card">
                     <span style="font-size: 22px">{{ $specialty->specialty_name }}</span>
-                    <span style="font-size: 22px"> - Specialty: {{ $specialty->specialty->specialty_name ?? 'N/A' }}</span><br>
-                    <strong style="font-size: 16px">{{ $specialty->institution->name ?? 'Unknown Institution' }}</strong>
                     <div class="button-group">
-                        <a href="{{ route('institution_specialties.edit', $specialty->id) }}">
+                        <a href="{{ route('global_specialties.edit', $specialty->id) }}">
                             <button class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
                         </a>
-                        <form action="{{ route('institution_specialties.destroy', $specialty->id) }}" method="POST" class="delete-form">
+                        <form action="{{ route('global_specialties.destroy', $specialty->id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить специальность?')">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
                         </form>

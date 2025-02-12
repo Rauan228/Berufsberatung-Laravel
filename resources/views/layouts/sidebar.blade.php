@@ -80,14 +80,14 @@
     <a href="{{ route('institution_specialties.index') }}"><button>
         <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png" alt="education" />
         Institution Specialties</button></a>
-    <button>
+    <a href="{{ route('global_specialties.index') }}"><button>
         <i class="bi bi-briefcase"></i>
-        Global specialties</button>
-    <button style="display: flex">
+        Global specialties</button></a>
+    <a href="{{ route('grants.index') }}"> <button style="display: flex">
         <img width="21" height="21"
             src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/FFFFFF/external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector.png"
             alt="external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector" />
-        Grants</button>
+        Grants</button></a>
     <form action="{{ route('logout') }}" method="POST">
         @csrf
         <button class="logout">

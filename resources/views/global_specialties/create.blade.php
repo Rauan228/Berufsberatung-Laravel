@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добавить уведомление</title>
+    <title>Добавить специальность</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +26,6 @@
             max-width: 400px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.5s ease-in-out;
-            text-align: center;
         }
 
         @keyframes fadeIn {
@@ -48,11 +48,9 @@
             display: block;
             margin: 10px 0 5px;
             font-weight: bold;
-            text-align: left;
         }
 
-        input,
-        textarea {
+        input {
             width: 100%;
             padding: 10px;
             border: none;
@@ -64,22 +62,12 @@
             background-color: #dcdddf;
         }
 
-        input:focus,
-        textarea:focus {
+        input:focus {
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        button, 
-        .cancel-button {
+        button {
             width: 100%;
             padding: 10px;
             border: none;
@@ -88,12 +76,6 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        button {
             background: #28a745;
             color: white;
         }
@@ -103,36 +85,35 @@
             transform: scale(1.05);
         }
 
-        .cancel-button {
-            background: #dc3545;
+        .btn-secondary {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            background: #6c757d;
             color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        .cancel-button:hover {
-            background: #c82333;
-            transform: scale(1.05);
+        .btn-secondary:hover {
+            background: #5a6268;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h2>Добавить уведомление</h2>
-        <form action="{{ route('notifications.store') }}" method="POST">
+        <h2>Добавить специальность</h2>
+        <form action="{{ route('global_specialties.store') }}" method="POST">
             @csrf
-            <label for="user_id">ID пользователя *</label>
-            <input type="text" name="user_id" id="user_id" required>
-
-            <label for="event_id">ID события (не обязательно)</label>
-            <input type="text" name="event_id" id="event_id">
-
-            <label for="message">Сообщение *</label>
-            <textarea name="message" id="message" rows="3" required></textarea>
-
-            <div class="button-container">
-                <button type="submit">Сохранить</button>
-                <a href="{{ route('notifications.index') }}" class="cancel-button">Отмена</a>
-            </div>
+            <label for="specialty_name">Название специальности:</label>
+            <input type="text" id="specialty_name" name="specialty_name" required>
+            <button type="submit">Сохранить</button>
         </form>
+        <a href="{{ route('global_specialties.index') }}" class="btn-secondary">Назад</a>
     </div>
 </body>
+
 </html>
