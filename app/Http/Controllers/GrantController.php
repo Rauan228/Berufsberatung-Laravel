@@ -5,24 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Grant;
 use App\Models\Institution;
 use App\Models\InstitutionSpecialty;
-use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 
 class GrantController extends Controller
 {
-    /**
-     * Отображает список грантов.
-     */
+    // Отображение всех грантов
     public function index()
     {
-        $grants = Grant::with(['institution', 'specialty'])->get();
+        $grants = Grant::with('institution', 'specialty')->get();
         $admin = Auth::guard('admin')->user();
         return view('grants.index', compact('admin','grants'));
     }
 
-    /**
-     * Отображает форму создания нового гранта.
-     */
+    // Показать форму для создания нового гранта
     public function create()
     {
         $institutions = Institution::all();
@@ -30,35 +26,23 @@ class GrantController extends Controller
         return view('grants.create', compact('institutions', 'specialties'));
     }
 
-    /**
-     * Сохраняет новый грант в БД.
-     */
+    // Сохранение нового гранта
     public function store(Request $request)
     {
         $request->validate([
             'institution_id' => 'required|exists:institutions,id',
             'specialty_id' => 'required|exists:institution_specialties,id',
             'grant_name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric',
             'application_deadline' => 'required|date',
         ]);
 
         Grant::create($request->all());
 
-        return redirect()->route('grants.index')->with('success', 'Грант успешно добавлен.');
+        return redirect()->route('grants.index')->with('success', 'Grant created successfully.');
     }
 
-    /**
-     * Отображает конкретный грант.
-     */
-    public function show(Grant $grant)
-    {
-        return view('grants.show', compact('grant'));
-    }
-
-    /**
-     * Отображает форму редактирования гранта.
-     */
+    // Показать форму для редактирования гранта
     public function edit(Grant $grant)
     {
         $institutions = Institution::all();
@@ -66,30 +50,27 @@ class GrantController extends Controller
         return view('grants.edit', compact('grant', 'institutions', 'specialties'));
     }
 
-    /**
-     * Обновляет данные гранта.
-     */
+    // Обновление гранта
     public function update(Request $request, Grant $grant)
     {
         $request->validate([
             'institution_id' => 'required|exists:institutions,id',
             'specialty_id' => 'required|exists:institution_specialties,id',
             'grant_name' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric',
             'application_deadline' => 'required|date',
         ]);
 
         $grant->update($request->all());
 
-        return redirect()->route('grants.index')->with('success', 'Грант успешно обновлён.');
+        return redirect()->route('grants.index')->with('success', 'Grant updated successfully.');
     }
 
-    /**
-     * Удаляет грант.
-     */
+    // Удаление гранта
     public function destroy(Grant $grant)
     {
         $grant->delete();
-        return redirect()->route('grants.index')->with('success', 'Грант удалён.');
+
+        return redirect()->route('grants.index')->with('success', 'Grant deleted successfully.');
     }
 }

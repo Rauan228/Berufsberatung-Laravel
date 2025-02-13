@@ -12,7 +12,6 @@ class InstitutionSpecialtyFactory extends Factory
     public function definition()
     {
         return [
-            'institution_id' => \App\Models\Institution::factory(),
             'specialty_id' => \App\Models\GlobalSpecialty::factory(),
             'specialty_name' => $this->faker->word,
         ];

@@ -1,49 +1,129 @@
 @extends('layouts.app')
 
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<div class="container">
-    .main-content{}
-    <h2>Список грантов</h2>
-    <a href="{{ route('grants.create') }}" class="btn btn-primary mb-3">Добавить грант</a>
+<!DOCTYPE html>
+<html lang="en">
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grants</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название гранта</th>
-                <th>Учреждение</th>
-                <th>Специальность</th>
-                <th>Сумма</th>
-                <th>Дедлайн</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card .button-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .event-card .btn {
+            flex: 1;
+            font-size: 0.6rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+
+        .event-card .btn-warning:hover {
+            background: linear-gradient(135deg, #d39e00, #c69500);
+            box-shadow: 0 5px 10px rgba(255, 193, 7, 0.5);
+            transform: scale(1.07);
+        }
+
+        .event-card .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333, #a71d2a);
+            box-shadow: 0 5px 10px rgba(220, 53, 69, 0.5);
+            transform: scale(1.07);
+        }
+
+        .event-card .btn:active {
+            transform: scale(0.95);
+        }
+
+        .event-card .btn:hover {
+            transform: scale(1.05);
+        }
+
+        form {
+            display: inline;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+        <h1>Grants</h1>
+        <a href="{{ route('grants.create') }}" class="btn btn-primary">Add New Grant</a>
+        <ul>
             @foreach($grants as $grant)
-                <tr>
-                    <td>{{ $grant->id }}</td>
-                    <td>{{ $grant->grant_name }}</td>
-                    <td>{{ $grant->institution->name }}</td>
-                    <td>{{ $grant->specialty->name }}</td>
-                    <td>{{ $grant->amount }} руб.</td>
-                    <td>{{ $grant->application_deadline }}</td>
-                    <td>
-                        <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-info btn-sm">Просмотр</a>
-                        <a href="{{ route('grants.edit', $grant->id) }}" class="btn btn-warning btn-sm">Редактировать</a>
-                        <form action="{{ route('grants.destroy', $grant->id) }}" method="POST" style="display:inline;">
+                <li class="event-card">
+                    <span style="font-size: 22px">{{ $grant->grant_name }}</span>
+                    <span style="font-size: 18px"> - {{ $grant->institution->name ?? 'Unknown Institution' }}</span><br>
+                    <strong style="font-size: 16px">Amount: {{ number_format($grant->amount) }}</strong><br>
+                    <strong style="font-size: 16px">Application Deadline: {{ $grant->application_deadline }}</strong>
+                    <div class="button-group">
+                        <a href="{{ route('grants.edit', $grant->id) }}">
+                            <button class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </a>
+                        <form action="{{ route('grants.destroy', $grant->id) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены?')">Удалить</button>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </form>
-                    </td>
-                </tr>
+                    </div>
+                </li>
             @endforeach
-        </tbody>
-    </table>
-</div>
+        </ul>
+    </div>
+</body>
+</html>
 @endsection

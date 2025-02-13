@@ -89,3 +89,4 @@ Route::resource('institution_specialties', InstitutionSpecialtyController::class
 Route::resource('global_specialties', GlobalSpecialtyController::class);
 
 Route::resource('grants', GrantController::class);
+

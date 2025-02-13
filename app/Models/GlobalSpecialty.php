@@ -13,8 +13,8 @@ class GlobalSpecialty extends Model
         'specialty_name',
     ];
 
-    public function institutionSpecialties()
+    public function qualifications()
     {
-        return $this->hasMany(InstitutionSpecialty::class);
+        return $this->hasMany(Qualification::class);
     }
 }
