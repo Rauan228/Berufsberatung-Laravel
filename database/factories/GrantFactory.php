@@ -13,11 +13,9 @@ class GrantFactory extends Factory
     {
         return [
             'institution_id' => \App\Models\Institution::factory(),
-            'specialty_id' => \App\Models\InstitutionSpecialty::factory(),
             'grant_name' => $this->faker->word,
             'amount' => $this->faker->randomFloat(2, 1000, 100000),
             'application_deadline' => $this->faker->date,
         ];
     }
 }
-

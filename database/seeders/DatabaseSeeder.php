@@ -12,15 +12,15 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             InstitutionsTableSeeder::class,
             GlobalSpecialtiesTableSeeder::class,
-            InstitutionsSpecialtiesTableSeeder::class,
             EventsCalendarTableSeeder::class,
             ApplicationsTableSeeder::class,
             NotificationsTableSeeder::class,
             GrantsTableSeeder::class,
             ReviewsTableSeeder::class,
-            LikesTableSeeder::class,
+            // LikesTableSeeder::class,
             AdminsTableSeeder::class,
             SpecialtiesSeeder::class,
+            InstitutionSpecialtiesSeeder::class,
         ]);
     }
 }

@@ -15,17 +15,6 @@
         </div>
 
         <div class="form-group">
-            <label for="specialty_id">Specialty</label>
-            <select name="specialty_id" id="specialty_id" class="form-control">
-                @foreach($specialties as $specialty)
-                    <option value="{{ $specialty->id }}" {{ $grant->specialty_id == $specialty->id ? 'selected' : '' }}>
-                        {{ $specialty->specialty_name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
             <label for="grant_name">Grant Name</label>
             <input type="text" name="grant_name" id="grant_name" class="form-control" value="{{ $grant->grant_name }}" required>
         </div>

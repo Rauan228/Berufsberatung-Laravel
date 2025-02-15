@@ -19,10 +19,10 @@ class Institution extends Model
         return $this->hasMany(EventsCalendar::class);
     }
 
-    public function specialties()
-    {
-        return $this->hasMany(InstitutionSpecialty::class);
+    public function specializations() {
+        return $this->belongsToMany(Specialization::class, 'institution_specialties');
     }
+    
 
     public function grants()
     {

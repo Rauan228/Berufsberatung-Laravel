@@ -13,7 +13,6 @@ class GrantsTableSeeder extends Seeder
         $grants = [
             [
                 'institution_id'       => 1,
-                'specialty_id'         => 1,
                 'grant_name'           => 'Государственный образовательный грант',
                 'amount'               => 100000.00,
                 'application_deadline' => '2025-07-10',

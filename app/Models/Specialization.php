@@ -11,4 +11,9 @@ class Specialization extends Model {
     public function qualification() {
         return $this->belongsTo(Qualification::class);
     }
+
+    public function institutions() {
+        return $this->belongsToMany(Institution::class, 'institution_specialties');
+    }
+    
 }

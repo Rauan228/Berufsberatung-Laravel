@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('grants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade');
-            $table->foreignId('specialty_id')->constrained('institution_specialties')->onDelete('cascade');
             $table->string('grant_name');
             $table->decimal('amount', 10, 2);
             $table->date('application_deadline');

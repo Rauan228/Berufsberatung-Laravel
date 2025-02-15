@@ -1,4 +1,3 @@
-
 <div class="main-content">
     <h1>Create Grant</h1>
     <form action="{{ route('grants.store') }}" method="POST">
@@ -8,15 +7,6 @@
             <select name="institution_id" id="institution_id" class="form-control">
                 @foreach($institutions as $institution)
                     <option value="{{ $institution->id }}">{{ $institution->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="specialty_id">Specialty</label>
-            <select name="specialty_id" id="specialty_id" class="form-control">
-                @foreach($specialties as $specialty)
-                    <option value="{{ $specialty->id }}">{{ $specialty->specialty_name }}</option>
                 @endforeach
             </select>
         </div>

@@ -4,26 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Grant;
 use App\Models\Institution;
-use App\Models\InstitutionSpecialty;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
+use Illuminate\Support\Facades\Auth;
 
 class GrantController extends Controller
 {
     // Отображение всех грантов
     public function index()
     {
-        $grants = Grant::with('institution', 'specialty')->get();
+        $grants = Grant::with('institution')->get();
         $admin = Auth::guard('admin')->user();
-        return view('grants.index', compact('admin','grants'));
+        return view('grants.index', compact('admin', 'grants'));
     }
 
     // Показать форму для создания нового гранта
     public function create()
     {
         $institutions = Institution::all();
-        $specialties = InstitutionSpecialty::all();
-        return view('grants.create', compact('institutions', 'specialties'));
+        return view('grants.create', compact('institutions'));
     }
 
     // Сохранение нового гранта
@@ -31,7 +29,6 @@ class GrantController extends Controller
     {
         $request->validate([
             'institution_id' => 'required|exists:institutions,id',
-            'specialty_id' => 'required|exists:institution_specialties,id',
             'grant_name' => 'required|string|max:255',
             'amount' => 'required|numeric',
             'application_deadline' => 'required|date',
@@ -46,8 +43,7 @@ class GrantController extends Controller
     public function edit(Grant $grant)
     {
         $institutions = Institution::all();
-        $specialties = InstitutionSpecialty::all();
-        return view('grants.edit', compact('grant', 'institutions', 'specialties'));
+        return view('grants.edit', compact('grant', 'institutions'));
     }
 
     // Обновление гранта
@@ -55,7 +51,6 @@ class GrantController extends Controller
     {
         $request->validate([
             'institution_id' => 'required|exists:institutions,id',
-            'specialty_id' => 'required|exists:institution_specialties,id',
             'grant_name' => 'required|string|max:255',
             'amount' => 'required|numeric',
             'application_deadline' => 'required|date',
