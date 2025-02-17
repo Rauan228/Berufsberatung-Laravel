@@ -6,11 +6,16 @@ use App\Models\Review;
 use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reviews = Review::with(['user', 'institution'])->latest()->get();
+        // Пагинация и сортировка по дате
+        $reviews = Review::with(['user', 'institution'])
+                        ->latest()
+                        ->paginate(20);  // Здесь 10 — количество отзывов на одной странице
+
         $admin = Auth::guard('admin')->user();
-        return view('reviews.index', compact('admin','reviews'));
+
+        return view('reviews.index', compact('admin', 'reviews'));
     }
 
 

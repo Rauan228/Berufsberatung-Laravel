@@ -19,9 +19,11 @@ class Qualification extends Model
         return $this->belongsTo(GlobalSpecialty::class);
     }
 
-    public function specializations() {
+    public function specializations()
+    {
         return $this->hasMany(Specialization::class);
     }
+    
 }
 
 

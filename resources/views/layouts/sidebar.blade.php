@@ -77,9 +77,9 @@
         <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
             alt="facebook-like--v1" />
         Likes</button></a>
-    <a href="{{ route('institution_specialties.index') }}"><button>
+    <a href="{{ route('specializations.index') }}"><button>
         <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png" alt="education" />
-        Institution Specialties</button></a>
+        Speciality</button></a>
     <a href="{{ route('global_specialties.index') }}"><button>
         <i class="bi bi-briefcase"></i>
         Global specialties</button></a>

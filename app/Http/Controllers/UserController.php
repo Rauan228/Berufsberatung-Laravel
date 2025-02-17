@@ -8,16 +8,24 @@ use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Получаем всех пользователей с необходимыми полями
-        $users = User::select('id', 'username', 'created_at', 'is_banned')->get();
-         // Получаем текущего вошедшего админа
+       // Получаем текущую страницу для активных и забаненных пользователей
+    $activePage = $request->input('active_page', 1);
+    $bannedPage = $request->input('banned_page', 1);
+
+    // Получаем активных и забаненных пользователей с пагинацией
+    $activeUsers = User::where('is_banned', false)->paginate(24, ['*'], 'active_page', $activePage);
+    $bannedUsers = User::where('is_banned', true)->paginate(24, ['*'], 'banned_page', $bannedPage);
+        
+        // Получаем текущего вошедшего админа
         $admin = Auth::guard('admin')->user();
-    
+        
         // Передаем данные в представление
-        return view('users.index', compact('admin','users'));
+        return view('users.index', compact('admin', 'activeUsers', 'bannedUsers'));
     }
+    
+
     
 
     public function toggleBan($id)

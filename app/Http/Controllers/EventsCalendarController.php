@@ -12,7 +12,7 @@ class EventsCalendarController extends Controller
 {
     public function index()
     {
-        $events = EventsCalendar::all();
+        $events = EventsCalendar::paginate(12); // Пагинация по 12 событий на странице
         $admin = Auth::guard('admin')->user();
         
         return view('events_calendar.index', compact('admin','events',));

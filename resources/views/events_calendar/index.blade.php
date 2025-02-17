@@ -47,6 +47,29 @@
                 </div>
             @endforeach
         </div>
+
+        <!-- Пагинация -->
+        <div class="pagination-container">
+            @if ($events->total() > 0)
+                <p class="pagination-info">
+                    Showing {{ $events->firstItem() }} to {{ $events->lastItem() }} of {{ $events->total() }} results
+                </p>
+            @endif
+            
+            <div class="pagination-buttons">
+                @if ($events->onFirstPage())
+                    <span class="page-btn disabled">←</span>
+                @else
+                    <a href="{{ $events->previousPageUrl() }}" class="page-btn">←</a>
+                @endif
+
+                @if ($events->hasMorePages())
+                    <a href="{{ $events->nextPageUrl() }}" class="page-btn">→</a>
+                @else
+                    <span class="page-btn disabled">→</span>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 
@@ -92,7 +115,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 90%;
+        height: 60%;
     }
 
     .event-card .card-title {
@@ -160,6 +183,43 @@
 
     .main-content{
         margin-left: 300px
+    }
+
+     /* Пагинация */
+     .pagination-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination-info {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .pagination-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .page-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .page-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .page-btn.disabled {
+        background-color: #ccc;
+        pointer-events: none;
     }
 </style>
 

@@ -15,6 +15,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\InstitutionSpecialtyController;
 use App\Http\Controllers\GlobalSpecialtyController;
 use App\Http\Controllers\GrantController;
+use App\Http\Controllers\SpecializationController;
+
 
 
 Route::get('/', function () {
@@ -84,9 +86,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/likes/{id}', [LikeController::class, 'destroy'])->name('likes.destroy');
 });
 
-Route::resource('institution_specialties', InstitutionSpecialtyController::class);
-
 Route::resource('global_specialties', GlobalSpecialtyController::class);
 
 Route::resource('grants', GrantController::class);
 
+Route::resource('specializations', SpecializationController::class);
