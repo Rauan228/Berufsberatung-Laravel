@@ -11,6 +11,7 @@ class SpecialtiesSeeder extends Seeder
     public function run()
     {
         $specialties = [
+            // 6B01 Педагогические науки
             ['name' => 'Дошкольное образование', 'qualification_id' => 1],
             ['name' => 'Дошкольное обучение и воспитание', 'qualification_id' => 1],
 
@@ -76,6 +77,9 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Физическая культура и спорт', 'qualification_id' => 10],
             ['name' => 'Художественное образование (IP)', 'qualification_id' => 10],
 
+
+
+            // 6B02 Искусство и гуманитарные науки
             ['name' => 'Операторское искусство', 'qualification_id' => 11],
 
             ['name' => 'Археология и этнология', 'qualification_id' => 12],
@@ -191,6 +195,12 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Технический перевод', 'qualification_id' => 20],
             ['name' => 'Цифровая лингвистика', 'qualification_id' => 20],
 
+
+
+
+
+
+            // 6B03 Социальные науки, журналистика и информация
             ['name' => 'Digital Journalism (Цифровая журналистика)', 'qualification_id' => 21],
             ['name' => 'New media', 'qualification_id' => 21],
             ['name' => 'PR и Реклама', 'qualification_id' => 21],
@@ -222,6 +232,9 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Социология', 'qualification_id' => 22],
             ['name' => 'Управление социально-психологическими процессами', 'qualification_id' => 22],
 
+
+
+            // 6B04 Бизнес, управление и право
             ['name' => 'BBA in Accounting', 'qualification_id' => 23],
             ['name' => 'BBA in Accounting (2 года)', 'qualification_id' => 23],
             ['name' => 'BBA in Accounting (3 года)', 'qualification_id' => 23],
@@ -353,6 +366,11 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Юриспруденция (2 года)', 'qualification_id' => 25],
             ['name' => 'Юриспруденция (3 года)', 'qualification_id' => 25],
 
+
+
+
+
+            // 6B05 Естественные науки, математика и статистика
             ['name' => 'Биоинженерия и биоинформатика', 'qualification_id' => 26],
             ['name' => 'Биологическая инженерия', 'qualification_id' => 26],
             ['name' => 'Биология', 'qualification_id' => 26],
@@ -400,6 +418,12 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Экспертиза веществ и материалов в химической инженерии', 'qualification_id' => 29],
             ['name' => 'Ядерная физика и атомная энергетика', 'qualification_id' => 29],
 
+
+
+
+
+
+            // 6B06 Информационно-коммуникационные технологии
             ['name' => 'Cybersecurity (Кибербезопасность)', 'qualification_id' => 30],
             ['name' => 'Аппаратные средства защиты информации', 'qualification_id' => 30],
             ['name' => 'Информационная безопасность финансовых структур', 'qualification_id' => 30],
@@ -469,6 +493,10 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Телекоммуникационные системы и сети ж.д. связи', 'qualification_id' => 32],
             ['name' => 'Электронная инженерия', 'qualification_id' => 32],
 
+
+
+
+            // 6B07 Инженерные, обрабатывающие и строительные отрасли
             ['name' => 'BIM проектирование зданий и сооружений', 'qualification_id' => 33],
             ['name' => 'Архитектура', 'qualification_id' => 33],
             ['name' => 'Архитектура жилых и общественных зданий', 'qualification_id' => 33],
@@ -616,6 +644,11 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Стандартизация и сертификация (по отраслям)', 'qualification_id' => 36],
             ['name' => 'Стандартизация, сертификация и метрология (по отраслям)', 'qualification_id' => 36],
 
+
+
+
+
+            // 6B08 Сельское хозяйство и биоресурсы
             ['name' => 'Аграрная техника и технология', 'qualification_id' => 37],
             ['name' => 'Гибридные системы электроснабжения агропромышленных объектов', 'qualification_id' => 37],
             ['name' => 'Цифровые технологии в агропромышленном комплексе', 'qualification_id' => 37],
@@ -647,11 +680,20 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Аквакультура и водные биоресурсы', 'qualification_id' => 43],
             ['name' => 'Рыбное хозяйство и промышленное рыболовство', 'qualification_id' => 43],
 
+
+
+
+
+            // 6В09 Ветеринария
             ['name' => 'Ветеринария', 'qualification_id' => 42],
             ['name' => 'Ветеринарная медицина', 'qualification_id' => 42],
             ['name' => 'Ветеринарная санитария', 'qualification_id' => 42],
             ['name' => 'Ветеринарно-пищевая безопасность и технологии', 'qualification_id' => 42],
 
+
+
+
+            // 6B10 Здравоохранение и социальное обеспечение (медицина)
             ['name' => 'Кинезитерапия', 'qualification_id' => 43],
             ['name' => 'Лабораторная медицина', 'qualification_id' => 43],
             ['name' => 'Медико-профилактическое дело', 'qualification_id' => 43],
@@ -669,6 +711,11 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Социальная политика и предпринимательство', 'qualification_id' => 43],
             ['name' => 'Социальная работа', 'qualification_id' => 43],
 
+
+
+
+
+            // 6B12 Национальная безопасность и военное дело
             ['name' => 'Командная тактическая сил гражданской обороны', 'qualification_id' => 44],
 
             ['name' => 'Защита в чрезвычайных ситуациях', 'qualification_id' => 44],
@@ -677,6 +724,9 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Следственно-криминалистическая деятельность', 'qualification_id' => 44],
 
 
+
+
+            // Зарубежные программы
             ['name' => 'Прикладная информатика', 'qualification_id' => 43],
 
             ['name' => 'Защищенные высокопроизводительные вычислительные системы', 'qualification_id' => 43],
@@ -720,6 +770,53 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Юриспруденция', 'qualification_id' => 43],
 
             ['name' => 'Физика элементарных частиц и космология', 'qualification_id' => 43],
+
+
+
+
+            // 6B11 Услуги
+            ['name' => 'Безопасность жизнедеятельности и защита окружающей среды','qualification_id' => 56],
+            ['name' => 'Инженерная экология и безопасность в энергетике', 'qualification_id' => 56],
+            ['name' => 'Инновационное управление безопасностью ЧС природного и техногенного характера', 'qualification_id' => 56],
+            ['name' => 'Промышленная безопасность', 'qualification_id' => 56],
+            ['name' => 'Промышленная, экологическая и пожарная безопасность', 'qualification_id' => 56],
+            ['name' => 'Экоаналитика в отраслях', 'qualification_id' => 56],
+
+
+            ['name' => 'IT–технологии в сфере сервиса', 'qualification_id' => 58],
+            ['name' => 'Tourism Guide Service', 'qualification_id' => 58],
+            ['name' => 'Гостиничный и ресторанный бизнес', 'qualification_id' => 58],
+            ['name' => 'Ивент-менеджмент', 'qualification_id' => 58],
+            ['name' => 'Культурно-досуговая работа', 'qualification_id' => 58],
+            ['name' => 'Международный и внутренний туризм', 'qualification_id' => 58],
+            ['name' => 'Международный туризм', 'qualification_id' => 58],
+            ['name' => 'Менеджмент инноваций туризма и гостеприимства', 'qualification_id' => 58],
+            ['name' => 'Менеджмент туристских дестинаций', 'qualification_id' => 58],
+            ['name' => 'Организация индустрии туризма и гостеприимства', 'qualification_id' => 58],
+            ['name' => 'Организация экскурсионных услуг и индивидуальных туров', 'qualification_id' => 58],
+            ['name' => 'Ресторанно-отельный бизнес', 'qualification_id' => 58],
+            ['name' => 'Ресторанное дело и гостиничный бизнес', 'qualification_id' => 58],
+            ['name' => 'Спортивно-оздоровительный фитнес', 'qualification_id' => 58],
+            ['name' => 'Спортивный и оздоровительный фитнес', 'qualification_id' => 58],
+            ['name' => 'Спортивный туризм', 'qualification_id' => 58],
+            ['name' => 'Туризм', 'qualification_id' => 58],
+            ['name' => 'Туризм и Events Management', 'qualification_id' => 58],
+            ['name' => 'Туризм и гостеприимство', 'qualification_id' => 58],
+            ['name' => 'Управление и организация мероприятий', 'qualification_id' => 58],
+            ['name' => 'Устойчивый туризм', 'qualification_id' => 58],
+
+
+            ['name' => 'Бизнес-логистика', 'qualification_id' => 59],
+            ['name' => 'Логистика', 'qualification_id' => 59],
+            ['name' => 'Логистика (по отраслям)', 'qualification_id' => 59],
+            ['name' => 'Логистика на транспорте', 'qualification_id' => 59],
+            ['name' => 'Организация авиационных перевозок', 'qualification_id' => 59],
+            ['name' => 'Организация аэропортовой деятельности', 'qualification_id' => 59],
+            ['name' => 'Организация дорожного движения', 'qualification_id' => 59],
+            ['name' => 'Организация и управление логистикой', 'qualification_id' => 59],
+            ['name' => 'Организация перевозок, движения и эксплуатация транспорта', 'qualification_id' => 59],
+            ['name' => 'Транспортная логистика', 'qualification_id' => 59],
+            ['name' => 'Управление услугами в отрасли', 'qualification_id' => 59],
         ];
 
         DB::table('specializations')->insert($specialties);

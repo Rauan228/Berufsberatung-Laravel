@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('institution_id')->constrained()->onDelete('cascade');
             $table->foreignId('specialization_id')->constrained()->onDelete('cascade');
+            $table->decimal('cost', 10, 2)->nullable(); // Разрешаем null для столбца cost
             $table->timestamps();
         });
     }
