@@ -16,6 +16,7 @@ use App\Http\Controllers\InstitutionSpecialtyController;
 use App\Http\Controllers\GlobalSpecialtyController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\SpecializationController;
+use App\Http\Controllers\QualificationController;
 
 
 
@@ -91,3 +92,5 @@ Route::resource('global_specialties', GlobalSpecialtyController::class);
 Route::resource('grants', GrantController::class);
 
 Route::resource('specializations', SpecializationController::class);
+
+Route::resource('qualifications', QualificationController::class);

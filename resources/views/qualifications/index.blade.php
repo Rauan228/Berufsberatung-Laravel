@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grants</title>
+    <title>Список квалификаций</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -37,13 +37,13 @@
             text-decoration: underline;
         }
 
-        .grants-grid {
+        .qualifications-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
-        .grant-item {
+        .qualification-item {
             background-color: #fff;
             padding: 15px;
             border-radius: 8px;
@@ -168,35 +168,33 @@
 
 <body>
     <div class="main-content">
-        <h1>Grants</h1>
-        <a href="{{ route('grants.create') }}" class="btn btn-primary">Add New Grant</a>
+        <h1>Список квалификаций</h1>
+        <a href="{{ route('qualifications.create') }}" class="btn btn-primary">Добавить</a>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <div class="grants-grid" style="margin-top: 30px">
-            @foreach($grants as $grant)
-                <div class="grant-item">
-                    <strong style="font-size: 22px">{{ $grant->grant_name }}</strong>
-                    <span style="font-size: 18px"> - {{ $grant->institution->name ?? 'Unknown Institution' }}</span><br>
-                    <strong style="font-size: 16px">Amount: {{ number_format($grant->amount) }}</strong><br>
-                    <strong style="font-size: 16px">Application Deadline: {{ $grant->application_deadline }}</strong>
+        <div class="qualifications-grid" style="margin-top: 30px">
+            @foreach($qualifications as $qualification)
+                <div class="qualification-item">
+                    <strong style="font-size: 22px">{{ $qualification->qualification_name }}</strong>
+                    <span style="font-size: 18px">({{ $qualification->globalSpecialty->name ?? 'Не указано' }})</span><br>
 
                     <div class="button-group">
                         <!-- Кнопка "Редактировать" -->
-                        <a href="{{ route('grants.edit', $grant->id) }}">
+                        <a href="{{ route('qualifications.edit', $qualification) }}">
                             <button class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i> Редактировать
                             </button>
                         </a>
 
                         <!-- Кнопка "Удалить" -->
-                        <form action="{{ route('grants.destroy', $grant->id) }}" method="POST" class="delete-form">
+                        <form action="{{ route('qualifications.destroy', $qualification) }}" method="POST" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Удалить
                             </button>
                         </form>
                     </div>
@@ -206,21 +204,21 @@
 
         <!-- Пагинация -->
         <div class="pagination-container">
-            @if ($grants->total() > 0)
+            @if ($qualifications->total() > 0)
                 <p class="pagination-info">
-                    Showing {{ $grants->firstItem() }} to {{ $grants->lastItem() }} of {{ $grants->total() }} results
+                    Showing {{ $qualifications->firstItem() }} to {{ $qualifications->lastItem() }} of {{ $qualifications->total() }} results
                 </p>
             @endif
             
             <div class="pagination-buttons">
-                @if ($grants->onFirstPage())
+                @if ($qualifications->onFirstPage())
                     <span class="page-btn disabled">←</span>
                 @else
-                    <a href="{{ $grants->previousPageUrl() }}" class="page-btn">←</a>
+                    <a href="{{ $qualifications->previousPageUrl() }}" class="page-btn">←</a>
                 @endif
 
-                @if ($grants->hasMorePages())
-                    <a href="{{ $grants->nextPageUrl() }}" class="page-btn">→</a>
+                @if ($qualifications->hasMorePages())
+                    <a href="{{ $qualifications->nextPageUrl() }}" class="page-btn">→</a>
                 @else
                     <span class="page-btn disabled">→</span>
                 @endif

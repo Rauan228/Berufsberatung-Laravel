@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             NotificationsTableSeeder::class,
             GrantsTableSeeder::class,
             ReviewsTableSeeder::class,
-            // LikesTableSeeder::class,
+            LikesTableSeeder::class,
             AdminsTableSeeder::class,
             SpecialtiesSeeder::class,
             InstitutionSpecialtiesSeeder::class,

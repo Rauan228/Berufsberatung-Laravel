@@ -13,7 +13,7 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        $institutions = Institution::all();
+        $institutions = Institution::paginate(12);
         $admin = Auth::guard('admin')->user();
         return view('institutions.index', compact('admin','institutions'));
     }

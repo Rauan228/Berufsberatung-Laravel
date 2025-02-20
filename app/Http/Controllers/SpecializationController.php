@@ -8,12 +8,26 @@ use App\Models\Qualification;
 use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 class SpecializationController extends Controller
 {
-    public function index()
-    {
-        $specializations = Specialization::with('qualification')->get();
-        $admin = Auth::guard('admin')->user();
-        return view('specializations.index', compact('admin','specializations'));
+    public function index(Request $request)
+{
+    $query = Specialization::with('qualification');
+
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    if ($request->has('qualification_id') && $request->qualification_id != '') {
+        $query->where('qualification_id', $request->qualification_id);
+    }
+
+    $specializations = $query->paginate(48);
+
+    $qualifications = Qualification::all(); // Получаем список всех квалификаций
+    $admin = Auth::guard('admin')->user();
+
+    return view('specializations.index', compact('admin', 'specializations', 'qualifications'));
+}
+
 
     public function create()
     {

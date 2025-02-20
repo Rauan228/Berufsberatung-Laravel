@@ -56,6 +56,29 @@
                 </div>
             @endforeach
         </div>
+
+        <!-- Пагинация -->
+        <div class="pagination-container">
+            @if ($institutions->total() > 0)
+                <p class="pagination-info">
+                    Showing {{ $institutions->firstItem() }} to {{ $institutions->lastItem() }} of {{ $institutions->total() }} results
+                </p>
+            @endif
+            
+            <div class="pagination-buttons">
+                @if ($institutions->onFirstPage())
+                    <span class="page-btn disabled">←</span>
+                @else
+                    <a href="{{ $institutions->previousPageUrl() }}" class="page-btn">←</a>
+                @endif
+
+                @if ($institutions->hasMorePages())
+                    <a href="{{ $institutions->nextPageUrl() }}" class="page-btn">→</a>
+                @else
+                    <span class="page-btn disabled">→</span>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 
@@ -146,6 +169,53 @@
     .button-group .btn:hover {
         transform: scale(1.05);
     }
+
+    /* Пагинация */
+    .pagination-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination-info {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .pagination-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .page-btn {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .page-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .page-btn.disabled {
+        background-color: #ccc;
+        pointer-events: none;
+    }
+      /* Общий стиль для кнопок */
+      .btn {
+            flex: 1;
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
 </style>
 
 <script>

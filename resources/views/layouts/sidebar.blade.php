@@ -9,7 +9,7 @@
     </div>
     <p>Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа -->
 
-    <button class="sidebar-home-btn" onclick="window.location.href='{{ route('home') }}'">
+    <button class="btn btn-primary" onclick="window.location.href='{{ route('home') }}'">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
             viewBox="0 0 19 13">
             <path
@@ -18,7 +18,7 @@
         Home
     </button>
     <a href="{{ route('notifications.index') }}">
-        <button>
+        <button class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
                 viewBox="0 0 19 13">
                 <path
@@ -29,7 +29,7 @@
     </a>
 
     <a href="{{ route('applications.index') }}">
-        <button>
+        <button class="btn btn-primary">
             <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g id="layer1">
                     <path
@@ -42,7 +42,7 @@
     </a>
 
     <a href="{{ route('users.index') }}">
-        <button>
+        <button class="btn btn-primary">
             <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
@@ -54,41 +54,49 @@
     </a>
 
     <a href="{{ url('/events') }}">
-        <button>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-calendar-event" viewBox="0 0 19 13">
-            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
-                style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-            <path
-                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-        </svg>
-        Events Calendar</button>
+        <button class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-calendar-event" viewBox="0 0 19 13">
+                <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
+                    style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
+                <path
+                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+            </svg>
+            Events Calendar</button>
     </a>
-    
-    <a href="{{ route('reviews.index') }}"><button>
-        <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
-            alt="Review">
-        <span>Reviews</span>
-    </button></a>
-    <a href="{{ route('institutions.index') }}"><button>
-        <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/university.png" alt="university" />
-        Institutions</button></a>
-        <a href="{{ route('likes.index') }}"><button>
-        <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
-            alt="facebook-like--v1" />
-        Likes</button></a>
-    <a href="{{ route('specializations.index') }}"><button>
-        <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png" alt="education" />
-        Speciality</button></a>
-    <a href="{{ route('global_specialties.index') }}"><button>
-        <i class="bi bi-briefcase"></i>
-        Global specialties</button></a>
-    <a href="{{ route('grants.index') }}"> <button style="display: flex">
-        <img width="21" height="21"
-            src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/FFFFFF/external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector.png"
-            alt="external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector" />
-        Grants</button></a>
-    <form action="{{ route('logout') }}" method="POST">
+
+    <a href="{{ route('reviews.index') }}"><button class="btn btn-primary">
+            <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
+                alt="Review">
+            <span>Reviews</span>
+        </button></a>
+    <a href="{{ route('institutions.index') }}"><button class="btn btn-primary">
+            <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/university.png" alt="university" />
+            Institutions</button></a>
+    <a href="{{ route('likes.index') }}"><button class="btn btn-primary">
+            <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
+                alt="facebook-like--v1" />
+            Likes</button></a>
+    <a href="{{ route('global_specialties.index') }}" ><button class="btn btn-primary">
+            <i class="bi bi-briefcase"></i>
+            Global specialties</button></a>
+    <a href="{{ route('qualifications.index') }}">
+        <button class="btn btn-primary">
+            <i class="bi bi-award"></i> Qualifications
+        </button>
+    </a>
+
+
+    <a href="{{ route('specializations.index') }}"><button class="btn btn-primary">
+            <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png" alt="education" />
+            Speciality</button></a>
+
+    <a href="{{ route('grants.index') }}"> <button style="display: flex" class="btn btn-primary">
+            <img width="21" height="21"
+                src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/FFFFFF/external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector.png"
+                alt="external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector" />
+            Grants</button></a>
+    <form action="{{ route('logout') }}" method="POST" >
         @csrf
         <button class="logout">
             <i class="bi bi-box-arrow-right"></i> Logout
@@ -99,53 +107,60 @@
 </div>
 
 <style>
-     body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        height: 100%;
+        position: fixed;
+    }
+    .btn:active {
+            transform: scale(0.95);
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            height: 100%;
-            position: fixed;
+        .btn:hover {
+            transform: scale(1.05);
         }
+    .sidebar button {
+        background: #34495e;
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+    }
 
-        .sidebar button {
-            background: #34495e;
-            color: white;
-            font-size: 16px;
-            border: none;
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
+    .sidebar button:hover {
+        background: #2980b9;
+    }
 
-        .sidebar button:hover {
-            background: #2980b9;
-        }
-        .navbar {
-            display: flex;
-            align-items: center;
-            background-color: #2c3e50;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 10px;
-            color: #bc0404 !important;
-        }
+    .navbar {
+        display: flex;
+        align-items: center;
+        background-color: #2c3e50;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 10px;
+        color: #bc0404 !important;
+    }
 
-        .logout {
-            background-color: red !important
-        }
+    .logout {
+        background-color: red !important
+    }
 
-        .logout:hover {
+    .logout:hover {
 
-            background-color: rgb(169, 24, 24) !important
-        }
+        background-color: rgb(169, 24, 24) !important
+    }
 </style>

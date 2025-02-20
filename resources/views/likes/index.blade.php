@@ -29,7 +29,16 @@
             list-style-type: none;
             padding: 0;
         }
-
+  /* Общий стиль для кнопок */
+  .btn {
+            flex: 1;
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
         li {
             background-color: #fff;
             margin: 10px 0;

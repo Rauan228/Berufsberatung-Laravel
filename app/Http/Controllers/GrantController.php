@@ -12,7 +12,7 @@ class GrantController extends Controller
     // Отображение всех грантов
     public function index()
     {
-        $grants = Grant::with('institution')->get();
+        $grants = Grant::with('institution')->paginate(12);
         $admin = Auth::guard('admin')->user();
         return view('grants.index', compact('admin', 'grants'));
     }

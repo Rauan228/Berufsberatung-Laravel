@@ -33,7 +33,9 @@
         .institutes-count,
         .latest_grade,
         .users-count,
-        .specialties-count {
+        .events-count,
+        .specialties-count
+         {
             background: #f0f0f0;
             padding: 0 5% 0 5%;
             margin: 30px 10px 0 10px;
@@ -43,13 +45,34 @@
             font-weight: bold;
         }
 
-        .counts {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            max-width: 100%;
-            margin: auto;
-        }
+        .counts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    margin: auto;
+}
+
+.counts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+
+
+.latest_grade {
+    background: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 50%;
+}
+
 
         .chart-btn {
             background: #34495e;
@@ -148,8 +171,22 @@
             padding: 35px;
             /* Больше расстояние между днями */
         }
+        .btn {
+            flex: 1;
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
 
-
+        .btn:hover {
+            transform: scale(1.05);
+        }
 
         .calendar-controls {
             display: flex;
@@ -242,32 +279,35 @@
     <div class="main-content">
         <h1>Welcome to Admin Panel</h1>
 
-        <div class="counts">
-            <div class="institutes-count">
-                <p>Institutes</p>
-                <p>{{ $institutesCount }}</p>
-            </div>
-            <div class="users-count">
-                <p>Users</p>
-                <p>{{ $usersCount }}</p>
-            </div>
-            <div class="specialties-count">
-                <p>Specialties</p>
-                <p>{{ $specialtiesCount }}</p>
+        <div class="counts-container">
+            <div class="counts">
+                <div class="institutes-count">
+                    <p>Institutes</p>
+                    <p>{{ $institutesCount }}</p>
+                </div>
+                <div class="users-count">
+                    <p>Users</p>
+                    <p>{{ $usersCount }}</p>
+                </div>
+                <div class="specialties-count">
+                    <p>Specialties</p>
+                    <p>{{ $specializationsCount }}</p>
+                </div>
+                <div class="events-count">
+                    <p>Events</p>
+                    <p>{{ $eventsCount }}</p>
+                </div>
             </div>
             <div class="latest_grade">
-                <!-- Проверяем, есть ли отзыв и есть ли у него связанный пользователь -->
                 @if ($latestReview && $latestReview->user)
-                    <!-- Выводим username пользователя сверху -->
                     <p><strong>{{ $latestReview->user->username }}</strong></p>
-
-                    <!-- Текст отзыва -->
                     <p>{{ $latestReview->comment }}</p>
                 @else
                     <p>No reviews yet</p>
                 @endif
             </div>
         </div>
+        
 
 
 
