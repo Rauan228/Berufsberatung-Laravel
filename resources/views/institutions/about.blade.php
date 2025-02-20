@@ -22,7 +22,7 @@
             padding: 20px;
             border-radius: 10px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.5s ease-in-out;
             text-align: center;
@@ -75,6 +75,41 @@
         .btn-secondary:hover {
             background: #5a6268;
         }
+
+        /* Прокручиваемый список специальностей */
+        .specializations-container {
+            max-height: 200px; 
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background: white;
+            text-align: left;
+        }
+
+        .qualification {
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 5px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .specialization-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .specialization-item:last-child {
+            border-bottom: none;
+        }
+
+        .details {
+            font-size: 14px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +122,22 @@
                 <a href="{{ $institution->website }}" class="btn-primary" target="_blank">Перейти на сайт</a>
             @endif
         </p>
+
+        <p><strong>Специальности:</strong></p>
+        <div class="specializations-container">
+            @foreach($institution->specializations->groupBy('qualification.name') as $qualification => $specializations)
+                <div class="qualification">{{ $qualification }}</div>
+                @foreach($specializations as $specialization)
+                    <div class="specialization-item">
+                        <span>{{ $specialization->name }}</span>
+                        <span class="details">
+                            {{ $specialization->pivot->cost }} тг / {{ $specialization->pivot->duration }} мес
+                        </span>
+                    </div>
+                @endforeach
+            @endforeach
+        </div>
+
         <a href="{{ route('institutions.index') }}" class="btn-secondary">Вернуться к списку</a>
     </div>
 </body>

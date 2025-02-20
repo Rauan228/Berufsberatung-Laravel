@@ -21,7 +21,7 @@ class InstitutionController extends Controller
     /**
      * Показывает форму для создания нового института.
      */
-    public function create()
+    public function create()    
     {
         return view('institutions.create');
     }
@@ -50,10 +50,14 @@ class InstitutionController extends Controller
      * Отображает подробную информацию об институте.
      */
     public function show($id)
-    {
-        $institution = Institution::findOrFail($id);
-        return view('institutions.about', compact('institution'));
-    }
+{
+    $institution = Institution::with(['specializations.qualification', 'specializations' => function ($query) {
+        $query->withPivot('cost', 'duration'); // Загружаем cost и duration из промежуточной таблицы
+    }])->findOrFail($id);
+
+    return view('institutions.about', compact('institution'));
+}
+
 
     /**
      * Показывает форму для редактирования института.

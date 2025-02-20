@@ -20,7 +20,8 @@ class Institution extends Model
     }
 
     public function specializations() {
-        return $this->belongsToMany(Specialization::class, 'institution_specialties');
+        return $this->belongsToMany(Specialization::class, 'institution_specialties')
+                    ->withPivot('cost', 'duration'); // Добавляем поля cost и duration
     }
     
 

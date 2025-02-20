@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Specialization extends Model {
     protected $fillable = ['name', 'qualification_id'];
 
-    public function qualification()
-{
-    return $this->belongsTo(Qualification::class);
-}
+    public function qualification() {
+        return $this->belongsTo(Qualification::class);
+    }
 
 
     public function institutions() {
