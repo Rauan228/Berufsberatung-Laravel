@@ -253,13 +253,6 @@ php artisan serve
 ```
 
 
-## Скриншоты
-![Главная страница](C:\OSPanel\home\diplom.local\diplomTEST\public\screenshots\mainPage1.png)
-![Главная страница](C:\OSPanel\home\diplom.local\diplomTEST\public\screenshots\mainPage2.png)
-![Главная страница](C:\OSPanel\home\diplom.local\diplomTEST\public\screenshots\mainPage-statistic.png)
-![Главная страница](C:\OSPanel\home\diplom.local\diplomTEST\public\screenshots\mainPage-EventCalendar.png)
-
-
 
 
 ## Контакты
