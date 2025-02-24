@@ -117,7 +117,16 @@
     color: white;
     border-color: #007bff;
     font-weight: bold;
-}
+}      /* Общий стиль для кнопок */
+      .btn {
+            flex: 1;
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
 
     </style>
 @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InstitutionApplication;
-use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
+use Illuminate\Support\Facades\Auth;
 
 class InstitutionApplicationsController extends Controller
 {
@@ -20,8 +20,20 @@ class InstitutionApplicationsController extends Controller
             $query->where('verified', $request->verified);
         }
         
-        $applications = $query->paginate(10);
+        $applications = $query->paginate(16);
         
-        return view('applications.institution_applications.index', compact('admin','applications'));
+        return view('applications.institution_applications.index', compact('admin', 'applications'));
+    }
+
+    /**
+     * Update the verified status of an institution application.
+     */
+    public function updateVerifiedStatus(Request $request, $id)
+    {
+        $application = InstitutionApplication::findOrFail($id);
+        $application->verified = $request->verified;
+        $application->save();
+
+        return redirect()->back()->with('success', 'Verified status updated successfully.');
     }
 }

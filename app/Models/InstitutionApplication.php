@@ -11,7 +11,7 @@ class InstitutionApplication extends Model
     use HasFactory;
 
     protected $fillable = [
-        'institution_id', 'institution_name', 'email', 'password'
+        'institution_id', 'institution_name', 'email', 'password', 'verified'
     ];
 
     protected $hidden = [
@@ -22,8 +22,27 @@ class InstitutionApplication extends Model
     public static function boot()
     {
         parent::boot();
+
         static::creating(function ($institutionApplication) {
             $institutionApplication->password = Hash::make($institutionApplication->password);
+        });
+
+        // Обновляем поле verified в таблице institutions при изменении verified в institution_applications
+        static::updated(function ($institutionApplication) {
+            $institution = $institutionApplication->institution;
+            if ($institution) {
+                $institution->verified = $institutionApplication->verified;
+                $institution->save();
+            }
+        });
+
+        // При создании новой заявки также синхронизируем verified
+        static::created(function ($institutionApplication) {
+            $institution = $institutionApplication->institution;
+            if ($institution) {
+                $institution->verified = $institutionApplication->verified;
+                $institution->save();
+            }
         });
     }
 
@@ -31,11 +50,4 @@ class InstitutionApplication extends Model
     {
         return $this->belongsTo(Institution::class);
     }
-
-    // Доступ к флагу верификации через связанный институт
-    public function getVerifiedAttribute()
-    {
-        return $this->institution->verified ?? false;
-    }
 }
-

@@ -35,7 +35,8 @@ Route::get('/user_applications', [UserApplicationsController::class, 'index'])->
 
 Route::get('/institution-applications', [InstitutionApplicationsController::class, 'index'])->name('applications.institution_applications.index');
 Route::put('/applications/{id}/verify', [InstitutionApplicationsController::class, 'verify'])->name('applications.verify');
-
+Route::put('/institution-applications/{id}/update-verified-status', [InstitutionApplicationsController::class, 'updateVerifiedStatus'])
+    ->name('institution-applications.update-verified-status');
 
 // Управление пользователями
 Route::get('/users', [UserController::class, 'index'])->name('users.index');

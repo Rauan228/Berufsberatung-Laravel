@@ -25,7 +25,7 @@ class UserApplicationsController extends Controller
             $query->where('status', $request->status);
         }
         
-        $applications = $query->paginate(10);
+        $applications = $query->paginate(20);
         $events = EventsCalendar::all();
         
         return view('applications.user_applications.index', compact('applications','admin', 'events'));

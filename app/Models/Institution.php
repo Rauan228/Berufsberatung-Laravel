@@ -11,7 +11,7 @@ class Institution extends Model
 
     protected $table = 'institutions';
     protected $fillable = [
-        'name', 'description', 'location', 'website', 'verified',
+        'name', 'description1', 'description2', 'description3', 'location', 'email', 'phone', 'website', 'verified'
     ];
 
     public function events()
@@ -23,7 +23,6 @@ class Institution extends Model
         return $this->belongsToMany(Specialization::class, 'institution_specialties')
                     ->withPivot('cost', 'duration'); // Добавляем поля cost и duration
     }
-    
 
     public function grants()
     {
@@ -44,5 +43,4 @@ class Institution extends Model
     {
         return $this->hasMany(InstitutionApplication::class);
     }
-    
 }

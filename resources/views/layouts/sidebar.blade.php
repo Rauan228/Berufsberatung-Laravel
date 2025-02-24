@@ -29,21 +29,23 @@
     </a>
 
     <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="applicationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <g id="layer1">
-                    <path
-                        d="M 4 3 L 4 9 L 5 9 L 5 7 L 19 7 L 19 16 L 5 16 L 5 14 L 4 14 L 4 17 L 20 17 L 20 3 L 4 3 z M 5 4 L 19 4 L 19 6 L 5 6 L 5 4 z M 8 8 L 11 11 L 0 11 L 0 12 L 11 12 L 8 15 L 9.5 15 L 13 11.5 L 9.5 8 L 8 8 z"
-                        style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-                </g>
-            </svg>
-            Applications
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="applicationsDropdown">
-            <li><a class="dropdown-item" href="{{ route('applications.user_applications.index') }}">User Applications</a></li>
-            <li><a class="dropdown-item" href="{{ route('applications.institution_applications.index') }}">Institution Applications</a></li>
-        </ul>
-    </div>
+    <button class="btn btn-primary dropdown-toggle" type="button" id="applicationsDropdown" aria-expanded="false">
+        <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <g id="layer1">
+                <path
+                    d="M 4 3 L 4 9 L 5 9 L 5 7 L 19 7 L 19 16 L 5 16 L 5 14 L 4 14 L 4 17 L 20 17 L 20 3 L 4 3 z M 5 4 L 19 4 L 19 6 L 5 6 L 5 4 z M 8 8 L 11 11 L 0 11 L 0 12 L 11 12 L 8 15 L 9.5 15 L 13 11.5 L 9.5 8 L 8 8 z"
+                    style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
+            </g>
+        </svg>
+        Applications
+        <!-- Стрелочка -->
+        <span class="arrow">&#8250;</span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="applicationsDropdown">
+        <li><a class="dropdown-item" href="{{ route('applications.user_applications.index') }}">User Applications</a></li>
+        <li><a class="dropdown-item" href="{{ route('applications.institution_applications.index') }}">Institution Applications</a></li>
+    </ul>
+</div>
     
 
     <a href="{{ route('users.index') }}">
@@ -168,4 +170,103 @@
 
         background-color: rgb(169, 24, 24) !important
     }
+    /* Стили для кнопки выпадающего списка */
+    .dropdown {
+        position: relative; /* Относительное позиционирование для контейнера */
+    }
+
+    .dropdown .btn-primary {
+        background: #34495e;
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .dropdown .btn-primary:hover {
+        background: #34495e;
+    }
+
+    .dropdown .btn-primary svg {
+        margin-right: 8px;
+    }
+
+    /* Стили для стрелочки */
+    .dropdown .arrow {
+        margin-left: auto; /* Размещаем стрелочку справа */
+        transition: transform 0.3s ease; /* Плавное вращение */
+    }
+
+    .dropdown.show .arrow {
+        transform: rotate(90deg); /* Поворот стрелочки при открытии */
+    }
+
+    /* Стили для выпадающего меню */
+    .dropdown-menu {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 8px 0;
+        min-width: 200px;
+        opacity: 0; /* Начальная прозрачность */
+        visibility: hidden; /* Скрываем список */
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; /* Плавные переходы */
+        transform: translateY(-10px); /* Сдвиг вверх для анимации */
+        position: absolute; /* Абсолютное позиционирование для меню */
+        z-index: 1000; /* Убедимся, что список поверх других элементов */
+        display: none; /* Скрываем список полностью */
+        top: 100%; /* Позиционируем меню под кнопкой */
+        left: 0;
+    }
+
+    /* Показываем список при активации */
+    .dropdown.show .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        display: block; /* Показываем список */
+    }
+
+    /* Стили для элементов списка */
+    .dropdown-menu li {
+        list-style: none;
+        margin: 0;
+    }
+
+    .dropdown-menu .dropdown-item {
+        color: #333;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #007bff;
+    }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownButton = document.querySelector('.dropdown .btn-primary');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        const dropdown = document.querySelector('.dropdown');
+
+        dropdownButton.addEventListener('click', function (event) {
+            event.stopPropagation(); // Предотвращаем всплытие события
+            dropdown.classList.toggle('show');
+        });
+
+        // Закрыть выпадающий список при клике вне его
+        document.addEventListener('click', function (event) {
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    });
+</script>

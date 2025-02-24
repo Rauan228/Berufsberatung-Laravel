@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
-            $table->boolean('verified_id')->default(false); // Флаг верификации
+            $table->string('verified')->default('accepted'); // Добавляем поле verified
             $table->timestamps();
         });
     }

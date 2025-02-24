@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade'); // Внешний ключ
             $table->string('institution_name')->unique();
             $table->string('email')->unique();
-            $table->boolean('verified')->default(false); // Флаг верификации
+            $table->string('verified')->default('accepted'); // Синхронизируем тип данных
             $table->string('password');
             $table->timestamps();
         });
@@ -30,4 +30,3 @@ return new class extends Migration
         Schema::dropIfExists('institution_applications');
     }
 };
-

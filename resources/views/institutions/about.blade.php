@@ -110,17 +110,47 @@
             font-size: 14px;
             color: #555;
         }
+        .status {
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-accepted {
+        background-color: #28a745; /* Зеленый */
+        color: white;
+    }
+
+    .status-pending {
+        background-color: #ffc107; /* Желтый */
+        color: black;
+    }
+
+    .status-rejected {
+        background-color: #dc3545; /* Красный */
+        color: white;
+    }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>{{ $institution->name }}</h2>
-        <p><strong>Описание:</strong> {{ $institution->description }}</p>
+        <p><strong>Описание:</strong> {{ $institution->description1 }}</p>
         <p><strong>Локация:</strong> {{ $institution->location }}</p>
         <p><strong>Сайт:</strong>
             @if($institution->website)
                 <a href="{{ $institution->website }}" class="btn-primary" target="_blank">Перейти на сайт</a>
             @endif
+        </p>
+        <p><strong>Статус:</strong> 
+            <span class="status 
+                @if($institution->verified == 'accepted') status-accepted 
+                @elseif($institution->verified == 'pending') status-pending 
+                @elseif($institution->verified == 'rejected') status-rejected 
+                @endif">
+                {{ ucfirst($institution->verified) }}
+            </span>
         </p>
 
         <p><strong>Специальности:</strong></p>

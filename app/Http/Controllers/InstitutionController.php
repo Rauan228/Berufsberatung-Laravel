@@ -12,11 +12,12 @@ class InstitutionController extends Controller
      * Отображает список всех институтов.
      */
     public function index()
-    {
-        $institutions = Institution::paginate(12);
-        $admin = Auth::guard('admin')->user();
-        return view('institutions.index', compact('admin','institutions'));
-    }
+{
+    $institutions = Institution::whereNotIn('verified', ['pending', 'rejected'])->paginate(12);
+    $admin = Auth::guard('admin')->user();
+    return view('institutions.index', compact('admin', 'institutions'));
+}
+
 
     /**
      * Показывает форму для создания нового института.

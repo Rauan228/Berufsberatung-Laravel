@@ -16,6 +16,7 @@
 
         <div class="row" id="institution-list">
             @foreach($institutions as $institution)
+            @if($institution->verified !== 'pending' && $institution->verified !== 'rejected')
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card institution-card shadow-sm mb-4">
                         <div class="card-body">
@@ -54,6 +55,8 @@
                         </div>
                     </div>
                 </div>
+
+    @endif
             @endforeach
         </div>
 
