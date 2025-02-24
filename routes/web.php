@@ -2,15 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{ChartController, AuthController, HomeController, UserController, 
-    NotificationController, ApplicationController, EventsCalendarController, ReviewController, InstitutionController, 
+    NotificationController, EventsCalendarController, ReviewController, InstitutionController, 
     LikeController, GlobalSpecialtyController, GrantController, SpecializationController, 
-    QualificationController};
+    QualificationController, UserApplicationsController,InstitutionApplicationsController};
 
 // Перенаправление на страницу входа при обращении к корневому URL
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
+Route::get('/login', function () {
+    return response()->json(['message' => 'Login page']);
+});
 // Домашняя страница
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
@@ -26,12 +28,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::resource('notifications', NotificationController::class);
 Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
-// Управление заявками (applications) - только для аутентифицированных пользователей
-Route::middleware(['auth'])->group(function () {
-    Route::resource('applications', ApplicationController::class);
-    Route::put('/applications/{id}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
-    Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
-});
+
+Route::get('/user_applications', [UserApplicationsController::class, 'index'])->name('applications.user_applications.index');
+
+
+
+Route::get('/institution-applications', [InstitutionApplicationsController::class, 'index'])->name('applications.institution_applications.index');
+Route::put('/applications/{id}/verify', [InstitutionApplicationsController::class, 'verify'])->name('applications.verify');
+
 
 // Управление пользователями
 Route::get('/users', [UserController::class, 'index'])->name('users.index');

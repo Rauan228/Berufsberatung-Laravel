@@ -12,7 +12,7 @@ class AuthController extends Controller
     // Метод для отображения формы входа
     public function showLoginForm()
     {
-        return view('auth.login'); // Файл login.blade.php в resources/views/auth/
+        return view('auth.login');
     }
 
     // Метод для обработки входа

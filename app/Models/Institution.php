@@ -11,7 +11,7 @@ class Institution extends Model
 
     protected $table = 'institutions';
     protected $fillable = [
-        'name', 'description', 'location', 'website',
+        'name', 'description', 'location', 'website', 'verified',
     ];
 
     public function events()
@@ -40,5 +40,9 @@ class Institution extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function institutionApplications()
+    {
+        return $this->hasMany(InstitutionApplication::class);
+    }
     
 }

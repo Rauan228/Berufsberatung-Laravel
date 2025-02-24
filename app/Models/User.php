@@ -17,9 +17,9 @@ class User extends Model
         'password', 'remember_token',
     ];
 
-    public function applications()
+    public function userApplications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(UserApplication::class);
     }
 
     public function reviews()
@@ -51,5 +51,4 @@ class User extends Model
     {
         return $this->is_banned;
     }
-
 }

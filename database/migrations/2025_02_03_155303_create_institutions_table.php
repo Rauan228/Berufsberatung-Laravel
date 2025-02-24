@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('name')->unique();
+            $table->text('description1')->nullable();
+            $table->text('description2')->nullable();
+            $table->text('description3')->nullable();
             $table->string('location')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('website')->nullable();
+            $table->boolean('verified_id')->default(false); // Флаг верификации
             $table->timestamps();
         });
     }

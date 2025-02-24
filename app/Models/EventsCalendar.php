@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EventsCalendar extends Model
 {
     use HasFactory;
-    
-    // Указываем точное имя таблицы, как создано в миграции
+
     protected $table = 'events_calendar';
 
     protected $fillable = [
@@ -21,9 +20,9 @@ class EventsCalendar extends Model
         return $this->belongsTo(Institution::class);
     }
 
-    public function applications()
+    public function userApplications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(UserApplication::class);
     }
 
     public function notifications()
@@ -32,8 +31,7 @@ class EventsCalendar extends Model
     }
 
     public function user()
-{
-    return $this->belongsTo(User::class, 'user_id');
-}
-
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

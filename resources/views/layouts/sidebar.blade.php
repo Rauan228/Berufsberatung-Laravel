@@ -28,8 +28,8 @@
         </button>
     </a>
 
-    <a href="{{ route('applications.index') }}">
-        <button class="btn btn-primary">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="applicationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g id="layer1">
                     <path
@@ -39,7 +39,12 @@
             </svg>
             Applications
         </button>
-    </a>
+        <ul class="dropdown-menu" aria-labelledby="applicationsDropdown">
+            <li><a class="dropdown-item" href="{{ route('applications.user_applications.index') }}">User Applications</a></li>
+            <li><a class="dropdown-item" href="{{ route('applications.institution_applications.index') }}">Institution Applications</a></li>
+        </ul>
+    </div>
+    
 
     <a href="{{ route('users.index') }}">
         <button class="btn btn-primary">
