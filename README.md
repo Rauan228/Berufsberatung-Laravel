@@ -77,7 +77,7 @@ php artisan serve
 ## страница уведомлений
 ![Скриншот страницы уведомлений](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/notificationsPage.png)
 
-## старницы заявок
+## страницы заявок
 ![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionApplications.png)
 ![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplications.png)
 ![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplicationsFilter.png)
