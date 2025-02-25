@@ -63,6 +63,13 @@ php artisan serve
 Приложение будет доступно по адресу `http://127.0.0.1:8000`.
 
 
+## Cкриншоты
+
+## main page
+![Скриншот главной страницы](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage1.png)
+![Скриншот главной страницы](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage2.png)
+![Описание изображения](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage-statistic.png)
+
 ## Структура проекта
 ```
 /diplomTEST
@@ -252,7 +259,7 @@ php artisan serve
 └── vite.config.js                  # Конфигурация Vite
 ```
 
-![Описание изображения](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/B_B.png)
+
 
 
 ## Контакты
