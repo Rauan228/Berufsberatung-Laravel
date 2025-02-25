@@ -103,174 +103,153 @@
             align-items: center;
         }
 
-        .calendar-container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 50px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #calendar {
-            font-family: Arial, sans-serif;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-            border-radius: 8px;
-            width: 100%;
-            min-height: 600px;
-            /* Увеличиваем высоту */
-        }
-
-        /* Увеличение ширины календаря */
-        .fc-view-container {
-            width: 200% !important;
-        }
-
-        /* Стили для кнопок FullCalendar */
-        .fc .fc-button {
-            background: #007bff !important;
-            color: #fff !important;
-            border-radius: 6px !important;
-            border: none !important;
-            padding: 8px 12px !important;
-            font-size: 14px !important;
-            font-weight: bold;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-            width: 80px;
-            height: 50px;
-        }
-
-        .fc .fc-button:hover {
-            background: #0056b3 !important;
-            transform: scale(1.05);
-        }
-
-        /* Стилизация событий */
-        .fc-daygrid-event {
-            background: rgba(0, 123, 255, 0.5) !important;
-            border: none;
-            border-radius: 50%;
-            padding: 20px;
-            z-index: 1;
-            transition: all 0.3s ease-in-out;
-            color: transparent !important;
-            /* Скрыть текст */
-            position: absolute;
-            margin: -30px 0 0 -10px;
-        }
-
-        .fc .fc-daygrid-day {
-            padding: 35px;
-            /* Больше расстояние между днями */
-        }
-        .btn {
-            flex: 1;
-            font-size: 0.75rem;
-            padding: 8px 12px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: all 0.3s ease-in-out;
-            text-transform: uppercase;
-        }
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
-
         .calendar-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            /* Увеличиваем расстояние между кнопками */
-            margin-bottom: 20px;
-        }
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
 
-        #event-title-overlay {
-            position: absolute;
-            top: 600px;
-            /* Опускаем ниже */
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
+#event-title-overlay {
+    position: absolute;
+    top: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
 
+.fc-button {
+    background: #007bff !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    width: 120px;
+    height: 50px;
+}
 
-        .fc-button {
-            background: #007bff !important;
-            color: #fff !important;
-            border-radius: 6px !important;
-            border: none !important;
-            padding: 8px 12px !important;
-            font-size: 14px !important;
-            font-weight: bold;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-            width: 120px;
-            height: 50px;
-        }
+.fc-button:hover {
+    transform: scale(1.05);
+}
 
-        .fc-button:hover {
-            transform: scale(1.05);
-        }
+.fc-daygrid-day-number {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
 
-        .fc-daygrid-day-number {
-            position: relative;
-            z-index: 3;
-        }
+.fc-daygrid-day-number::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 2;
+}
 
-        .fc-daygrid-day-number::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            /* Размер круга */
-            height: 30px;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 2;
-        }
+#event-title-overlay {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    z-index: 1000;
+}
 
-        #event-title-overlay {
-            position: absolute;
-            top: calc(100% + 10px);
-            /* Под кнопкой "Сегодня" */
-            left: 50%;
-            color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            z-index: 1000;
-        }
+.calendar-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 50px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .fc-daygrid-day-number {
-            position: relative;
-            z-index: 3;
-        }
+#calendar {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 8px;
+    width: 100%;
+    min-height: 600px;
+}
 
-        .fc-daygrid-day-number::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            /* Размер круга */
-            height: 30px;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
+.fc-view-container {
+    width: 200% !important;
+}
+
+.fc .fc-button {
+    background: #007bff !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    width: 80px;
+    height: 50px;
+}
+
+.fc .fc-button:hover {
+    background: #0056b3 !important;
+    transform: scale(1.05);
+}
+
+.fc-daygrid-event {
+    background: rgba(0, 123, 255, 0.5) !important;
+    border: none;
+    border-radius: 50%;
+    padding: 20px;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+    color: transparent !important;
+    position: absolute;
+    margin: -30px 0 0 -10px;
+}
+
+.fc .fc-daygrid-day {
+    padding: 35px;
+}
+
+.btn {
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
     </style>
 </head>
 
@@ -396,114 +375,105 @@
 
         // скрипт для календаря
         document.addEventListener('DOMContentLoaded', function () {
-            if (typeof FullCalendar === "undefined") {
-                console.error("FullCalendar is not loaded!");
-                return;
+    if (typeof FullCalendar === "undefined") {
+        console.error("FullCalendar is not loaded!");
+        return;
+    }
+
+    var calendarEl = document.getElementById('calendar');
+    if (!calendarEl) {
+        console.error("Element #calendar not found!");
+        return;
+    }
+
+    var events = {!! json_encode($events, JSON_UNESCAPED_UNICODE) !!};
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'en', // Устанавливаем локаль на английский
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: '', // Убираем кнопки слева
+            center: 'title', // Заголовок по центру
+            right: '' // Убираем кнопки справа
+        },
+        events: events,
+        eventContent: function () {
+            return { html: '' }; // Скрываем заголовок события
+        },
+        eventDidMount: function (info) {
+            var eventDate = info.event.start.toISOString().split('T')[0];
+            var eventCell = document.querySelector(`[data-date="${eventDate}"] .fc-daygrid-day-number`);
+            if (eventCell) {
+                eventCell.style.position = 'relative';
+                eventCell.style.zIndex = '1';
+                eventCell.style.borderRadius = '50%';
             }
+        },
+        eventMouseEnter: function (info) {
+            var todayButton = document.querySelector('.fc-today-button');
 
-            var calendarEl = document.getElementById('calendar');
-            if (!calendarEl) {
-                console.error("Element #calendar not found!");
-                return;
+            if (!todayButton) return;
+
+            var rect = todayButton.getBoundingClientRect();
+
+            var eventTitle = document.createElement('div');
+            eventTitle.id = 'event-title-overlay';
+            eventTitle.style.position = 'absolute';
+            eventTitle.style.top = `${rect.bottom + window.scrollY + 5}px`;
+            eventTitle.style.left = `${rect.left + window.scrollX + 60}px`;
+            eventTitle.style.width = `${rect.width}px`;
+            eventTitle.style.textAlign = 'center';
+            eventTitle.style.background = 'rgba(0, 123, 255, 0.8)';
+            eventTitle.style.color = '#fff';
+            eventTitle.style.padding = '10px';
+            eventTitle.style.borderRadius = '6px';
+            eventTitle.style.zIndex = '1000';
+            eventTitle.innerText = info.event.title;
+
+            document.querySelector('.calendar-controls').appendChild(eventTitle);
+        },
+        eventMouseLeave: function () {
+            var eventTitle = document.getElementById('event-title-overlay');
+            if (eventTitle) {
+                eventTitle.remove();
             }
+        }
+    });
 
-            var events = {!! json_encode($events, JSON_UNESCAPED_UNICODE) !!};
+    calendar.render();
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'en', // Set locale to English
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: '', // Убираем кнопки слева
-                    center: 'title', // Заголовок по центру
-                    right: '' // Убираем кнопки справа
-                },
-                events: events,
-                eventContent: function () {
-                    return { html: '' }; // Hide event title
-                },
-                eventDidMount: function (info) {
-                    var eventDate = info.event.start.toISOString().split('T')[0];
-                    var eventCell = document.querySelector(`[data-date="${eventDate}"] .fc-daygrid-day-number`);
-                    if (eventCell) {
-                        eventCell.style.position = 'relative';
-                        eventCell.style.zIndex = '1';
-                        eventCell.style.borderRadius = '50%';
-                    }
-                },
-                eventMouseEnter: function (info) {
-                    // Находим кнопку "Сегодня"
-                    var todayButton = document.querySelector('.fc-today-button');
+    // Добавляем кастомные кнопки
+    const controlsContainer = document.createElement('div');
+    controlsContainer.classList.add('calendar-controls');
 
-                    if (!todayButton) return; // Если кнопки нет, выходим
+    const prevButton = document.createElement('button');
+    prevButton.classList.add('fc-button', 'fc-prev-button');
+    prevButton.innerText = '←';
+    prevButton.addEventListener('click', function () {
+        calendar.prev();
+    });
 
-                    // Получаем координаты кнопки
-                    var rect = todayButton.getBoundingClientRect();
+    const todayButton = document.createElement('button');
+    todayButton.classList.add('fc-button', 'fc-today-button');
+    todayButton.innerText = 'Today';
+    todayButton.addEventListener('click', function () {
+        calendar.today();
+    });
 
-                    // Создаём всплывающее окно
-                    var eventTitle = document.createElement('div');
-                    eventTitle.id = 'event-title-overlay';
-                    eventTitle.style.position = 'absolute';
-                    eventTitle.style.top = `${rect.bottom + window.scrollY + 5}px`; // Чуть ниже кнопки
-                    eventTitle.style.left = `${rect.left + window.scrollX + 60}px`; // Выровнено с кнопкой
-                    eventTitle.style.width = `${rect.width}px`; // Чтобы совпадало по ширине
-                    eventTitle.style.textAlign = 'center';
-                    eventTitle.style.background = 'rgba(0, 123, 255, 0.8)';
-                    eventTitle.style.color = '#fff';
-                    eventTitle.style.padding = '10px';
-                    eventTitle.style.borderRadius = '6px';
-                    eventTitle.style.zIndex = '1000';
-                    eventTitle.innerText = info.event.title;
+    const nextButton = document.createElement('button');
+    nextButton.classList.add('fc-button', 'fc-next-button');
+    nextButton.innerText = '→';
+    nextButton.addEventListener('click', function () {
+        calendar.next();
+    });
 
-                    // Добавляем в .calendar-controls
-                    document.querySelector('.calendar-controls').appendChild(eventTitle);
-                },
+    controlsContainer.appendChild(prevButton);
+    controlsContainer.appendChild(todayButton);
+    controlsContainer.appendChild(nextButton);
 
-                // Удаляем окно при уходе мыши
-                eventMouseLeave: function () {
-                    var eventTitle = document.getElementById('event-title-overlay');
-                    if (eventTitle) {
-                        eventTitle.remove();
-                    }
-                }
+    calendarEl.parentNode.insertBefore(controlsContainer, calendarEl);
+});
 
-            });
-
-            calendar.render();
-
-            // Добавляем кастомные кнопки
-            const controlsContainer = document.createElement('div');
-            controlsContainer.classList.add('calendar-controls');
-
-            const prevButton = document.createElement('button');
-            prevButton.classList.add('fc-button', 'fc-prev-button');
-            prevButton.innerText = '←';
-            prevButton.addEventListener('click', function () {
-                calendar.prev();
-            });
-
-            const todayButton = document.createElement('button');
-            todayButton.classList.add('fc-button', 'fc-today-button');
-            todayButton.innerText = 'Today';
-            todayButton.addEventListener('click', function () {
-                calendar.today();
-            });
-
-            const nextButton = document.createElement('button');
-            nextButton.classList.add('fc-button', 'fc-next-button');
-            nextButton.innerText = '→';
-            nextButton.addEventListener('click', function () {
-                calendar.next();
-            });
-
-            controlsContainer.appendChild(prevButton);
-            controlsContainer.appendChild(todayButton);
-            controlsContainer.appendChild(nextButton);
-
-            // Вставляем контейнер с кнопками перед календарем
-            calendarEl.parentNode.insertBefore(controlsContainer, calendarEl);
-
-
-        });
 
 
     </script>

@@ -15,10 +15,10 @@ class ApplicationsTableSeeder extends Seeder
         $statuses = ['Accepted', 'Rejected', 'Pending'];
         $userApplications = [];
 
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < 500; $i++) {
             $userApplications[] = [
                 'user_id' => rand(1, 40),
-                'event_id' => rand(1, 40),
+                'event_id' => rand(1, 60),
                 'status' => $statuses[array_rand($statuses)],
                 'created_at' => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
                 'updated_at' => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
