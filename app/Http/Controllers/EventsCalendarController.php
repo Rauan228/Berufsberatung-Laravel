@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventsCalendar;
-use App\Models\Application;
+use App\Models\UserApplication;
 use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
 use Illuminate\Http\Request;
 use App\Models\Institution;
@@ -50,7 +50,8 @@ class EventsCalendarController extends Controller
     public function show($id)
     {
         $event = EventsCalendar::with('institution')->findOrFail($id);
-        $applications = Application::where('event_id', $id)->with('user')->get();
+        $applications = UserApplication::where('event_id', $id)->with('user')->get();
+
         return view('events_calendar.about', compact('event', 'applications'));
     }
 
