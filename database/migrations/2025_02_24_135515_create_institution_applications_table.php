@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade'); // Внешний ключ
             $table->string('institution_name')->unique();
             $table->string('email')->unique();
-            $table->string('verified')->default('accepted'); // Синхронизируем тип данных
+            $table->string('verified')->default('pending'); // Синхронизируем тип данных
             $table->string('password');
             $table->timestamps();
         });

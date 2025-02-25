@@ -122,6 +122,15 @@
             <label for="name">Название *</label>
             <input type="text" name="name" id="name" value="{{ old('name') }}" required>
 
+            <label for="email">Email *</label>
+            <input type="email" name="email" id="email" value="{{ old('email') }}" required>
+
+            <label for="password">Пароль *</label>
+            <input type="password" name="password" id="password" required>
+
+            <label for="password_confirmation">Повторите пароль *</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required>
+
             <label for="description">Описание</label>
             <textarea name="description" id="description" rows="3">{{ old('description') }}</textarea>
 

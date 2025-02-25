@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institution;
+use App\Models\InstitutionApplication; // Добавляем импорт модели InstitutionApplication
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;  // Импортируем фасад Auth
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB; // ✅ Добавляем импорт DB
+use Illuminate\Support\Facades\Hash; // ✅ Добавляем импорт Hash
 
 class InstitutionController extends Controller
 {
@@ -12,12 +15,11 @@ class InstitutionController extends Controller
      * Отображает список всех институтов.
      */
     public function index()
-{
-    $institutions = Institution::whereNotIn('verified', ['pending', 'rejected'])->paginate(12);
-    $admin = Auth::guard('admin')->user();
-    return view('institutions.index', compact('admin', 'institutions'));
-}
-
+    {
+        $institutions = Institution::whereNotIn('verified', ['pending', 'rejected'])->paginate(12);
+        $admin = Auth::guard('admin')->user();
+        return view('institutions.index', compact('admin', 'institutions'));
+    }
 
     /**
      * Показывает форму для создания нового института.
@@ -32,33 +34,44 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        // Валидация входных данных
         $request->validate([
-            'name' => 'required|string|max:255',
-            // При необходимости добавьте валидацию для других полей:
-            // 'description' => 'nullable|string',
-            // 'location' => 'nullable|string|max:255',
-            // 'website' => 'nullable|url|max:255',
+            'name' => 'required|string|max:255|unique:institutions,name',
+            'email' => 'required|email|max:255|unique:institution_applications,email',
+            'password' => 'required|string|min:6|confirmed', // 'confirmed' проверяет повтор пароля
         ]);
 
-        Institution::create($request->all());
+        DB::transaction(function () use ($request) {
+            // Создаем университет
+            $institution = Institution::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'verified' => 'pending', // Пока заявка не одобрена
+            ]);
 
-        return redirect()->route('institutions.index')
-                         ->with('success', 'Институт успешно создан.');
+            // Создаем заявку
+            InstitutionApplication::create([
+                'institution_id' => $institution->id,
+                'institution_name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'verified' => 'pending',
+            ]);
+        });
+
+        return redirect()->route('institutions.index')->with('success', 'Заявка на создание университета отправлена.');
     }
 
     /**
      * Отображает подробную информацию об институте.
      */
     public function show($id)
-{
-    $institution = Institution::with(['specializations.qualification', 'specializations' => function ($query) {
-        $query->withPivot('cost', 'duration'); // Загружаем cost и duration из промежуточной таблицы
-    }])->findOrFail($id);
+    {
+        $institution = Institution::with(['specializations.qualification', 'specializations' => function ($query) {
+            $query->withPivot('cost', 'duration');
+        }])->findOrFail($id);
 
-    return view('institutions.about', compact('institution'));
-}
-
+        return view('institutions.about', compact('institution'));
+    }
 
     /**
      * Показывает форму для редактирования института.
@@ -74,20 +87,14 @@ class InstitutionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Валидация входных данных
         $request->validate([
             'name' => 'required|string|max:255',
-            // При необходимости добавьте валидацию для других полей:
-            // 'description' => 'nullable|string',
-            // 'location' => 'nullable|string|max:255',
-            // 'website' => 'nullable|url|max:255',
         ]);
 
         $institution = Institution::findOrFail($id);
         $institution->update($request->all());
 
-        return redirect()->route('institutions.index')
-                         ->with('success', 'Институт успешно обновлен.');
+        return redirect()->route('institutions.index')->with('success', 'Институт успешно обновлен.');
     }
 
     /**
@@ -98,7 +105,6 @@ class InstitutionController extends Controller
         $institution = Institution::findOrFail($id);
         $institution->delete();
 
-        return redirect()->route('institutions.index')
-                         ->with('success', 'Институт успешно удален.');
+        return redirect()->route('institutions.index')->with('success', 'Институт успешно удален.');
     }
 }
