@@ -252,7 +252,7 @@ php artisan serve
 └── vite.config.js                  # Конфигурация Vite
 ```
 
-
+![Описание изображения](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/B_B.png)
 
 
 ## Контакты
