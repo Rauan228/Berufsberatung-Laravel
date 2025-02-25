@@ -66,11 +66,40 @@ php artisan serve
 
 
 ## Cкриншоты
+## страница входа
+![Скриншот страницы регистрации](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/loginPage.png)
 
-## main page
+## главная страница
 ![Скриншот главной страницы](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage1.png)
 ![Скриншот главной страницы](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage2.png)
-![Описание изображения](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage-statistic.png)
+![Скриншот главной страницы](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage3.png)
+
+## страница уведомлений
+![Скриншот страницы уведомлений](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/notificationsPage.png)
+
+## старницы заявок
+![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionApplications.png)
+![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplications.png)
+![Скриншот страницы заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplicationsFilter.png)
+
+## страница отзывов
+![Скриншот страницы отзывов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/reviewsPage.png)
+
+## страница институтов
+![Скриншот страницы институтов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsPage.png)
+![Скриншот страницы институтов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsAbout.png)
+![Скриншот страницы институтов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsEdit.png)
+
+## страница глобальных специальностей
+![Скриншот страницы глобальных специальностей](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/globalSpecialitiesPage.png)
+
+## страница квалификаций
+![Скриншот страницы квалификаций](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/qualificationsPage.png)
+
+## страница специальностей
+![Скриншот страницы спецаильностей](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/specialitiesPage.png)
+
+
 
 ## Структура проекта
 ```
