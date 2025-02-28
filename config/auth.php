@@ -42,6 +42,10 @@ return [
         'driver' => 'session',
         'provider' => 'admins', // Должно совпадать с providers ниже
     ],
+    'api' => [
+        'driver' => 'sanctum',
+        'provider' => 'users',
+    ],
 ],
 
 
@@ -65,6 +69,7 @@ return [
     */
 
   'providers' => [
+    
     'admins' => [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,

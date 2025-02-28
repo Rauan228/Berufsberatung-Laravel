@@ -1,11 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use App\Http\Controllers\{ChartController, AuthController, HomeController, UserController, 
     NotificationController, EventsCalendarController, ReviewController, InstitutionController, 
     LikeController, GlobalSpecialtyController, GrantController, SpecializationController, 
     QualificationController, UserApplicationsController,InstitutionApplicationsController};
 
+
+
+    Route::get('/', fn() => Inertia::render('MainPage'));
+
+
+
+
+Route::get('/', fn() => Inertia::render('MainPage'));
+Route::get('/colleges', fn() => Inertia::render('CollegesListPage'));
+Route::get('/events', fn() => Inertia::render('EventsPage'));
+Route::get('/map', fn() => Inertia::render('MapPage'));
+Route::get('/specialties-col', fn() => Inertia::render('SpecialtiesColListPage'));
+Route::get('/specialties-un', fn() => Inertia::render('SpecialtiesUnListPage'));
+Route::get('/sum-list', fn() => Inertia::render('SUMListPage'));
+Route::get('/test', fn() => Inertia::render('TestPage'));
+Route::get('/university-about', fn() => Inertia::render('UniversityAboutPage'));
+Route::get('/universities', fn() => Inertia::render('UniversityListPage'));
+Route::get('/university-portal', fn() => Inertia::render('UniversityPortalPage'));
+Route::get('/user', fn() => Inertia::render('UserPage'));
 // Перенаправление на страницу входа при обращении к корневому URL
 Route::get('/', function () {
     return redirect()->route('login');
@@ -71,3 +91,9 @@ Route::resource('specializations', SpecializationController::class);
 
 // Управление квалификациями
 Route::resource('qualifications', QualificationController::class);
+
+
+
+
+
+

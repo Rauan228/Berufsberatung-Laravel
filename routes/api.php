@@ -1,16 +1,27 @@
 <?php
 
+use App\Http\Controllers\Api\GlobalSpecialtyController;
+use App\Http\Controllers\Api\QualificationController;
+use App\Http\Controllers\Api\SpecializationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\InstituteController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\InstitutionController;
+use App\Http\Controllers\Api\UserAuthController;
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/admin/login', [AuthController::class, 'login']);
+Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/institutions', [InstitutionController::class, 'index']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/global-specialitiez', [GlobalSpecialtyController::class, 'index']);
 
-Route::get('/institutes', [InstituteController::class, 'index']);
+Route::get('/qualifications', [QualificationController::class, 'index']);   
+
+Route::get('/specilizations', [SpecializationController::class, 'index']);  
+
+Route::post('/register', [UserAuthController::class, 'register']);
+Route::post('/login', [UserAuthController::class, 'login']);
+Route::post('/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+
+
