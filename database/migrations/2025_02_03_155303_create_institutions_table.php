@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
-            $table->string('verified')->default('accepted'); // Добавляем поле verified
+            $table->string('verified')->default('accepted'); 
+            $table->string('logo_url')->nullable(); 
+            $table->string('photo_url')->nullable(); 
             $table->timestamps();
         });
     }

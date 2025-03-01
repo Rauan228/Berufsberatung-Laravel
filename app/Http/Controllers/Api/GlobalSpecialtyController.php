@@ -12,8 +12,16 @@ class GlobalSpecialtyController extends Controller
     public function index()
     {
         $globalSpecialties = GlobalSpecialty::all();
+        
         return response()->json($globalSpecialties);
     }
+
+    public function getQualificationsWithSpecializations($id)
+{
+    $specialty = GlobalSpecialty::with('qualifications.specializations')->findOrFail($id);
+    return response()->json($specialty);
+}
+
 
     // Создать новую специальность
     public function store(Request $request)

@@ -11,7 +11,7 @@ class Institution extends Model
 
     protected $table = 'institutions';
     protected $fillable = [
-        'name', 'description1', 'description2', 'description3', 'location', 'email', 'phone', 'website', 'verified'
+        'name', 'description1', 'description2', 'description3', 'location', 'email', 'phone', 'website', 'verified', 'logo_url', 'photo_url', 'dormitory', 'grants'
     ];
 
     public function events()
@@ -33,6 +33,11 @@ class Institution extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+     public function averageRating()
+     {
+         return $this->reviews()->avg('rating') ?? 0; // Если отзывов нет, возвращаем 0
+     }
 
     public function likes()
     {

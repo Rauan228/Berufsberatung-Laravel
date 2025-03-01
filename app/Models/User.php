@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 class User extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable;    protected $fillable = [
+    use HasFactory, HasApiTokens;    protected $fillable = [
 
         'username', 'email', 'password',
     ];

@@ -13,10 +13,12 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('/institutions', [InstitutionController::class, 'index']);
+Route::get('/institutions/{id}', [InstitutionController::class, 'show']);
 
 Route::get('/global-specialitiez', [GlobalSpecialtyController::class, 'index']);
 
 Route::get('/qualifications', [QualificationController::class, 'index']);   
+Route::get('/global-specialties/{id}/qualifications', [GlobalSpecialtyController::class, 'getQualificationsWithSpecializations']);
 
 Route::get('/specilizations', [SpecializationController::class, 'index']);  
 

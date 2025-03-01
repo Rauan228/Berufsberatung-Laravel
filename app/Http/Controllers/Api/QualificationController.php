@@ -11,30 +11,34 @@ class QualificationController extends Controller
 {
     // Получить список квалификаций
     public function index(Request $request)
-{
-    $query = Qualification::query();
-
-    if ($request->has('specialty_id')) {
-        $query->where('specialty_id', $request->specialty_id);
+    {
+        $query = Qualification::with(['globalSpecialty', 'specializations']); // Загружаем связанные данные
+    
+        if ($request->has('specialty_id') && $request->specialty_id != '') {
+            $query->where('specialty_id', $request->specialty_id);
+        }
+    
+        $qualifications = $query->get();
+        return response()->json($qualifications);
     }
-
-    return response()->json($query->get());
-}
-
 
     // Создать новую квалификацию
     public function store(Request $request)
     {
         $request->validate([
             'qualification_name' => 'required|string|max:255',
-            'global_specialty_id' => 'required|exists:global_specialties,id',
+            'specialty_id' => 'required|exists:global_specialties,id',
         ]);
 
-        $qualification = Qualification::create($request->all());
+        $qualification = Qualification::create([
+            'qualification_name' => $request->qualification_name,
+            'specialty_id' => $request->specialty_id,
+        ]);
+
         return response()->json($qualification, 201);
     }
 
-    // Получить детали квалификации
+    // Получить детали конкретной квалификации
     public function show($id)
     {
         $qualification = Qualification::with('globalSpecialty')->findOrFail($id);
@@ -46,11 +50,15 @@ class QualificationController extends Controller
     {
         $request->validate([
             'qualification_name' => 'required|string|max:255',
-            'global_specialty_id' => 'required|exists:global_specialties,id',
+            'specialty_id' => 'required|exists:global_specialties,id',
         ]);
 
         $qualification = Qualification::findOrFail($id);
-        $qualification->update($request->all());
+        $qualification->update([
+            'qualification_name' => $request->qualification_name,
+            'specialty_id' => $request->specialty_id,
+        ]);
+
         return response()->json($qualification);
     }
 
