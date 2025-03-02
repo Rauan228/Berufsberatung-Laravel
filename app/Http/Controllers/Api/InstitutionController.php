@@ -41,19 +41,22 @@ class InstitutionController extends Controller
 
     // Получить детали института
     public function show($id)
-{
-    try {
-        $institution = Institution::with(['specializations.qualification', 'specializations' => function ($query) {
-            $query->withPivot('cost', 'duration');
-        }])->findOrFail($id);
-
-        return response()->json($institution);
-    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        return response()->json(['error' => 'Institution not found'], 404);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Internal Server Error'], 500);
+    {
+        try {
+            $institution = Institution::with(['specializations.qualification' => function ($query) {
+                $query->select('id', 'qualification_name'); // Выбираем только нужные поля
+            }, 'specializations' => function ($query) {
+                $query->select('specializations.id', 'specializations.name', 'qualification_id')
+                      ->withPivot('cost', 'duration');
+            }])->findOrFail($id);
+    
+            return response()->json($institution);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'Institution not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
-}
 
 
     // Обновить институт

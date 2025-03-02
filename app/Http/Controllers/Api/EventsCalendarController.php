@@ -30,6 +30,13 @@ class EventsCalendarController extends Controller
         return response()->json($event, 201);
     }
 
+    // Получить события по ID университета
+    public function getEventsByInstitution($institutionId)
+    {
+        $events = EventsCalendar::where('institution_id', $institutionId)->get();
+        return response()->json($events);
+    }
+
     // Получить детали события
     public function show($id)
     {

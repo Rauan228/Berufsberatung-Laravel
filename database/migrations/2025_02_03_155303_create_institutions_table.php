@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('description2')->nullable();
             $table->text('description3')->nullable();
             $table->string('location')->nullable();
+            $table->string('address')->nullable(); // Добавляем адрес
+            $table->decimal('latitude', 10, 7)->nullable(); // Добавляем широту (10 знаков, 7 после запятой)
+            $table->decimal('longitude', 10, 7)->nullable(); // Добавляем долготу
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();

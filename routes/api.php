@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\InstitutionController;
 use App\Http\Controllers\Api\UserAuthController;
+use App\Http\Controllers\Api\EventsCalendarController;
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -27,3 +28,22 @@ Route::post('/login', [UserAuthController::class, 'login']);
 Route::post('/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
+
+
+// Получить список всех событий
+Route::get('/events', [EventsCalendarController::class, 'index']);
+
+// Получить события по ID университета
+Route::get('/institutions/{institutionId}/events', [EventsCalendarController::class, 'getEventsByInstitution']);
+
+// Получить детали события по ID
+Route::get('/events/{id}', [EventsCalendarController::class, 'show']);
+
+// Создать новое событие
+Route::post('/events', [EventsCalendarController::class, 'store']);
+
+// Обновить событие по ID
+Route::put('/events/{id}', [EventsCalendarController::class, 'update']);
+
+// Удалить событие по ID
+Route::delete('/events/{id}', [EventsCalendarController::class, 'destroy']);

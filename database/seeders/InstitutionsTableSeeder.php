@@ -26,6 +26,8 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://vlast.kz/media/pages/8z/17103992352mfah_1600x900.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> '',
+                
             ],
             [
                 'name' => 'Евразийский Национальный Университет имени Л.Н. Гумилёва',
