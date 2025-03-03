@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Review;
 use App\Models\Institution;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Like;
 
 class InstitutionController extends Controller
 {
@@ -20,7 +22,22 @@ class InstitutionController extends Controller
 
         return response()->json($institutions);
     }
+    public function getLikedInstitutions()
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['error' => 'Пользователь не авторизован'], 401);
+    }
 
+    $likedInstitutions = Like::where('user_id', $user->id)
+        ->with(['institution' => function ($query) {
+            $query->withAvg('reviews', 'rating'); // Добавляем средний рейтинг
+        }])
+        ->get()
+        ->pluck('institution');
+
+    return response()->json($likedInstitutions);
+}
     // Создать новый институт
     public function store(Request $request)
     {

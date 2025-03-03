@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\InstitutionController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\EventsCalendarController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\NotificationController;
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -29,8 +29,11 @@ Route::post('/register', [UserAuthController::class, 'register']);
 Route::post('/user-login', [UserAuthController::class, 'login']);
 Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/current-user', [UserController::class, 'getCurrentUser']);
+Route::middleware('auth:sanctum')->get('/liked-institutions', [InstitutionController::class, 'getLikedInstitutions']);
 
 
+
+Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'getUserNotifications']);
 
 // Получить список всех событий
 Route::get('/events', [EventsCalendarController::class, 'index']);

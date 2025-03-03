@@ -24,6 +24,8 @@ class UserController extends Controller
             'banned_users' => $bannedUsers,
         ]);
     }
+
+    
     public function getCurrentUser()
     {
         if (!Auth::check()) {

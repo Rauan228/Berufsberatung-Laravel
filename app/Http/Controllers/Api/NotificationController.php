@@ -27,7 +27,16 @@ class NotificationController extends Controller
         $notification = Notification::create($request->all());
         return response()->json($notification, 201);
     }
+    public function getUserNotifications(Request $request)
+{
+    $user = $request->user(); // Получаем текущего пользователя
+    $notifications = Notification::where('user_id', $user->id)
+        ->with('event') // Загружаем связанные события
+        ->orderBy('created_at', 'desc') // Сортируем по дате создания
+        ->get();
 
+    return response()->json($notifications);
+}
     // Получить детали уведомления
     public function show($id)
     {

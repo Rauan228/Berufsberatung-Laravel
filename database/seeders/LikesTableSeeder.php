@@ -15,19 +15,30 @@ class LikesTableSeeder extends Seeder
     {
         $likes = [];
 
-        for ($i = 1; $i <= 5; $i++) {
-            $randomDate = Carbon::now()
-                ->subDays(rand(0, 365))
-                ->subHours(rand(0, 23))
-                ->subMinutes(rand(0, 59))
-                ->subSeconds(rand(0, 59));
+        while (count($likes) < 20) {
+            $userId = rand(1, 60);
+            $institutionId = rand(1, 18);
 
-            $likes[] = [
-                'user_id'        => rand(1, 40), // случайный пользователь от 1 до 40
-                'institution_id' => rand(1, 18), // случайное учреждение от 1 до 18
-                'created_at'     => $randomDate,
-                'updated_at'     => $randomDate,
-            ];
+            // Проверяем, существует ли уже такой лайк
+            $exists = DB::table('likes')
+                ->where('user_id', $userId)
+                ->where('institution_id', $institutionId)
+                ->exists();
+
+            if (!$exists) {
+                $randomDate = Carbon::now()
+                    ->subDays(rand(0, 365))
+                    ->subHours(rand(0, 23))
+                    ->subMinutes(rand(0, 59))
+                    ->subSeconds(rand(0, 59));
+
+                $likes[] = [
+                    'user_id'        => $userId,
+                    'institution_id' => $institutionId,
+                    'created_at'     => $randomDate,
+                    'updated_at'     => $randomDate,
+                ];
+            }
         }
 
         DB::table('likes')->insert($likes);
