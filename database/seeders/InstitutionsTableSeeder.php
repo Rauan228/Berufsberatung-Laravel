@@ -26,7 +26,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://vlast.kz/media/pages/8z/17103992352mfah_1600x900.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
-                'address'=> '',
+                'address'=> 'просп. Кабанбай Батыра 53, Астана, Казахстан',
+                'latitude' => '51.09067178404732',
+                'longitude' => '71.39816459704697',
                 
             ],
             [
@@ -44,6 +46,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://static.tengrinews.kz/userdata/news/2017/news_322258/thumb_m/photo_220595.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'ул. Сатбаева 2, Астана Казахстан',
+                'latitude' => '51.15830616351122',
+                'longitude' => '71.46734210869282',
             ],
             [
                 'name' => 'Казахский Агротехнический Университет имени Сакена Сейфуллина',
@@ -60,6 +65,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://univery.kz/images/agrarnyj-universitet-nur-sultan.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'просп. Женис 62, Астана Казахстан',
+                'latitude' => '51.187320363531555',
+                'longitude' => '71.40905965472486',
             ],
             [
                 'name' => 'Медицинский Университет Астана',
@@ -76,6 +84,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://smapse.ru/storage/2020/03/astana-medical-university-smapse1.jpg',
                 'grants' => '1',
                 'dormitory'=>'0',
+                'address'=> 'улица Бейбитшилик 49/A, Астана Казахстан',
+                'latitude' => '51.18177110513288',
+                'longitude' => '71.41642239705278',
             ],
             [
                 'name' => 'Казахстанский Университет Экономики, Финансов и Международной Торговли',
@@ -92,6 +103,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://s.zagranitsa.com/images/guides/19694/original/c8c5dc096afe3771bb7a0248fc855982.jpg?1440153670',
                 'grants' => '0',
                 'dormitory'=>'1',
+                'address'=> 'ул. Алпамыс батыр 7, Астана Казахстан',
+                'latitude' => '51.14383838924555',
+                'longitude' => '71.4274287111098',
             ],
             [
                 'name' => 'Академия Государственного Управления при Президенте Республики Казахстан',
@@ -108,6 +122,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://liter.kz/cache/imagine/1200/uploads/news/2023/10/26/653a559dd5902266308527.jpeg',
                 'grants' => '0',
                 'dormitory'=>'0',
+                'address'=> 'пр-т. Абая 33 а, Астана Казахстан',
+                'latitude' => '51.16833248209512',
+                'longitude' => '71.42026384123116',
             ],
             [
                 'name' => 'Университет КАЗГЮУ',
@@ -124,6 +141,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://admin.vipusknik.kz/storage/3776/snimok-2png.png',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'Кургальжинское ш. 8, Астана Казахстан',
+                'latitude' => '51.14838934409969',
+                'longitude' => '71.37944445287141',
             ],
             [
                 'name' => 'Международный Университет Астаны',
@@ -140,6 +160,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://aiu.kz/media/photos/2022/03/04/1H7A7990_1-min.jpg',
                 'grants' => '1',
                 'dormitory'=>'0',
+                'address'=> 'просп. Кабанбай Батыра 8, Астана Казахстан',
+                'latitude' => '51.144843187440536',
+                'longitude' => '71.42293361979759',
             ],
             [
                 'name' => 'Астана IT Университет',
@@ -156,6 +179,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://egemen.kz/media/2022/04/11/it-1.jpg',
                 'grants' => '1',
                 'dormitory'=>'0',
+                'address'=> 'пр-т. Мангилик Ел., Астана Казахстан',
+                'latitude' => '51.0909014744094',
+                'longitude' => '71.41817088025934',
             ],
             [
                 'name' => 'Казахстанский Университет Технологии и Бизнеса',
@@ -172,6 +198,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://testing.kz/images/universites/47/8b79dfe87b173466eb0a19c9ebf60b02.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'улица Кайыма Мухамедханов 37А, Астана Казахстан',
+                'latitude' => '51.14482675669144',
+                'longitude' => '71.36904055842398',
             ],
             [
                 'name' => 'Университет «Туран-Астана»',
@@ -188,6 +217,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://admin.vipusknik.kz/storage/1883/xxljpg.jpeg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'ул. Ыкылас Дукенулы 29, Астана Казахстан',
+                'latitude' => '51.18187767784688',
+                'longitude' => '71.43151375233754',
             ],
             [
                 'name' => 'Казахский национальный университет искусств',
@@ -204,6 +236,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://univery.kz/images/kazakhskij-natsionalnyj-universitet-iskusstv.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> '“Шабыт” шығармашылық сарайы, Тәуелсіздік даңғылы 50, Астана Казахстан',
+                'latitude' => '51.12292699002619',
+                'longitude' => '71.47330237457513',
             ],
             [
                 'name' => 'Казахская национальная академия хореографии',
@@ -220,6 +255,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRANDUluwQho_km2oa9MTwBh3zDvRi92Q_KfQ&s',
                 'grants' => '1',
                 'dormitory'=>'0',
+                'address'=> 'Uly Dala Avenue 43/1, Астана Казахстан',
+                'latitude' => '51.09906938290285',
+                'longitude' => '71.42029580391535',
             ],
             [
                 'name' => 'Карагандинский университет Казпотребсоюза, филиал в г. Астана',
@@ -236,6 +274,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://admin.vipusknik.kz/storage/1944/keuk-astanajpg.jpeg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'ул. Кенесары 60, Астана Казахстан',
+                'latitude' => '51.16678578501739',
+                'longitude' => '71.44970622262002',
             ],
             [
                 'name' => 'Казахстанский филиал МГУ им. М.В.Ломоносова',
@@ -252,6 +293,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://kzkazan.ru/wp-content/uploads/2019/04/img_3029_3535.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'ул. Кажымукан Муңайтпасов 11, Астана Казахстан',
+                'latitude' => '51.15580967173556',
+                'longitude' => '71.46936824678323',
             ],
             [
                 'name' => 'Национальный университет обороны Республики Казахстан',
@@ -268,6 +312,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://baigenews.kz/storage/storage/news/2022/05/06/mainphoto/1858/1200x700_aP7s0AnMkJPu9A7zYy2IJRIzOE67rDG2ngfCqwta.jpg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'просп. Туран 72, Астана Казахстан',
+                'latitude' => '51.07811573883253',
+                'longitude' => '71.39173236635943',
             ],
             [
                 'name' => 'Esil University',
@@ -284,6 +331,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaX9CWJyj92lcfzHqrH64knNKwTmtW-H7Etw&s',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'Ахмет Жұбанов көшесі 7, Астана Казахстан',
+                'latitude' => '51.16010074294173',
+                'longitude' => '71.45801244678344',
             ],
             [
                 'name' => 'Евразийский гуманитарный институт имени А. Кусаинова',
@@ -300,6 +350,9 @@ class InstitutionsTableSeeder extends Seeder
                 'photo_url' => 'https://keagi.edu.kz/2020/wp-content/uploads/slider3/_2020-05_1_1920x800.jpeg',
                 'grants' => '1',
                 'dormitory'=>'1',
+                'address'=> 'проспект Магжана Жумабаева 4/1, Астана Казахстан',
+                'latitude' => '51.15568542902447',
+                'longitude' => '71.47947961467557',
             ],
         ]);
 

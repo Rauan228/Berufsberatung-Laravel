@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\InstitutionController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\EventsCalendarController;
+use App\Http\Controllers\Api\UserController;
+
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -24,9 +26,9 @@ Route::get('/global-specialties/{id}/qualifications', [GlobalSpecialtyController
 Route::get('/specilizations', [SpecializationController::class, 'index']);  
 
 Route::post('/register', [UserAuthController::class, 'register']);
-Route::post('/login', [UserAuthController::class, 'login']);
-Route::post('/logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
-
+Route::post('/user-login', [UserAuthController::class, 'login']);
+Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/current-user', [UserController::class, 'getCurrentUser']);
 
 
 
@@ -35,6 +37,8 @@ Route::get('/events', [EventsCalendarController::class, 'index']);
 
 // Получить события по ID университета
 Route::get('/institutions/{institutionId}/events', [EventsCalendarController::class, 'getEventsByInstitution']);
+Route::get('/institutions/{id}/reviews', [InstitutionController::class, 'getReviews']);
+
 
 // Получить детали события по ID
 Route::get('/events/{id}', [EventsCalendarController::class, 'show']);

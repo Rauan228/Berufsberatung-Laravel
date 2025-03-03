@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Review;
 use App\Models\Institution;
 
 class InstitutionController extends Controller
@@ -57,7 +58,15 @@ class InstitutionController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+    public function getReviews($institutionId)
+{
+    $reviews = Review::where('institution_id', $institutionId)
+        ->with('user') // Загружаем данные пользователя
+        ->latest()
+        ->get();
 
+    return response()->json($reviews);
+}
 
     // Обновить институт
     public function update(Request $request, $id)
