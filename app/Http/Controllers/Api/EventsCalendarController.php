@@ -11,10 +11,10 @@ class EventsCalendarController extends Controller
 {
     // Получить список событий
     public function index()
-    {
-        $events = EventsCalendar::paginate(12);
-        return response()->json($events);
-    }
+{
+    $events = EventsCalendar::with('institution')->paginate(12);
+    return response()->json($events);
+}
 
     // Создать новое событие
     public function store(Request $request)

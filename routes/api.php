@@ -30,7 +30,11 @@ Route::post('/user-login', [UserAuthController::class, 'login']);
 Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/current-user', [UserController::class, 'getCurrentUser']);
 Route::middleware('auth:sanctum')->get('/liked-institutions', [InstitutionController::class, 'getLikedInstitutions']);
-
+Route::delete('/institutions/{id}/unlike', [InstitutionController::class, 'unlike'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/current-user', function (Request $request) {
+    return response()->json($request->user());
+});
+Route::middleware('auth:sanctum')->post('/institutions/{id}/like', [InstitutionController::class, 'like']);
 
 
 Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'getUserNotifications']);
@@ -41,7 +45,7 @@ Route::get('/events', [EventsCalendarController::class, 'index']);
 // Получить события по ID университета
 Route::get('/institutions/{institutionId}/events', [EventsCalendarController::class, 'getEventsByInstitution']);
 Route::get('/institutions/{id}/reviews', [InstitutionController::class, 'getReviews']);
-
+Route::middleware('auth:sanctum')->post('/institutions/{id}/reviews', [InstitutionController::class, 'storeReview']);
 
 // Получить детали события по ID
 Route::get('/events/{id}', [EventsCalendarController::class, 'show']);
@@ -54,3 +58,5 @@ Route::put('/events/{id}', [EventsCalendarController::class, 'update']);
 
 // Удалить событие по ID
 Route::delete('/events/{id}', [EventsCalendarController::class, 'destroy']);
+
+Route::delete('/institutions/{id}/unlike', [InstitutionController::class, 'unlike'])->middleware('auth:sanctum');

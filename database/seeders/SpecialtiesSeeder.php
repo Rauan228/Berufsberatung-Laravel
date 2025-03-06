@@ -12,7 +12,7 @@ class SpecialtiesSeeder extends Seeder
     {
         $specialties = [
             // 6B01 Педагогические науки
-            ['name' => 'Дошкольное образование', 'qualification_id' => 1],
+            ['name' => 'Дошкольное образование', 'qualification_id'  => 1],
             ['name' => 'Дошкольное обучение и воспитание', 'qualification_id' => 1],
 
             ['name' => 'Педагогика и психология', 'qualification_id' => 2],

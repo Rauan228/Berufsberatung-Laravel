@@ -39,10 +39,10 @@ class Institution extends Model
          return $this->reviews()->avg('rating') ?? 0; // Если отзывов нет, возвращаем 0
      }
 
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
+     public function likes() {
+        return $this->belongsToMany(User::class, 'likes', 'institution_id', 'user_id');
+    }   
+    
 
     public function institutionApplications()
     {
