@@ -175,7 +175,7 @@
             </svg>
             <span style="font-size:25px; font-weight: bold; color:#bc0404;">Berufsberatung</span>
         </div>
-        <p style="font-size: 25px">Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа -->
+        {{-- <p style="font-size: 25px">Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа --> --}}
         <a href="{{ route('home') }}">
             <button class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"

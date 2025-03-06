@@ -22,9 +22,10 @@ return new class extends Migration
             $table->decimal('latitude', 16, 14)->nullable(); // Добавляем широту (10 знаков, 7 после запятой)
             $table->decimal('longitude', 16,14)->nullable(); // Добавляем долготу
             $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
-            $table->string('verified')->default('accepted'); 
+            $table->string('verified')->default('pending'); 
             $table->string('logo_url')->nullable(); 
             $table->string('photo_url')->nullable(); 
             $table->timestamps();

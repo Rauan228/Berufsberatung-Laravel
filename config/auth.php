@@ -38,6 +38,10 @@ return [
     */
 
     'guards' => [
+        'institution' => [
+        'driver' => 'session',
+        'provider' => 'institutions',
+    ],
     'admin' => [
         'driver' => 'session',
         'provider' => 'admins', // Должно совпадать с providers ниже
@@ -69,7 +73,10 @@ return [
     */
 
   'providers' => [
-    
+    'institutions' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Institution::class,
+    ],
     'admins' => [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,

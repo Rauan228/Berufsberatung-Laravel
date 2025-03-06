@@ -2,50 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
 class InstitutionApplication extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'institution_id', 'institution_name', 'email', 'password', 'verified'
+        'institution_id',
+        'institution_name',
+        'email',
+        'password',
+        'verified',
     ];
 
     protected $hidden = [
-        'password'
+        'password',
     ];
 
-    // Авто-хеширование пароля перед сохранением
-    public static function boot()
+    // Мутатор для хеширования пароля
+    public function setPasswordAttribute($value)
     {
-        parent::boot();
-
-        static::creating(function ($institutionApplication) {
-            $institutionApplication->password = Hash::make($institutionApplication->password);
-        });
-
-        // Обновляем поле verified в таблице institutions при изменении verified в institution_applications
-        static::updated(function ($institutionApplication) {
-            $institution = $institutionApplication->institution;
-            if ($institution) {
-                $institution->verified = $institutionApplication->verified;
-                $institution->save();
-            }
-        });
-
-        // При создании новой заявки также синхронизируем verified
-        static::created(function ($institutionApplication) {
-            $institution = $institutionApplication->institution;
-            if ($institution) {
-                $institution->verified = $institutionApplication->verified;
-                $institution->save();
-            }
-        });
+        if ($value) {
+            $this->attributes['password'] = Hash::make($value);
+        }
     }
 
+    // Удаляем boot, так как мутатор достаточно
     public function institution()
     {
         return $this->belongsTo(Institution::class);

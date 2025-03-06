@@ -18,13 +18,14 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('aut
 
 Route::get('/institutions', [InstitutionController::class, 'index']);
 Route::get('/institutions/{id}', [InstitutionController::class, 'show']);
-
+Route::post('/institutions/register', [InstitutionController::class, 'register']);
 Route::get('/global-specialitiez', [GlobalSpecialtyController::class, 'index']);
 
 Route::get('/qualifications', [QualificationController::class, 'index']);   
 Route::get('/global-specialties/{id}/qualifications', [GlobalSpecialtyController::class, 'getQualificationsWithSpecializations']);
 
 Route::get('/specilizations', [SpecializationController::class, 'index']);  
+Route::get('/specializations', [SpecializationController::class, 'index']);
 
 Route::post('/register', [UserAuthController::class, 'register']);
 Route::post('/user-login', [UserAuthController::class, 'login']);
@@ -46,6 +47,8 @@ Route::get('/events', [EventsCalendarController::class, 'index']);
 Route::get('/institutions/{institutionId}/events', [EventsCalendarController::class, 'getEventsByInstitution']);
 Route::get('/institutions/{id}/reviews', [InstitutionController::class, 'getReviews']);
 Route::middleware('auth:sanctum')->post('/institutions/{id}/reviews', [InstitutionController::class, 'storeReview']);
+Route::post('/institutions/login', [InstitutionController::class, 'login']);
+Route::middleware('auth:sanctum')->get('/institutions/current', [InstitutionController::class, 'getCurrentInstitution']);
 
 // Получить детали события по ID
 Route::get('/events/{id}', [EventsCalendarController::class, 'show']);

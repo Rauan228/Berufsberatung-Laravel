@@ -24,6 +24,7 @@ class SpecializationController extends Controller
 
         $specializations = $query->paginate(48);
         return response()->json($specializations);
+
     }
 
     // Создать новую специализацию

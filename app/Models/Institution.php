@@ -2,17 +2,41 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
-class Institution extends Model
+class Institution extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable, HasApiTokens;
 
     protected $table = 'institutions';
+
+    // Используем $fillable вместо $guarded
     protected $fillable = [
-        'name', 'description1', 'description2', 'description3', 'location', 'email', 'phone', 'website', 'verified', 'logo_url', 'photo_url', 'dormitory', 'grants'
+        'name',
+        'description1',
+        'description2',
+        'description3',
+        'location',
+        'email',
+        'phone',
+        'website',
+        'verified',
+        'logo_url',
+        'photo_url',
+        'dormitory',
+        'grants',
+        'password', // Убедимся, что password включен
     ];
+
+    protected $hidden = [
+        'password',
+    ];
+
+    
+
 
     public function events()
     {
@@ -23,7 +47,13 @@ class Institution extends Model
         return $this->belongsToMany(Specialization::class, 'institution_specialties')
                     ->withPivot('cost', 'duration'); // Добавляем поля cost и duration
     }
-
+// Мутатор для хеширования пароля
+    public function setPasswordAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['password'] = Hash::make($value);
+        }
+    }
     public function grants()
     {
         return $this->hasMany(Grant::class);
