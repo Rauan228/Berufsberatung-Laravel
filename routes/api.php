@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\EventsCalendarController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\UserApplicationsController; // Обновлено
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -36,7 +37,6 @@ Route::middleware('auth:sanctum')->get('/current-user', function (Request $reque
 });
 Route::middleware('auth:sanctum')->post('/institutions/{id}/like', [InstitutionController::class, 'like']);
 
-
 Route::middleware('auth:sanctum')->get('/notifications', [NotificationController::class, 'getUserNotifications']);
 
 // Получить список всех событий
@@ -60,3 +60,10 @@ Route::put('/events/{id}', [EventsCalendarController::class, 'update']);
 Route::delete('/events/{id}', [EventsCalendarController::class, 'destroy']);
 
 Route::delete('/institutions/{id}/unlike', [InstitutionController::class, 'unlike'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/user-applications', [UserApplicationsController::class, 'store']);
+    Route::get('/user-applications', [UserApplicationsController::class, 'getUserApplications']);
+    Route::get('/events', [EventsCalendarController::class, 'index']);
+    Route::get('/user-reviews', [UserController::class, 'getUserReviews']); // Новый маршрут для отзывов
+});

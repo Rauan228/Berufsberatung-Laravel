@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-
 class UserController extends Controller
 {
     // Получить список пользователей
@@ -25,7 +24,6 @@ class UserController extends Controller
         ]);
     }
 
-    
     public function getCurrentUser()
     {
         if (!Auth::check()) {
@@ -38,8 +36,20 @@ class UserController extends Controller
             'email' => $user->email,
         ]);
     }
-    
-    
+
+    // Получить отзывы текущего пользователя
+    public function getUserReviews()
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Пользователь не авторизован'], 401);
+        }
+
+        $user = Auth::user();
+        $reviews = $user->reviews()->with('institution')->get();
+
+        return response()->json($reviews);
+    }
+
     // Заблокировать/разблокировать пользователя
     public function toggleBan($id)
     {

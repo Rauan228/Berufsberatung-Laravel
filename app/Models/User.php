@@ -3,17 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Добавляем для аутентификации
+use Illuminate\Notifications\Notifiable; // Добавляем для уведомлений (опционально)
 use Laravel\Sanctum\HasApiTokens;
-class User extends Model
-{
-    use HasFactory, HasApiTokens;    protected $fillable = [
 
-        'username', 'email', 'password',
+class User extends Authenticatable // Изменяем наследование на Authenticatable
+{
+    use HasFactory, HasApiTokens, Notifiable; // Добавляем Notifiable для уведомлений
+
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     public function userApplications()
