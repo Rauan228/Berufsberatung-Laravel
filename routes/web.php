@@ -33,13 +33,13 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return response()->json(['message' => 'Login page']);
 });
-// Домашняя страница
+// Домашняя страницаф
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 // Данные для графиков (доступно только аутентифицированным пользователям)
 Route::get('/chart-data', [ChartController::class, 'getChartData'])->middleware('auth')->name('chart.data');
 
-// Аутентификация
+// Аутентификацияыыыыыы
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
