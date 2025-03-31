@@ -1,6 +1,6 @@
 # Berufsberatung — Административная панель системы профориентации
 
-## Введениеё  ёё
+## Введениe
 В условиях стремительного развития информационных технологий и цифровизации всех сфер жизни особое внимание уделяется вопросам профессиональной ориентации молодежи. Для молодых людей, стоящих перед выбором будущей профессии и учебного заведения, важно иметь доступ к достоверной и актуальной информации, которая поможет принять взвешенное решение. Однако информация в интернете зачастую разрознена, сложна для восприятия и не учитывает индивидуальные предпочтения абитуриентов.
 
 Проект **"B/B" (Berufsberatung)** — это веб-приложение, разработанное на Laravel 11, целью которого является помощь молодым людям в определении учебного ориентира, выборе учебного заведения и знакомстве с возможными специальностями. Данный репозиторий представляет собой **административную панель**, обеспечивающую управление данными системы, включая учебные заведения, специальности, мероприятия и пользователей. Панель создана с учетом современных требований к программным продуктам: удобный интерфейс, адаптивность и высокая функциональность.
@@ -131,37 +131,37 @@ php artisan serve
 
 ## Скриншоты
 
-#### Страница входа
+### Страница входа
 ![Страница входа](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/loginPage.png)
 
-#### Главная страница
+### Главная страница
 ![Главная страница 1](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage1.png)
 ![Главная страница 2](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage2.png)
 ![Главная страница 3](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/mainPage3.png)
 
-#### Страница уведомлений
+### Страница уведомлений
 ![Страница уведомлений](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/notificationsPage.png)
 
-#### Страницы заявок
+### Страницы заявок
 ![Заявки учреждений](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionApplications.png)
 ![Заявки пользователей](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplications.png)
 ![Фильтр заявок](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/userApplicationsFilter.png)
 
-#### Страница отзывов
+### Страница отзывов
 ![Страница отзывов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/reviewsPage.png)
 
-#### Страница институтов
+### Страница институтов
 ![Список институтов](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsPage.png)
 ![О заведении](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsAbout.png)
 ![Редактирование](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/institutionsEdit.png)
 
-#### Страница глобальных специальностей
+### Страница глобальных специальностей
 ![Глобальные специальности](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/globalSpecialitiesPage.png)
 
-#### Страница квалификаций
+### Страница квалификаций
 ![Квалификации](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/qualificationsPage.png)
 
-#### Страница специальностей
+### Страница специальностей
 ![Специальности](https://github.com/Rauan228/Berufsberatung-Laravel/blob/main/public/screenshots/specialitiesPage.png)
 
 ---
