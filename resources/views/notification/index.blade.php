@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Уведомления</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -168,8 +168,8 @@
 
 <body>
     <div class="main-content">
-        <h1>Notifications</h1>
-        <a href="{{ route('notifications.create') }}"  class="btn btn-primary">Add new notification</a>
+        <h1>Уведомления</h1>
+        <a href="{{ route('notifications.create') }}"  class="btn btn-primary">Добавить уведомление</a>
         
         <div class="notifications-grid" style="margin-top: 30px">
             @foreach($notifications as $notification)
@@ -182,7 +182,7 @@
                         <!-- Кнопка "Редактировать" -->
                         <a href="{{ route('notifications.edit', $notification->id) }}">
                             <button class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i> Редактировать
                             </button>
                         </a>
 
@@ -191,7 +191,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Удалить
                             </button>
                         </form>
                     </div>
@@ -202,7 +202,7 @@
         <div class="pagination d-flex align-items-center justify-content-center mt-4">
             @if ($notifications->total() > 0)
             <p class="pagination-info">
-                Showing {{ $notifications->firstItem() }} to {{ $notifications->lastItem() }} of {{ $notifications->total() }} results
+                Показано с {{ $notifications->firstItem() }} по {{ $notifications->lastItem() }} из {{ $notifications->total() }} результатов
             </p>
             @endif
             

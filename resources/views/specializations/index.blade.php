@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -186,7 +186,7 @@
                 @foreach($qualifications as $qualification)
                     <option value="{{ $qualification->id }}" 
                         {{ request('qualification_id') == $qualification->id ? 'selected' : '' }}>
-                        {{ $qualification->qualification_name }}
+                        {{ $qualification->qualification_name }} ({{ $qualification->globalSpecialty->name }})
                     </option>
                 @endforeach
             </select>
@@ -201,7 +201,8 @@
             @foreach($specializations as $specialization)
                 <div class="specialization-item">
                     <strong style="font-size: 22px">{{ $specialization->name }}</strong>
-                    <span style="font-size: 18px">({{ $specialization->qualification->name }})</span><br>
+                    <span style="font-size: 18px">({{ $specialization->qualification->qualification_name }})</span><br>
+                    <span style="font-size: 16px">{{ $specialization->qualification->globalSpecialty->name }}</span><br>
 
                     <div class="button-group">
                         <!-- Кнопка "Редактировать" -->

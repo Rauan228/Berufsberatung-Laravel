@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('verified')->default('pending'); 
             $table->string('logo_url')->nullable(); 
             $table->string('photo_url')->nullable(); 
+            $table->string('type')->default('university'); // Добавляем поле type
+            $table->boolean('dormitory')->default(false);
+            $table->boolean('grants')->default(false);
             $table->timestamps();
         });
     }

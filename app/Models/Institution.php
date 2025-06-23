@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class Institution extends Authenticatable
 {
@@ -13,7 +14,6 @@ class Institution extends Authenticatable
 
     protected $table = 'institutions';
 
-    // Используем $fillable вместо $guarded
     protected $fillable = [
         'name',
         'description1',
@@ -28,32 +28,51 @@ class Institution extends Authenticatable
         'photo_url',
         'dormitory',
         'grants',
-        'password', // Убедимся, что password включен
+        'password',
+        'type',
+        'directions',
+        'latitude',
+        'longitude'
     ];
 
     protected $hidden = [
         'password',
     ];
 
-    
+    protected $appends = ['likes_count'];
 
+    public function getLikesCountAttribute()
+    {
+        return $this->likes()->count();
+    }
 
     public function events()
     {
         return $this->hasMany(EventsCalendar::class);
     }
 
-    public function specializations() {
-        return $this->belongsToMany(Specialization::class, 'institution_specialties')
-                    ->withPivot('cost', 'duration'); // Добавляем поля cost и duration
+    public function specializations()
+    {
+        return $this->belongsToMany(Specialization::class, 'institution_specialties', 'institution_id', 'university_specialization_id')
+            ->withPivot('cost', 'duration');
     }
-// Мутатор для хеширования пароля
+
+    public function collegeSpecializations()
+    {
+        return $this->belongsToMany(CollegeSpecialization::class, 'college_institution_specs', 'institution_id', 'college_specialization_id')
+                    ->withPivot('cost', 'duration')
+            ->with(['qualification' => function($query) {
+                $query->with('collegeGlobalSpecialty');
+            }]);
+    }
+
     public function setPasswordAttribute($value)
     {
         if ($value) {
             $this->attributes['password'] = Hash::make($value);
         }
     }
+
     public function grants()
     {
         return $this->hasMany(Grant::class);
@@ -64,18 +83,41 @@ class Institution extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-     public function averageRating()
+    public function getAverageRatingAttribute()
      {
-         return $this->reviews()->avg('rating') ?? 0; // Если отзывов нет, возвращаем 0
+        return $this->reviews()->avg('rating') ?? 0;
      }
 
-     public function likes() {
-        return $this->belongsToMany(User::class, 'likes', 'institution_id', 'user_id');
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }   
-    
 
     public function institutionApplications()
     {
         return $this->hasMany(InstitutionApplication::class);
+    }
+
+    private function makeAbsoluteUrl($path)
+    {
+        if (!$path) return null;
+
+        $url = Storage::url($path); // /storage/...
+
+        // Если URL относительный – добавляем APP_URL
+        if (!preg_match('/^https?:\/\//', $url)) {
+            $url = rtrim(config('app.url'), '/') . $url;
+        }
+        return $url;
+    }
+
+    public function getLogoUrlAttribute($value)
+    {
+        return $this->makeAbsoluteUrl($value);
+    }
+
+    public function getPhotoUrlAttribute($value)
+    {
+        return $this->makeAbsoluteUrl($value);
     }
 }

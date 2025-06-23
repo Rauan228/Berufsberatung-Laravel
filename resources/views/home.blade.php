@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Панель администратора</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css">
@@ -31,11 +32,12 @@
         
 
         .institutes-count,
-        .latest_grade,
+        .universities-count,
+        .colleges-count,
         .users-count,
         .events-count,
-        .specialties-count
-         {
+        .specialties-count,
+        .latest_grade {
             background: #f0f0f0;
             padding: 0 5% 0 5%;
             margin: 30px 10px 0 10px;
@@ -55,24 +57,92 @@
 
 .counts {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
     width: 100%;
 }
 
+        /* Add specific colors for each type */
+        .institutes-count {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
 
+        .universities-count {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
 
-.latest_grade {
-    background: #f0f0f0;
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 18px;
+        .colleges-count {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .users-count {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .events-count {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: white;
+        }
+
+        .specialties-count {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+            color: white;
+        }
+
+        /* Add hover effects */
+        .institutes-count,
+        .universities-count,
+        .colleges-count,
+        .users-count,
+        .events-count,
+        .specialties-count {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .institutes-count:hover,
+        .universities-count:hover,
+        .colleges-count:hover,
+        .users-count:hover,
+        .events-count:hover,
+        .specialties-count:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add padding and improve text styling */
+        .institutes-count p,
+        .universities-count p,
+        .colleges-count p,
+        .users-count p,
+        .events-count p,
+        .specialties-count p {
+            margin: 15px 0;
+        }
+
+        .institutes-count p:first-child,
+        .universities-count p:first-child,
+        .colleges-count p:first-child,
+        .users-count p:first-child,
+        .events-count p:first-child,
+        .specialties-count p:first-child {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .institutes-count p:last-child,
+        .universities-count p:last-child,
+        .colleges-count p:last-child,
+        .users-count p:last-child,
+        .events-count p:last-child,
+        .specialties-count p:last-child {
+            font-size: 24px;
     font-weight: bold;
-    margin-top: 20px;
-    width: 50%;
 }
-
 
         .chart-btn {
             background: #34495e;
@@ -128,7 +198,7 @@
     font-weight: bold;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    width: 120px;
+    width: 150px;
     height: 50px;
 }
 
@@ -172,7 +242,7 @@
 .calendar-container {
     max-width: 900px;
     margin: 30px auto;
-    padding: 50px;
+    padding: 90px;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -217,15 +287,15 @@
 }
 
 .fc-daygrid-event {
-    background: rgba(0, 123, 255, 0.5) !important;
-    border: none;
-    border-radius: 50%;
-    padding: 20px;
-    z-index: 1;
-    transition: all 0.3s ease-in-out;
-    color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    opacity: 0;
     position: absolute;
-    margin: -30px 0 0 -10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
 }
 
 .fc .fc-daygrid-day {
@@ -250,30 +320,55 @@
     transform: scale(1.05);
 }
 
+.fc-daygrid-day.has-event .fc-daygrid-day-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #007bff;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.fc-daygrid-day.fc-day-other .fc-daygrid-day-number { color: #bbb; }
+.fc-daygrid-day.fc-day-other.has-event .fc-daygrid-day-number { background:none; color:#bbb; }
+
+.fc-daygrid-event-harness, .fc-daygrid-event { height: 100% !important; width: 100% !important; }
+
     </style>
 </head>
 
 <body>
 
     <div class="main-content">
-        <h1>Welcome to Admin Panel</h1>
+        <h1>Панель администратора</h1>
 
         <div class="counts-container">
             <div class="counts">
                 <div class="institutes-count">
-                    <p>Institutes</p>
+                    <p>Институты</p>
                     <p>{{ $institutesCount }}</p>
                 </div>
+                <div class="universities-count">
+                    <p>Университеты</p>
+                    <p>{{ $universitiesCount }}</p>
+                </div>
+                <div class="colleges-count">
+                    <p>Колледжи</p>
+                    <p>{{ $collegesCount }}</p>
+                </div>
                 <div class="users-count">
-                    <p>Users</p>
+                    <p>Пользователи</p>
                     <p>{{ $usersCount }}</p>
                 </div>
                 <div class="specialties-count">
-                    <p>Specialties</p>
+                    <p>Специальности</p>
                     <p>{{ $specializationsCount }}</p>
                 </div>
                 <div class="events-count">
-                    <p>Events</p>
+                    <p>События</p>
                     <p>{{ $eventsCount }}</p>
                 </div>
             </div>
@@ -282,7 +377,7 @@
                     <p><strong>{{ $latestReview->user->username }}</strong></p>
                     <p>{{ $latestReview->comment }}</p>
                 @else
-                    <p>No reviews yet</p>
+                    <p>Пока отзывов нет</p>
                 @endif
             </div>
         </div>
@@ -298,9 +393,9 @@
                 <canvas id="visitChart"></canvas>
             </div>
             <div style="text-align: center; margin: 10px 0 0 320px;">
-                <button onclick="loadChart('days')" id="daysBtn" class="chart-btn">Days</button>
-                <button onclick="loadChart('weeks')" id="weeksBtn" class="chart-btn">Weeks</button>
-                <button onclick="loadChart('months')" id="monthsBtn" class="chart-btn">Months</button>
+                <button onclick="loadChart('days')" id="daysBtn" class="chart-btn">Дни</button>
+                <button onclick="loadChart('weeks')" id="weeksBtn" class="chart-btn">Недели</button>
+                <button onclick="loadChart('months')" id="monthsBtn" class="chart-btn">Месяцы</button>
             </div>
         </div>
         
@@ -309,13 +404,32 @@
             </div>
         </div>
 
+        <!-- Test Results Line Chart -->
+        <div class="charts">
+            <div style="width: calc(100% - 300px); margin-left: 300px; height: 400px;">
+                <canvas id="testChart"></canvas>
+            </div>
+            <div style="text-align: center; margin: 10px 0 0 320px;">
+                <button onclick="loadTestChart('days')" id="testDaysBtn" class="chart-btn">Дни</button>
+                <button onclick="loadTestChart('weeks')" id="testWeeksBtn" class="chart-btn">Недели</button>
+                <button onclick="loadTestChart('months')" id="testMonthsBtn" class="chart-btn">Месяцы</button>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <script>
         let visitChart;
+        let testChart;
+
+        // Register Chart.js DataLabels plugin if it is loaded
+        if (window.ChartDataLabels) {
+            Chart.register(ChartDataLabels);
+        }
 
         function loadChart(type, updateUrl = true) {
             fetch(`/chart-data?type=${type}`)
@@ -332,7 +446,7 @@
                         data: {
                             labels: data.labels,
                             datasets: [{
-                                label: 'Visits',
+                                label: 'Посещения',
                                 data: data.data,
                                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -342,6 +456,19 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
+                            plugins: {
+                                datalabels: {
+                                    anchor: 'end',
+                                    align: 'end',
+                                    color: '#000',
+                                    font: {
+                                        weight: 'bold'
+                                    },
+                                    formatter: function(value) {
+                                        return value;
+                                    }
+                                }
+                            },
                             scales: {
                                 y: { beginAtZero: true }
                             }
@@ -360,16 +487,74 @@
                 });
         }
 
+        function loadTestChart(type, updateUrl = true) {
+            fetch(`/test-chart-data?type=${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('testChart').getContext('2d');
+
+                    if (testChart) {
+                        testChart.destroy();
+                    }
+
+                    testChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Пройдено тестов',
+                                data: data.data,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                tension: 0.3,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                datalabels: {
+                                    anchor: 'end',
+                                    align: 'top',
+                                    color: '#000',
+                                    formatter: function (value) {
+                                        return value;
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: { beginAtZero: true }
+                            }
+                        }
+                    });
+
+                    // Reset active states for this chart's buttons only
+                    document.querySelectorAll('#testDaysBtn, #testWeeksBtn, #testMonthsBtn').forEach(btn => btn.classList.remove('active'));
+                    document.getElementById('test' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn').classList.add('active');
+
+                    if (updateUrl) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('testChart', type);
+                        history.pushState(null, '', url);
+                    }
+                });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const chartType = params.get('chart') || 'days';
             loadChart(chartType, false);
+            const testChartType = params.get('testChart') || 'days';
+            loadTestChart(testChartType, false);
         });
 
         window.addEventListener('popstate', () => {
             const params = new URLSearchParams(window.location.search);
             const chartType = params.get('chart') || 'days';
             loadChart(chartType, false);
+            const testChartType = params.get('testChart') || 'days';
+            loadTestChart(testChartType, false);
         });
 
 
@@ -389,55 +574,61 @@
     var events = {!! json_encode($events, JSON_UNESCAPED_UNICODE) !!};
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: 'en', // Устанавливаем локаль на английский
+        locale: 'ru', // Устанавливаем локаль на русский
         initialView: 'dayGridMonth',
+        showNonCurrentDates: true,
+        fixedWeekCount: true,
+        firstDay: 1,
         headerToolbar: {
             left: '', // Убираем кнопки слева
             center: 'title', // Заголовок по центру
             right: '' // Убираем кнопки справа
         },
         events: events,
-        eventContent: function () {
-            return { html: '' }; // Скрываем заголовок события
-        },
-        eventDidMount: function (info) {
-            var eventDate = info.event.start.toISOString().split('T')[0];
-            var eventCell = document.querySelector(`[data-date="${eventDate}"] .fc-daygrid-day-number`);
-            if (eventCell) {
-                eventCell.style.position = 'relative';
-                eventCell.style.zIndex = '1';
-                eventCell.style.borderRadius = '50%';
+        eventContent: function () { return { html: '' }; },
+        eventDidMount: function(info) {
+            const dateStr = info.event.startStr.split('T')[0];
+            const cell = document.querySelector(`[data-date="${dateStr}"]`);
+            if (!cell) return;
+            cell.classList.add('has-event');
+
+            // store titles array in dataset
+            const cleanTitle = info.event.title.replace(/\s*#\d+$/, '');
+            const titles = cell.dataset.titles ? JSON.parse(cell.dataset.titles) : [];
+            titles.push(cleanTitle);
+            cell.dataset.titles = JSON.stringify(titles);
+
+            // attach hover listeners once per cell
+            if (!cell.dataset.tooltipBound) {
+                cell.dataset.tooltipBound = 'true';
+                cell.addEventListener('mouseenter', function(){
+                    const tooltip = document.createElement('div');
+                    tooltip.id = 'event-title-overlay';
+                    const rect = cell.getBoundingClientRect();
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.top = `${rect.top + window.scrollY - 35}px`;
+                    tooltip.style.left = `${rect.left + window.scrollX}px`;
+                    tooltip.style.padding = '6px 10px';
+                    tooltip.style.background = 'rgba(0, 123, 255, 0.85)';
+                    tooltip.style.color = '#fff';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.fontSize = '12px';
+                    tooltip.style.whiteSpace = 'nowrap';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.innerText = JSON.parse(cell.dataset.titles).join(', ');
+                    document.body.appendChild(tooltip);
+                });
+                cell.addEventListener('mouseleave', function(){
+                    const t = document.getElementById('event-title-overlay');
+                    if (t) t.remove();
+                });
             }
+
+            // hide underlying event element to prevent default display
+            info.el.style.display = 'none';
         },
-        eventMouseEnter: function (info) {
-            var todayButton = document.querySelector('.fc-today-button');
-
-            if (!todayButton) return;
-
-            var rect = todayButton.getBoundingClientRect();
-
-            var eventTitle = document.createElement('div');
-            eventTitle.id = 'event-title-overlay';
-            eventTitle.style.position = 'absolute';
-            eventTitle.style.top = `${rect.bottom + window.scrollY + 5}px`;
-            eventTitle.style.left = `${rect.left + window.scrollX + 60}px`;
-            eventTitle.style.width = `${rect.width}px`;
-            eventTitle.style.textAlign = 'center';
-            eventTitle.style.background = 'rgba(0, 123, 255, 0.8)';
-            eventTitle.style.color = '#fff';
-            eventTitle.style.padding = '10px';
-            eventTitle.style.borderRadius = '6px';
-            eventTitle.style.zIndex = '1000';
-            eventTitle.innerText = info.event.title;
-
-            document.querySelector('.calendar-controls').appendChild(eventTitle);
-        },
-        eventMouseLeave: function () {
-            var eventTitle = document.getElementById('event-title-overlay');
-            if (eventTitle) {
-                eventTitle.remove();
-            }
-        }
+        eventMouseEnter: null,
+        eventMouseLeave: null,
     });
 
     calendar.render();
@@ -455,7 +646,7 @@
 
     const todayButton = document.createElement('button');
     todayButton.classList.add('fc-button', 'fc-today-button');
-    todayButton.innerText = 'Today';
+    todayButton.innerText = 'Сегодня';
     todayButton.addEventListener('click', function () {
         calendar.today();
     });

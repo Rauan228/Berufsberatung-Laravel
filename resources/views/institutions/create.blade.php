@@ -112,12 +112,48 @@
             background: #c82333;
             transform: scale(1.05);
         }
+
+        .file-input-container {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #4a90e2;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #357abd;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-name {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Создать новый институт</h2>
-        <form action="{{ route('institutions.store') }}" method="POST">
+        <form action="{{ route('institutions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label for="name">Название *</label>
             <input type="text" name="name" id="name" value="{{ old('name') }}" required>
@@ -130,6 +166,24 @@
 
             <label for="password_confirmation">Повторите пароль *</label>
             <input type="password" name="password_confirmation" id="password_confirmation" required>
+
+            <div class="file-input-container">
+                <label class="file-input-label">
+                    Выберите фото
+                    <input type="file" name="photo" class="file-input" accept="image/*" onchange="previewImage(this, 'photoPreview')">
+                </label>
+                <span class="file-name" id="photoName"></span>
+                <img id="photoPreview" class="preview-image">
+            </div>
+
+            <div class="file-input-container">
+                <label class="file-input-label">
+                    Выберите логотип
+                    <input type="file" name="logo" class="file-input" accept="image/*" onchange="previewImage(this, 'logoPreview')">
+                </label>
+                <span class="file-name" id="logoName"></span>
+                <img id="logoPreview" class="preview-image">
+            </div>
 
             <label for="description">Описание</label>
             <textarea name="description" id="description" rows="3">{{ old('description') }}</textarea>
@@ -146,5 +200,27 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            const fileName = input.files[0]?.name;
+            const nameSpan = document.getElementById(input.name + 'Name');
+            
+            if (fileName) {
+                nameSpan.textContent = fileName;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                nameSpan.textContent = '';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

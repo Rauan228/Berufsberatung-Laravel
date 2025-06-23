@@ -4,41 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Admin;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    // Метод для отображения формы входа
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Метод для обработки входа
     public function login(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'password' => 'required',
+        $credentials = $request->validate([
+            'name' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        $admin = Admin::where('name', $request->name)->first();
-
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            Auth::guard('admin')->login($admin);
-            return redirect()->route('home');
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('home'));
         }
 
-        return back()->withErrors(['name' => 'Неверные учетные данные']);
+        return back()->withErrors([
+            'name' => 'Неверные учетные данные.',
+        ])->withInput($request->only('name'));
     }
 
-    // Метод для выхода
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
-
- 
 }

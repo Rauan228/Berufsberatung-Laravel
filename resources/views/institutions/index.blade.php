@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 
@@ -7,12 +7,27 @@
 
 <div class="container" style="margin:50px 0 0 50px">
     <div class="main-content">
-        <h1 class="text-center mb-4">Institutions list</h1>
+        <h1 class="text-center mb-4">Список учреждений</h1>
         <a href="{{ route('institutions.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus"></i> Add new institution
+            <i class="fas fa-plus"></i> Добавить учреждение
         </a>
 
-        <input type="text" id="search" class="form-control w-50 mb-4" placeholder="🔍 Search by Institute...">
+        <!-- Search Form -->
+        <div class="search-form mb-4">
+            <form action="{{ route('institutions.index') }}" method="GET">
+                <input type="text" 
+                       name="search" 
+                       placeholder="Поиск по названию учреждения..." 
+                       value="{{ request('search') }}">
+                <select name="type" class="form-select">
+                        <option value="">Все типы</option>
+                        <option value="university" {{ request('type') == 'university' ? 'selected' : '' }}>Университет</option>
+                        <option value="college" {{ request('type') == 'college' ? 'selected' : '' }}>Колледж</option>
+                    </select>
+                <button type="submit" class="btn btn-primary">Поиск</button>
+                <a href="{{ route('institutions.index') }}" class="btn btn-secondary" style="text-decoration: none; color: white; display: flex; justify-content: center; align-items: center;">Сброс</a>
+            </form>
+        </div>
 
         <div class="row" id="institution-list">
             @foreach($institutions as $institution)
@@ -21,50 +36,46 @@
                     <div class="card institution-card shadow-sm mb-4">
                         <div class="card-body">
                             <h5 class="card-title text-primary fw-bold">{{ $institution->name }}</h5>
-                            <p class="card-text text-muted"><strong>📍 Location:</strong> {{ $institution->location }}</p>
+                            <p class="card-text text-muted"><strong>📍 Расположение:</strong> {{ $institution->location }}</p>
                             <p class="card-text text-muted">
-                                {{ \Illuminate\Support\Str::limit($institution->description, 100) }}
+                                {{ \Illuminate\Support\Str::limit($institution->description1, 100) }}
                             </p>
 
                             @if($institution->website)
-                                <p><a href="{{ $institution->website }}" target="_blank" class="text-info"><i
-                                            class="fas fa-globe"></i> Go to website</a></p>
+                                <p><a href="{{ $institution->website }}" target="_blank" class="text-info"><i class="fas fa-globe"></i> Перейти на сайт</a></p>
                             @endif
 
                             <div class="d-flex justify-content-between button-group">
                                 <a href="{{ route('institutions.show', $institution->id) }}">
                                     <button class="btn btn-sm btn-info">
-                                        <i class="fas fa-eye"></i> Detail
+                                        <i class="fas fa-eye"></i> Детали
                                     </button>
                                 </a>
                                 <a href="{{ route('institutions.edit', $institution->id) }}">
                                     <button class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Edit
+                                        <i class="fas fa-edit"></i> Редактировать
                                     </button>
                                 </a>
-                                <form action="{{ route('institutions.destroy', $institution->id) }}" method="POST"
-                                    class="delete-form">
+                                <form action="{{ route('institutions.destroy', $institution->id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i> Delete
+                                        <i class="fas fa-trash"></i> Удалить
                                     </button>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-    @endif
+            @endif
             @endforeach
         </div>
 
-        <!-- Пагинация -->
+        <!-- Pagination -->
         <div class="pagination-container">
             @if ($institutions->total() > 0)
                 <p class="pagination-info">
-                    Showing {{ $institutions->firstItem() }} to {{ $institutions->lastItem() }} of {{ $institutions->total() }} results
+                    Показано с {{ $institutions->firstItem() }} по {{ $institutions->lastItem() }} из {{ $institutions->total() }} результатов
                 </p>
             @endif
             
@@ -72,11 +83,11 @@
                 @if ($institutions->onFirstPage())
                     <span class="page-btn disabled">←</span>
                 @else
-                    <a href="{{ $institutions->previousPageUrl() }}" class="page-btn">←</a>
+                    <a href="{{ $institutions->appends(['type' => request('type'), 'search' => request('search')])->previousPageUrl() }}" class="page-btn">←</a>
                 @endif
 
                 @if ($institutions->hasMorePages())
-                    <a href="{{ $institutions->nextPageUrl() }}" class="page-btn">→</a>
+                    <a href="{{ $institutions->appends(['type' => request('type'), 'search' => request('search')])->nextPageUrl() }}" class="page-btn">→</a>
                 @else
                     <span class="page-btn disabled">→</span>
                 @endif
@@ -86,15 +97,21 @@
 </div>
 
 <style>
+    :root { --sidebar-width: 300px; }
+
     .main-content {
-        margin-left: 300px
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+        padding: 20px 40px;
     }
 
     #institution-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 3 карты в ряд по умолчанию */
+        gap: 120px;
+        padding: 20px;
+        max-width: 2600px; /* ~8 cards per row */
+        margin: 0 auto;
     }
 
     .institution-card {
@@ -128,14 +145,12 @@
         color: #6c757d;
     }
 
-    /* Контейнер для кнопок */
     .button-group {
         display: flex;
         justify-content: space-between;
         gap: 5px;
     }
 
-    /* Общий стиль для кнопок */
     .button-group .btn {
         flex: 1;
         font-size: 0.6rem;
@@ -164,7 +179,6 @@
         transform: scale(1.07);
     }
 
-    /* Анимация нажатия */
     .button-group .btn:active {
         transform: scale(0.95);
     }
@@ -173,7 +187,6 @@
         transform: scale(1.05);
     }
 
-    /* Пагинация */
     .pagination-container {
         text-align: center;
         margin-top: 20px;
@@ -209,20 +222,99 @@
         background-color: #ccc;
         pointer-events: none;
     }
-      /* Общий стиль для кнопок */
-      .btn {
-            flex: 1;
-            font-size: 0.75rem;
-            padding: 8px 12px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: all 0.3s ease-in-out;
-            text-transform: uppercase;
-        }
+
+    .btn {
+        flex: 1;
+        font-size: 0.75rem;
+        padding: 8px 12px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        text-transform: uppercase;
+    }
+
+    /* Search Form Styles */
+    .search-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 60%;
+        max-width: 2400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-form form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-form input[type="text"] {
+        flex: 1;
+        height: 45px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 15px;
+        transition: border-color 0.3s ease;
+        min-width: 200px;
+    }
+
+    .search-form .form-select {
+        height: 45px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 15px;
+        transition: border-color 0.3s ease;
+        width: auto;
+    }
+
+    .search-form input[type="text"]:focus,
+    .search-form .form-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        outline: none;
+    }
+
+    .search-form .btn {
+        height: 45px;
+        width: 100px;
+        padding: 0 20px;
+        font-weight: 400;
+        white-space: nowrap;
+    }
+
+    .search-form .btn-secondary {
+        background-color: #95a5a6;
+        border: none;
+    }
+
+    .search-form .btn-secondary:hover {
+        background-color: #7f8c8d;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1800px) {
+        #institution-list { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    }
+
+    @media (max-width: 1400px) {
+        #institution-list { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    }
+
+    @media (max-width: 1024px) {
+        .main-content { margin-left: 0; width: 100%; padding: 15px; }
+        #institution-list { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Client-side search filtering
         document.getElementById('search').addEventListener('keyup', function () {
             let filter = this.value.toLowerCase();
             let cards = document.querySelectorAll('.institution-card');
@@ -233,6 +325,7 @@
             });
         });
 
+        // Confirmation for delete action
         document.querySelectorAll('.delete-form').forEach(form => {
             form.addEventListener('submit', function (e) {
                 if (!confirm('Вы уверены, что хотите удалить этот институт?')) {

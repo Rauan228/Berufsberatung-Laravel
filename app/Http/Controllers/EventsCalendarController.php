@@ -10,12 +10,26 @@ use App\Models\Institution;
 
 class EventsCalendarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = EventsCalendar::paginate(12); // Пагинация по 12 событий на странице
+        $query = EventsCalendar::with('institution');
+
+        // Filter by institution type if specified
+        if ($request->filled('type')) {
+            $query->whereHas('institution', function($q) use ($request) {
+                $q->where('type', $request->type);
+            });
+        }
+
+        // Search by name if search term is provided
+        if ($request->filled('search')) {
+            $query->where('event_name', 'like', '%' . $request->search . '%');
+        }
+
+        $events = $query->paginate(12);
         $admin = Auth::guard('admin')->user();
         
-        return view('events_calendar.index', compact('admin','events',));
+        return view('events_calendar.index', compact('admin', 'events'));
     }
 
     public function create()

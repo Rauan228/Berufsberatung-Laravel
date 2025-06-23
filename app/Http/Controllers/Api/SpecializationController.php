@@ -5,26 +5,63 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Specialization;
+use App\Models\CollegeSpecialization;
 use App\Models\Qualification;
+use App\Models\GlobalSpecialty;
+use App\Models\CollegeGlobalSpecialty;
+use App\Models\UniversityGlobalSpecialty;
 
 class SpecializationController extends Controller
 {
     // Получить список специализаций
     public function index(Request $request)
     {
-        $query = Specialization::with('qualification');
+        try {
+            $type = $request->query('type', 'university');
+            $search = $request->query('search');
+            $qualificationId = $request->query('qualification_id');
 
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            if ($type === 'college') {
+                $query = CollegeGlobalSpecialty::with(['collegeQualifications.specializations']);
+            } else {
+                $query = GlobalSpecialty::with(['qualifications.specializations']);
+            }
+
+            if ($search) {
+                $query->where('name', 'like', "%{$search}%");
         }
 
-        if ($request->has('qualification_id') && $request->qualification_id != '') {
-            $query->where('qualification_id', $request->qualification_id);
+            if ($qualificationId) {
+                if ($type === 'college') {
+                    $query->whereHas('collegeQualifications', function ($q) use ($qualificationId) {
+                        $q->where('id', $qualificationId);
+                    });
+                } else {
+                    $query->whereHas('qualifications', function ($q) use ($qualificationId) {
+                        $q->where('id', $qualificationId);
+                    });
+                }
         }
 
-        $specializations = $query->paginate(48);
-        return response()->json($specializations);
+            $specialties = $query->paginate(48);
 
+            return response()->json([
+                'success' => true,
+                'data' => $specialties->items(),
+                'meta' => [
+                    'current_page' => $specialties->currentPage(),
+                    'last_page' => $specialties->lastPage(),
+                    'per_page' => $specialties->perPage(),
+                    'total' => $specialties->total()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in SpecializationController@index: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Произошла ошибка при получении списка специальностей'
+            ], 500);
+        }
     }
 
     // Создать новую специализацию
@@ -42,8 +79,80 @@ class SpecializationController extends Controller
     // Получить детали специализации
     public function show($id)
     {
-        $specialization = Specialization::with('qualification')->findOrFail($id);
-        return response()->json($specialization);
+        try {
+            $type = request('type', 'university');
+            
+            if ($type === 'college') {
+                $specialization = CollegeSpecialization::with([
+                    'qualification.collegeGlobalSpecialty',
+                    'institutions' => function($query) {
+                        $query->select('institutions.*', 'college_institution_specs.cost', 'college_institution_specs.duration');
+                    }
+                ])->findOrFail($id);
+            } else {
+                $specialization = Specialization::with([
+                    'qualification.globalSpecialty',
+                    'institutions' => function($query) {
+                        $query->select('institutions.*', 'institution_specialties.cost', 'institution_specialties.duration');
+                    }
+                ])->findOrFail($id);
+            }
+            
+            return response()->json([
+                'success' => true,
+                'data' => $specialization
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching specialization: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Специальность не найдена'
+            ], 404);
+        }
+    }
+
+    public function institutions($id)
+    {
+        try {
+            $type = request('type', 'university');
+            
+            if ($type === 'college') {
+                $specialization = CollegeSpecialization::with(['institutions' => function($query) {
+                    $query->select('institutions.*', 'college_institution_specs.cost', 'college_institution_specs.duration');
+                }])->findOrFail($id);
+                
+                $institutions = $specialization->institutions()
+                    ->with(['reviews' => function($query) {
+                        $query->select('institution_id', 'rating');
+                    }])
+                    ->withCount('reviews')
+                    ->withAvg('reviews', 'rating')
+                    ->get();
+            } else {
+                $specialization = Specialization::with(['institutions' => function($query) {
+                    $query->select('institutions.*', 'institution_specialties.cost', 'institution_specialties.duration');
+                }])->findOrFail($id);
+                
+                $institutions = $specialization->institutions()
+                    ->with(['reviews' => function($query) {
+                        $query->select('institution_id', 'rating');
+                    }])
+                    ->withCount('reviews')
+                    ->withAvg('reviews', 'rating')
+                    ->get();
+            }
+            
+            return response()->json([
+                'success' => true,
+                'data' => $institutions
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching institutions: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Не удалось загрузить список учебных заведений'
+            ], 500);
+        }
     }
 
     // Обновить специализацию

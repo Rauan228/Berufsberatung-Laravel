@@ -9,9 +9,12 @@ return new class extends Migration {
         Schema::create('institution_specialties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('institution_id')->constrained()->onDelete('cascade');
-            $table->foreignId('specialization_id')->constrained()->onDelete('cascade');
-            $table->decimal('cost', 10, 2)->nullable(); // Разрешаем null для столбца cost
+            $table->foreignId('university_specialization_id')->constrained('specializations')->onDelete('cascade');
+            $table->decimal('cost', 10, 2)->nullable();
+            $table->integer('duration')->nullable();
             $table->timestamps();
+
+            $table->unique(['institution_id', 'university_specialization_id'], 'inst_spec_unique');
         });
     }
 

@@ -1,16 +1,16 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <div class="main-content">
-        <h1>Applications</h1>
+        <h1>Заявки участников</h1>
         <form method="GET" action="{{ route('applications.user_applications.index') }}" class="filter-form">
 
-            <label for="event_filter">Filter by Event:</label>
+            <label for="event_filter">Фильтр по событию:</label>
             <select name="event_id" id="event_filter" onchange="this.form.submit()">
-                <option value="">All Events</option>
+                <option value="">Все события</option>
                 @foreach($events as $event)
                     <option value="{{ $event->id }}" {{ request('event_id') == $event->id ? 'selected' : '' }}>
                         {{ $event->event_name }}
@@ -18,12 +18,12 @@
                 @endforeach
             </select>
         
-            <label for="status_filter">Filter by Status:</label>
+            <label for="status_filter">Фильтр по статусу:</label>
             <select name="status" id="status_filter" onchange="this.form.submit()">
-                <option value="">All Statuses</option>
-                <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option value="Accepted" {{ request('status') == 'Accepted' ? 'selected' : '' }}>Accepted</option>
-                <option value="Rejected" {{ request('status') == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                <option value="">Все статусы</option>
+                <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>В ожидании</option>
+                <option value="Accepted" {{ request('status') == 'Accepted' ? 'selected' : '' }}>Принято</option>
+                <option value="Rejected" {{ request('status') == 'Rejected' ? 'selected' : '' }}>Отклонено</option>
             </select>
         </form>
         
@@ -32,7 +32,7 @@
                 <div class="grid-item">
                     <strong style="font-size: 22px">{{ $application->user->username }}</strong>
                     <span style="font-size: 22px">- {{ $application->event->event_name }}</span><br>
-                    Status: {{ $application->status }}
+                    Статус: {{ $application->status }}
                 </div>
             @endforeach
         </div>
@@ -53,8 +53,9 @@
 
         .main-content {
             flex-grow: 1;
-            padding: 20px;
-            margin: 0 0 0 300px;
+            padding: 20px 40px;
+            margin-left: 300px;
+            width: calc(100% - 300px);
         }
 
         h1 {
@@ -68,7 +69,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
             padding: 20px;
         }

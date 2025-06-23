@@ -14,9 +14,9 @@ return [
     */
 
     'defaults' => [
-    'guard' => 'admin',
-    'passwords' => 'admins',
-],
+        'guard' => 'web',
+        'passwords' => 'users',
+    ],
 
 
 
@@ -38,19 +38,20 @@ return [
     */
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        // Guard for institutions (universities/colleges)
         'institution' => [
-        'driver' => 'session',
-        'provider' => 'institutions',
+            'driver' => 'session',
+            'provider' => 'institutions',
+        ],
     ],
-    'admin' => [
-        'driver' => 'session',
-        'provider' => 'admins', // Должно совпадать с providers ниже
-    ],
-    'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'users',
-    ],
-],
 
 
     
@@ -73,13 +74,18 @@ return [
     */
 
   'providers' => [
-    'institutions' => [
+    'users' => [
         'driver' => 'eloquent',
-        'model' => App\Models\Institution::class,
+        'model' => App\Models\User::class,
     ],
     'admins' => [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,
+    ],
+    // Provider for institutions
+    'institutions' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Institution::class,
     ],
 ],
 
@@ -104,8 +110,8 @@ return [
     */
 
    'passwords' => [
-    'admins' => [
-        'provider' => 'admins',
+    'users' => [
+        'provider' => 'users',
         'table' => 'password_resets',
         'expire' => 60,
         'throttle' => 60,

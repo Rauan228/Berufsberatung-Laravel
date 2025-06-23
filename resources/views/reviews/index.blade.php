@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
     <div class="main-content">
-        <h1>Reviews</h1>
+        <h1>Отзывы</h1>
 
         @if ($reviews->isEmpty())
-            <p>There are no reviews yet.</p>
+            <p>Отзывов пока нет.</p>
         @else
             <div class="grid-container">
                 @foreach ($reviews as $review)
@@ -34,7 +34,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"
                                 onclick="return confirm('Вы уверены, что хотите удалить этот отзыв?');">
-                                <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Удалить
                             </button>
                         </form>
                     </div>
@@ -44,7 +44,7 @@
             <div class="pagination d-flex align-items-center justify-content-center mt-4">
                 @if ($reviews->total() > 0)
                     <p class="pagination-info">
-                        Showing {{ $reviews->firstItem() }} to {{ $reviews->lastItem() }} of {{ $reviews->total() }} results
+                        Показано с {{ $reviews->firstItem() }} по {{ $reviews->lastItem() }} из {{ $reviews->total() }} результатов
                     </p>
                 @endif
 
@@ -70,28 +70,59 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <style>
+        :root { --sidebar-width: 300px; }
+
         .main-content {
-            margin-left: 300px;
-            padding: 20px;
+            margin-left: var(--sidebar-width);
+            padding: 20px 40px;
             flex-grow: 1;
-            width: 80%;
+            width: calc(100% - var(--sidebar-width));
         }
 
-        /* Контейнер для сетки */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            /* 4 столбца */
-            grid-gap: 20px;
-            padding: 0;
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+            grid-template-columns: repeat(5, 1fr);
         }
 
-        /* Стили для отдельных отзывов */
+        /* 1200-1799px : 3 columns */
+        @media (max-width: 1799px) {
+            .grid-container { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* 900-1199px : 2 columns */
+        @media (max-width: 1199px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* <600px : 1 column */
+        @media (max-width: 599px) {
+            .grid-container { grid-template-columns: 1fr; }
+        }
+
+        /* mobile adjustments - remove sidebar */
+        @media (max-width: 1024px) {
+            .main-content { margin-left: 0; width: 100%; padding: 15px; }
+        }
+
         .grid-item {
             background-color: #fff;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 300px; /* uniform height */
+            width: 350px;
+            overflow: hidden;
+        }
+
+        .grid-item span {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Стили для звездочек */

@@ -6,20 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Добавляем для аутентификации
 use Illuminate\Notifications\Notifiable; // Добавляем для уведомлений (опционально)
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable // Изменяем наследование на Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable; // Добавляем Notifiable для уведомлений
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes; // Добавляем Notifiable для уведомлений и SoftDeletes для мягкого удаления
 
     protected $fillable = [
         'username',
         'email',
         'password',
+        'is_admin',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $dates = [
+        'deleted_at'
     ];
 
     public function userApplications()
@@ -40,20 +46,5 @@ class User extends Authenticatable // Изменяем наследование 
     public function likes()
     {
         return $this->hasMany(Like::class);
-    }
-
-    public function ban()
-    {
-        $this->update(['is_banned' => true]);
-    }
-
-    public function unban()
-    {
-        $this->update(['is_banned' => false]);
-    }
-
-    public function isBanned()
-    {
-        return $this->is_banned;
     }
 }

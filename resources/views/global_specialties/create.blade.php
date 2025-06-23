@@ -112,7 +112,7 @@
             <input type="text" id="specialty_name" name="specialty_name" required>
             <button type="submit">Сохранить</button>
         </form>
-        <a href="{{ route('global_specialties.index') }}" class="btn-secondary">Назад</a>
+        <a href="{{ route('specialties.index') }}" class="btn-secondary">Назад</a>
     </div>
 </body>
 

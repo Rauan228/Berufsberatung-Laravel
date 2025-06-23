@@ -10,9 +10,15 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    protected $table = 'admins'; // Явно указываем таблицу
+    protected $guard = 'admin';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'password',
+    ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }

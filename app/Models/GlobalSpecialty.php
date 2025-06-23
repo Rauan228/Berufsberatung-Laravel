@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class GlobalSpecialty extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'specialty_name',
+        'name',
+        'description'
     ];
 
-    public function qualifications()
+    public function qualifications(): HasMany
     {
-        return $this->hasMany(Qualification::class);
+        return $this->hasMany(Qualification::class, 'global_specialty_id');
     }
 }

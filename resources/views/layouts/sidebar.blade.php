@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +17,9 @@
             background-color: #2c3e50;
             color: white;
             padding: 20px;
-            height: 100%;
+            height: 100vh;
             position: fixed;
+            overflow-y: auto;
         }
 
         .sidebar button {
@@ -27,17 +27,20 @@
             color: white;
             font-size: 16px;
             border: none;
-            padding: 10px;
+            padding: 12px 15px;
             margin: 5px 0;
             width: 100%;
             text-align: left;
             cursor: pointer;
             display: flex;
             align-items: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .sidebar button:hover {
             background: #2980b9;
+            transform: translateX(5px);
         }
 
         .sidebar button.active {
@@ -47,22 +50,25 @@
         }
 
         .sidebar button svg {
-            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
         }
 
         .sidebar a {
             text-decoration: none;
+            display: block;
         }
 
         .sidebar button,
         .dropdown .btn-primary {
-            margin: 20px 0;
-            /* Увеличенный вертикальный отступ */
+            margin: 8px 0;
         }
-
 
         .dropdown {
             position: relative;
+            width: 100%;
         }
 
         .dropdown .btn-primary {
@@ -70,17 +76,19 @@
             color: white;
             font-size: 16px;
             border: none;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px 15px;
             width: 100%;
             text-align: left;
             cursor: pointer;
             display: flex;
             align-items: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .dropdown .btn-primary:hover {
-            background: #34495e;
+            background: #2980b9;
+            transform: translateX(5px);
         }
 
         .dropdown .arrow {
@@ -95,13 +103,13 @@
         .dropdown-menu {
             background-color: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 8px 0;
             min-width: 200px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
             transform: translateY(-10px);
             position: absolute;
             z-index: 1000;
@@ -124,15 +132,17 @@
 
         .dropdown-menu .dropdown-item {
             color: #333;
-            padding: 8px 16px;
+            padding: 10px 15px;
             text-decoration: none;
-            display: block;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
         .dropdown-menu .dropdown-item:hover {
             background-color: #f8f9fa;
-            color: #007bff;
+            color: #2980b9;
+            transform: translateX(5px);
         }
 
         .dropdown-menu .dropdown-item.active {
@@ -140,214 +150,385 @@
             color: white;
         }
 
-        /* Отдельный стиль для кнопки "Logout" */
+        .dropdown-menu .dropdown-item svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+        }
+
         .sidebar .logout-button {
             background: #bc0404;
             color: white;
             font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.3s ease, transform 0.3s ease;
-            /* Добавил плавное увеличение */
+            border-radius: 6px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
         }
 
         .sidebar .logout-button:hover {
             background: #a00000;
-            transform: scale(1.1);
-            /* Увеличение кнопки */
+            transform: translateX(5px);
         }
 
         .navbar {
             display: flex;
-            flex-direction: row;
-            align-items: center
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        .navbar img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .navbar span {
+            font-size: 20px;
+            font-weight: bold;
+            color: #bc0404;
+            margin-left: 12px;
+        }
+
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .nested-dropdown {
+            position: relative;
+        }
+
+        .nested-dropdown > .dropdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nested-dropdown > .dropdown-menu {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 1px;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .nested-dropdown.show > .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nested-dropdown > .dropdown-item .arrow {
+            margin-left: auto;
+        }
+
+        /* Explicitly disable hover effects */
+        .nested-dropdown:hover > .dropdown-menu,
+        .dropdown:hover > .dropdown-menu,
+        .dropdown-menu:hover {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Only show dropdowns when .show class is present */
+        .dropdown.show > .dropdown-menu,
+        .nested-dropdown.show > .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
-
 <body>
-
     <div class="sidebar">
         <div class="navbar">
-            <img src="B_B.png" alt="logo" style="width: 30px">
-            <span style="font-size:25px; font-weight: bold; color:#bc0404; margin-left:15px ">Berufsberatung</span>
+            <img src="{{ asset('B_B.png') }}" alt="logo">
+            <span>Berufsberatung</span>
         </div>
-        {{-- <p style="font-size: 25px">Admin: {{ $admin->name }}</p> <!-- Выведет имя текущего админа --> --}}
+
         <a href="{{ route('home') }}">
-            <button class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house"
-                    viewBox="0 0 19 13">
-                    <path
-                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+            <button class="btn-icon {{ request()->routeIs('home') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
                 </svg>
-                Home
+                Главная
             </button>
         </a>
 
-        <a href="{{ route('notifications.index') }}">
-            <button class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell"
-                    viewBox="0 0 19 13">
-                    <path
-                        d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
-                </svg>
-                Notifications
-            </button>
-        </a>
-
+        <!-- Applications Dropdown -->
         <div class="dropdown">
-            <button class="btn btn-primary">
-                <svg width="16px" height="16px" viewBox="4 -3 19 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <g id="layer1">
-                        <path
-                            d="M 4 3 L 4 9 L 5 9 L 5 7 L 19 7 L 19 16 L 5 16 L 5 14 L 4 14 L 4 17 L 20 17 L 20 3 L 4 3 z M 5 4 L 19 4 L 19 6 L 5 6 L 5 4 z M 8 8 L 11 11 L 0 11 L 0 12 L 11 12 L 8 15 L 9.5 15 L 13 11.5 L 9.5 8 L 8 8 z"
-                            style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-                    </g>
+            <button class="btn-icon btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 1.99-2.181h4.017a2 2 0 0 1 1.936 1.488 2 2 0 0 1 1.688-1.488zm.471 5.746a.5.5 0 0 0-.708.708L10.293 10H7.5a.5.5 0 0 0 0 1h2.793l-.647.646a.5.5 0 0 0 .708.708l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5zM2.19 4l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 14.806 4H3.194a1 1 0 0 0-.995.91z"/>
                 </svg>
-                Applications
-                <span class="arrow">&#8250;</span>
+                Заявки
+                <span class="arrow">›</span>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('applications.user_applications.index') }}">User
-                        Applications</a></li>
-                <li><a class="dropdown-item"
-                        href="{{ route('applications.institution_applications.index') }}">Institution Applications</a>
+                <li>
+                    <a class="dropdown-item {{ request()->routeIs('applications.user_applications.*') ? 'active' : '' }}" 
+                       href="{{ route('applications.user_applications.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        Заявки пользователей
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item {{ request()->routeIs('applications.institution_applications.*') ? 'active' : '' }}" 
+                       href="{{ route('applications.institution_applications.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022Z"/>
+                        </svg>
+                        Заявки учреждений
+                    </a>
                 </li>
             </ul>
         </div>
 
         <a href="{{ route('users.index') }}">
-            <button class="btn btn-primary">
-                <svg width="16px" height="16px" viewBox="4 -3 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z"
-                        style="fill:#fff; stroke:none; stroke-width:0px; margin: 0 10 0 0;" stroke="#000000"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <button class="btn-icon {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
                 </svg>
-                Users
-            </button>
-        </a>
-
-        <a href="{{ url('/events') }}">
-            <button class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-calendar-event" viewBox="0 0 19 13">
-                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"
-                        style="fill:#fff; fill-opacity:1; stroke:none; stroke-width:0px; margin: 0 10 0 0;" />
-                    <path
-                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                </svg>
-                Events Calendar
-            </button>
-        </a>
-
-        <a href="{{ route('reviews.index') }}">
-            <button class="btn btn-primary">
-                <img width="18" height="20" src="https://img.icons8.com/?size=100&id=463&format=png&color=FFFFFF"
-                    alt="Review">
-                <span>Reviews</span>
+                Пользователи
             </button>
         </a>
 
         <a href="{{ route('institutions.index') }}">
-            <button class="btn btn-primary">
-                <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/university.png"
-                    alt="university" />
-                Institutions
+            <button class="btn-icon {{ request()->routeIs('institutions.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z"/>
+                </svg>
+                Учреждения
+            </button>
+        </a>
+
+        <a href="{{ route('events.index') }}">
+            <button class="btn-icon {{ request()->routeIs('events.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM2.545 3h10.91c.3 0 .545.224.545.5v1c0 .276-.244.5-.546.5H2.545C2.245 5 2 4.776 2 4.5v-1c0-.276.244-.5.545-.5z"/>
+                </svg>
+                Календарь событий
+            </button>
+        </a>
+
+        <a href="{{ route('reviews.index') }}">
+            <button class="btn-icon {{ request()->routeIs('reviews.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                </svg>
+                Отзывы
             </button>
         </a>
 
         <a href="{{ route('likes.index') }}">
-            <button class="btn btn-primary">
-                <img width="18" height="20" src="https://img.icons8.com/ios/50/FFFFFF/facebook-like--v1.png"
-                    alt="facebook-like--v1" />
-                Likes
+            <button class="btn-icon {{ request()->routeIs('likes.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+                </svg>
+                Лайки
             </button>
         </a>
 
-        <a href="{{ route('global_specialties.index') }}">
-            <button class="btn btn-primary">
-                <i class="bi bi-briefcase"></i>
-                Global specialties
+        <!-- Education Dropdown -->
+        <div class="dropdown">
+            <button class="btn-icon btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                    <path fill="currentColor" d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+                </svg>
+                Образование
+                <span class="arrow">›</span>
+            </button>
+            <ul class="dropdown-menu">
+                <!-- Universities Section -->
+                <li class="nested-dropdown">
+                    <a class="dropdown-item" data-type="universities">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                        </svg>
+                        Университеты
+                    </a>
+                </li>
+                <!-- Colleges Section -->
+                <li class="nested-dropdown">
+                    <a class="dropdown-item" data-type="colleges">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M2 1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5v1H12v12H4V2h2.5V1H2z"/>
+                        </svg>
+                        Колледжи
+                    </a>
+                </li>
+            </ul>
+            <!-- Global Education Lists -->
+            <ul class="dropdown-menu global-lists" style="display: none;">
+                <li>
+                    <a class="dropdown-item" id="global-specialties">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                        </svg>
+                        Направления (глоб.)
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="global-qualifications">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+                        </svg>
+                        Квалификации
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="global-specializations">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                        </svg>
+                        Специализации
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <a href="{{ route('notifications.index') }}">
+            <button class="btn-icon {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                </svg>
+                Уведомления
             </button>
         </a>
 
-        <a href="{{ route('qualifications.index') }}">
-            <button class="btn btn-primary">
-                <i class="bi bi-award"></i>
-                Qualifications
-            </button>
-        </a>
-
-        <a href="{{ route('specializations.index') }}">
-            <button class="btn btn-primary">
-                <img width="21" height="20" src="https://img.icons8.com/quill/100/FFFFFF/education.png"
-                    alt="education" />
-                Speciality
-            </button>
-        </a>
-
-        <a href="{{ route('grants.index') }}">
-            <button class="btn btn-primary">
-                <img width="21" height="21"
-                    src="https://img.icons8.com/external-glyph-silhouettes-icons-papa-vector/50/FFFFFF/external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector.png"
-                    alt="external-Scholarship-black-glyph-icon-bonuses.-glyph.-silhouette-glyph-silhouettes-icons-papa-vector" />
-                Grants
-            </button>
-        </a>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form action="{{ route('logout') }}" method="POST">
             @csrf
+            <button type="submit" class="logout-button btn-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill="currentColor" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill="currentColor" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+                Выход
+            </button>
         </form>
-
-        <button class="logout-button" onclick="document.getElementById('logout-form').submit();">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M10 15a1 1 0 0 1-1-1v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4V2a1 1 0 0 1 1.707-.707l5 5a1 1 0 0 1 0 1.414l-5 5A1 1 0 0 1 10 15zm1-6V7H5v2h6zm2-1a.5.5 0 0 0 0-1H5a.5.5 0 0 0 0 1h8z" />
-            </svg>
-            Logout
-        </button>
-
-
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Подсветка активной кнопки
-            const currentUrl = window.location.href;
-            const sidebarLinks = document.querySelectorAll('.sidebar a');
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const nestedDropdowns = document.querySelectorAll('.nested-dropdown');
+            
+            // Find Education dropdown by checking button text content
+            const educationDropdown = Array.from(dropdowns).find(dropdown => {
+                const button = dropdown.querySelector('.btn-primary');
+                return button && button.textContent.trim().includes('Образование');
+            });
+            
+            const mainMenu = educationDropdown ? educationDropdown.querySelector('.dropdown-menu:not(.global-lists)') : null;
+            const globalLists = educationDropdown ? educationDropdown.querySelector('.dropdown-menu.global-lists') : null;
 
-            sidebarLinks.forEach(link => {
-                if (link.href === currentUrl) {
-                    link.querySelector('button').classList.add('active');
-                }
+            // Toggle main dropdown
+            dropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('.btn-primary');
+                
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Close all other dropdowns first
+                    dropdowns.forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('show');
+                        }
+                    });
+                    
+                    // Close all nested dropdowns
+                    nestedDropdowns.forEach(nested => {
+                        nested.classList.remove('show');
+                    });
+                    
+                    // Hide global lists
+                    if (globalLists) {
+                        globalLists.style.display = 'none';
+                    }
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('show');
+                });
             });
 
-            // Обработка выпадающего списка
-            const dropdownButton = document.querySelector('.dropdown .btn-primary');
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            const dropdown = document.querySelector('.dropdown');
-
-            dropdownButton.addEventListener('click', function (event) {
-                event.stopPropagation();
-                dropdown.classList.toggle('show');
+            // Toggle nested dropdowns and handle global lists
+            nestedDropdowns.forEach(nested => {
+                const item = nested.querySelector('.dropdown-item');
+                
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Close other nested dropdowns
+                    nestedDropdowns.forEach(other => {
+                        if (other !== nested) {
+                            other.classList.remove('show');
+                        }
+                    });
+                    
+                    const type = item.getAttribute('data-type');
+                    const isOpen = nested.classList.toggle('show');
+                    
+                    if (globalLists) {
+                        if (isOpen && type) {
+                            // Show global lists and update links based on type
+                            globalLists.style.display = 'block';
+                            const specialtiesLink = globalLists.querySelector('#global-specialties');
+                            const qualificationsLink = globalLists.querySelector('#global-qualifications');
+                            const specializationsLink = globalLists.querySelector('#global-specializations');
+                            
+                            if (type === 'universities') {
+                                specialtiesLink.setAttribute('href', '{{ route("specialties.index") }}?type=university');
+                                qualificationsLink.setAttribute('href', '{{ route("qualifications.index") }}?type=university');
+                                specializationsLink.setAttribute('href', '{{ route("specializations.index") }}?type=university');
+                            } else if (type === 'colleges') {
+                                specialtiesLink.setAttribute('href', '{{ route("specialties.index") }}?type=college');
+                                qualificationsLink.setAttribute('href', '{{ route("qualifications.index") }}?type=college');
+                                specializationsLink.setAttribute('href', '{{ route("specializations.index") }}?type=college');
+                            }
+                        } else {
+                            globalLists.style.display = 'none';
+                        }
+                    }
+                });
             });
 
-            document.addEventListener('click', function (event) {
-                if (!dropdown.contains(event.target)) {
-                    dropdown.classList.remove('show');
-                }
-            });
-
-            // Подсветка активного элемента в выпадающем списке
-            const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
-            dropdownLinks.forEach(link => {
-                if (link.href === currentUrl) {
-                    link.classList.add('active');
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                const isDropdownClick = e.target.closest('.dropdown');
+                const isNestedDropdownClick = e.target.closest('.nested-dropdown');
+                
+                if (!isDropdownClick && !isNestedDropdownClick) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('show');
+                    });
+                    nestedDropdowns.forEach(nested => {
+                        nested.classList.remove('show');
+                    });
+                    if (globalLists) {
+                        globalLists.style.display = 'none';
+                    }
                 }
             });
         });
     </script>
 </body>
-
 </html>

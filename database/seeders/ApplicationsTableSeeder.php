@@ -5,27 +5,51 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class ApplicationsTableSeeder extends Seeder
 {
     public function run()
     {
-        // Данные для user_applications
-        $statuses = ['Accepted', 'Rejected', 'Pending'];
+        // ---------- User Applications ----------
+        $statuses = ['Pending', 'Accepted', 'Rejected'];
         $userApplications = [];
 
-        for ($i = 0; $i < 500; $i++) {
-            $userApplications[] = [
-                'user_id' => rand(1, 40),
-                'event_id' => rand(1, 60),
-                'status' => $statuses[array_rand($statuses)],
-                'created_at' => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
-                'updated_at' => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
-            ];
-        }
+        // Берём все закрытые мероприятия (на них требуются индивидуальные заявки)
+        $closedEvents = DB::table('events_calendar')
+            ->where('event_type', 'closed')
+            ->pluck('id');
 
-        DB::table('user_applications')->insert($userApplications);
+        // Если по какой-то причине закрытых нет, просто выйдем
+        if ($closedEvents->isNotEmpty()) {
+            foreach ($closedEvents as $eventId) {
+                // Для каждого закрытого мероприятия сгенерируем 8-20 заявок
+                $appsCount = rand(8, 20);
+
+                for ($i = 0; $i < $appsCount; $i++) {
+                    $payload = [
+                        'full_name' => 'Пользователь ' . rand(1, 5000),
+                        'contacts'  => '+7701' . rand(1000000, 9999999),
+                    ];
+
+                    $userApplications[] = [
+                        'user_id'     => rand(1, 40), // предполагается, что UsersTableSeeder создаёт ≥40 пользователей
+                        'event_id'    => $eventId,
+                        'status'      => $statuses[array_rand($statuses)],
+                        'ticket_code' => (string) Str::uuid(),
+                        'payload'     => json_encode($payload, JSON_UNESCAPED_UNICODE),
+                        'created_at'  => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
+                        'updated_at'  => Carbon::now()->subDays(rand(1, 30))->subHours(rand(1, 23))->subMinutes(rand(1, 59)),
+                    ];
+                }
+            }
+
+            // Вставляем батчами по 1000, чтобы не переполнить пакет MySQL
+            foreach (array_chunk($userApplications, 1000) as $chunk) {
+                DB::table('user_applications')->insert($chunk);
+            }
+        }
 
         // Данные для institution_applications
         $institutions = [

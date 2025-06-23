@@ -10,65 +10,133 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Like;
 use Illuminate\Support\Facades\DB;
 use App\Models\InstitutionApplication;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class InstitutionController extends Controller
 {
-    public function getCurrentInstitution(Request $request)
-{
-    try {
-        $institution = Auth::guard('institution')->user();
-        
-        if (!$institution) {
-            return response()->json(['error' => 'Не авторизован'], 401);
+    public function index()
+    {
+        try {
+            \Log::info('Fetching all institutions');
+            
+            $institutions = Institution::with([
+                'specializations' => function($query) {
+                    $query->select('specializations.id', 'specializations.name', 'qualification_id')
+                        ->with(['qualification' => function($q) {
+                            $q->select('id', 'qualification_name');
+                        }]);
+                },
+                'collegeSpecializations' => function($query) {
+                    $query->select('college_specializations.id', 'college_specializations.name', 'college_qualification_id')
+                        ->with(['qualification' => function($q) {
+                            $q->select('id', 'qualification_name');
+                        }]);
+                },
+                'reviews',
+                'likes'
+            ])
+            ->withCount(['reviews', 'likes'])
+            ->withAvg('reviews', 'rating')
+            ->get(); // убрана пагинация
+
+            return response()->json(['data' => $institutions]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching institutions: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            return response()->json(['error' => 'Failed to fetch institutions'], 500);
         }
-
-        return response()->json([
-            'institution' => $institution,
-        ], 200);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
     }
-}
-public function login(Request $request)
-{
-    try {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
 
-        $credentials = $request->only('email', 'password');
+    public function show($id)
+    {
+        try {
+            $institution = Institution::with([
+                'specializations' => function($query) {
+                    $query->with(['qualification' => function($q) {
+                        $q->select('id', 'qualification_name');
+                    }]);
+                },
+                'reviews.user',
+                'likes'
+            ])->findOrFail($id);
 
-        if (Auth::guard('institution')->attempt($credentials)) {
-            $institution = Auth::guard('institution')->user();
+            if ($institution->type === 'college') {
+                $institution->load(['collegeSpecializations' => function ($query) use ($id) {
+                    $query->select('college_specializations.id', 'college_specializations.name', 'college_qualification_id')
+                        ->with(['qualification:id,qualification_name,description'])
+                        ->withPivot('cost', 'duration');
+                }]);
 
-            if ($institution->verified !== 'accepted') {
-                Auth::guard('institution')->logout();
-                return response()->json([
-                    'error' => 'Ваш аккаунт еще не подтвержден'
-                ], 403);
+                // Устанавливаем специальности колледжа в свойство specializations
+                $institution->setRelation('specializations', $institution->collegeSpecializations);
             }
 
-            // Создаем токен с указанием guard
-            $token = $institution->createToken('institution-token', ['institution'])->plainTextToken;
+            return response()->json($institution);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Institution not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getCurrentInstitution(Request $request)
+    {
+        try {
+            $institution = Auth::guard('institution')->user();
+            
+            if (!$institution) {
+                return response()->json(['error' => 'Не авторизован'], 401);
+            }
 
             return response()->json([
-                'message' => 'Успешный вход',
                 'institution' => $institution,
-                'token' => $token
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        return response()->json([
-            'error' => 'Неверные учетные данные'
-        ], 401);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return response()->json(['errors' => $e->errors()], 422);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
     }
-}
+
+    public function login(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            $credentials = $request->only('email', 'password');
+
+            if (Auth::guard('institution')->attempt($credentials)) {
+                $institution = Auth::guard('institution')->user();
+
+                if ($institution->verified !== 'accepted') {
+                    Auth::guard('institution')->logout();
+                    return response()->json([
+                        'error' => 'Ваш аккаунт еще не подтвержден'
+                    ], 403);
+                }
+
+                // Создаем токен с указанием guard
+                $token = $institution->createToken('institution-token', ['institution'])->plainTextToken;
+
+                return response()->json([
+                    'message' => 'Успешный вход',
+                    'institution' => $institution,
+                    'token' => $token
+                ], 200);
+            }
+
+            return response()->json([
+                'error' => 'Неверные учетные данные'
+            ], 401);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
     public function register(Request $request)
     {
@@ -132,33 +200,20 @@ public function login(Request $request)
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    // Остальные методы остаются без изменений
-    public function index()
-{
-    $institutions = Institution::withCount('reviews')
-        ->withAvg('reviews', 'rating')
-        ->paginate(100);
-
-    return response()->json($institutions);
-}
 
     public function getLikedInstitutions()
     {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'Пользователь не авторизован'], 401);
+        try {
+            $user = Auth::user();
+            $likedInstitutions = Institution::whereHas('likes', function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get();
+
+            return response()->json($likedInstitutions);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching liked institutions: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch liked institutions'], 500);
         }
-
-        $likedInstitutions = Like::where('user_id', $user->id)
-            ->with([
-                'institution' => function ($query) {
-                    $query->withAvg('reviews', 'rating');
-                }
-            ])
-            ->get()
-            ->pluck('institution');
-
-        return response()->json($likedInstitutions);
     }
 
     public function store(Request $request)
@@ -177,27 +232,6 @@ public function login(Request $request)
         ]);
 
         return response()->json($institution, 201);
-    }
-
-    public function show($id)
-    {
-        try {
-            $institution = Institution::with([
-                'specializations.qualification' => function ($query) {
-                    $query->select('id', 'qualification_name');
-                },
-                'specializations' => function ($query) {
-                    $query->select('specializations.id', 'specializations.name', 'qualification_id')
-                        ->withPivot('cost', 'duration');
-                }
-            ])->findOrFail($id);
-
-            return response()->json($institution);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['error' => 'Institution not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
     }
 
     public function getReviews($institutionId)
@@ -254,41 +288,50 @@ public function login(Request $request)
         return response()->json(null, 204);
     }
 
-    public function like($id, Request $request)
+    public function like($id)
     {
         try {
-            $user = auth()->user();
-            if (!$user) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+            $institution = Institution::findOrFail($id);
+            $user = Auth::user();
+
+            // Проверяем, не лайкнул ли уже пользователь это учреждение
+            $existingLike = Like::where('user_id', $user->id)
+                ->where('institution_id', $id)
+                ->first();
+
+            if ($existingLike) {
+                return response()->json(['message' => 'Already liked'], 400);
             }
 
-            $institution = Institution::findOrFail($id);
-            $institution->likes()->attach($user->id);
+            $like = new Like();
+            $like->user_id = $user->id;
+            $like->institution_id = $id;
+            $like->save();
 
-            return response()->json(['message' => 'Liked successfully']);
+            return response()->json($like, 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            \Log::error('Error adding like: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to add like'], 500);
         }
     }
 
-    public function unlike($institutionId)
+    public function unlike($id)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
+            $like = Like::where('user_id', $user->id)
+                ->where('institution_id', $id)
+                ->first();
 
-        if (!$user) {
-            return response()->json(['error' => 'Пользователь не авторизован'], 401);
+            if (!$like) {
+                return response()->json(['message' => 'Like not found'], 404);
+            }
+
+            $like->delete();
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            \Log::error('Error removing like: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to remove like'], 500);
         }
-
-        $like = Like::where('user_id', $user->id)
-            ->where('institution_id', $institutionId)
-            ->first();
-
-        if (!$like) {
-            return response()->json(['message' => 'Лайк не найден'], 404);
-        }
-
-        $like->delete();
-
-        return response()->json(['message' => 'Лайк удалён'], 200);
     }
 }

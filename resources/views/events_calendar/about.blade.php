@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>More about the event</title>
+    <title>Информация о событии</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,17 +100,17 @@
 <body>
     <div class="container">
         <h1>{{ $event->event_name }}</h1>
-        <p><strong>Date:</strong> {{ $event->event_date }}</p>
-        <p><strong>Description:</strong> {{ $event->description }}</p>
-        <p><strong>Institution:</strong> {{ $event->institution->name ?? 'Не указан' }}</p>
+        <p><strong>Дата и время:</strong> {{ $event->event_date }}</p>
+        <p><strong>Описание:</strong> {{ $event->description }}</p>
+        <p><strong>Учреждение:</strong> {{ $event->institution->name ?? 'Не указан' }}</p>
 
-        <h3>Applications for participation ({{ $applications->count() }})</h3>
+        <h3>Заявки на участие ({{ $applications->count() }})</h3>
 
         @if($applications->count() > 0)
             <ul class="list-group">
                 @foreach($applications as $application)
                     <li class="list-group-item">
-                        {{ $application->user->username ?? 'Unknown user' }} - 
+                        {{ $application->user->username ?? 'Неизвестный пользователь' }} - 
                         <span style="color: {{ $application->status == 'Accepted' ? 'green' : 'red' }}">
                             {{ $application->status }}
                         </span>

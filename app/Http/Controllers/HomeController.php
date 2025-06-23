@@ -10,13 +10,19 @@ use App\Models\User;
 use App\Models\Review;
 use App\Models\InstitutionSpecialty;
 use App\Models\EventsCalendar;
+use App\Traits\AdminCheck;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    use AdminCheck;
 
     public function index()
     {
+        $this->checkAdmin();
         $institutesCount = Institution::count();
+        $universitiesCount = Institution::where('type', 'university')->count();
+        $collegesCount = Institution::where('type', 'college')->count();
         $usersCount = User::count();
         $specializationsCount = Specialization::count();
         $latestReview = Review::latest()->with('user')->first();
@@ -30,7 +36,9 @@ class HomeController extends Controller
             ];
         });
 
-        return view('home', ['events' => $events],compact('eventsCount','admin', 'institutesCount', 'usersCount', 'specializationsCount', 'latestReview', 'events'));
+        return view('home', ['events' => $events], 
+            compact('eventsCount', 'admin', 'institutesCount', 'universitiesCount', 'collegesCount',
+                    'usersCount', 'specializationsCount', 'latestReview', 'events'));
     }
     
 

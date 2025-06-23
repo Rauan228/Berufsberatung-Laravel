@@ -64,4 +64,13 @@ class NotificationController extends Controller
         Notification::destroy($id);
         return response()->json(null, 204);
     }
+
+    // Пометить уведомление прочитанным
+    public function markAsRead(Request $request, $id)
+    {
+        $user = $request->user();
+        $notification = Notification::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        $notification->update(['read_at' => now()]);
+        return response()->json(['status' => 'ok']);
+    }
 }

@@ -39,6 +39,15 @@
             }
         }
 
+        /* Image styles */
+        .institution-photo,
+        .institution-logo {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
         h2 {
             margin-bottom: 15px;
         }
@@ -135,6 +144,16 @@
 </head>
 <body>
     <div class="container">
+        <!-- Институт фото -->
+        @if($institution->photo_url)
+            <img src="{{ $institution->photo_url }}" alt="Institution photo" class="institution-photo">
+        @endif
+
+        <!-- Логотип института -->
+        @if($institution->logo_url)
+            <img src="{{ $institution->logo_url }}" alt="Institution logo" class="institution-logo">
+        @endif
+
         <h2>{{ $institution->name }}</h2>
         <p><strong>Описание:</strong> {{ $institution->description1 }}</p>
         <p><strong>Локация:</strong> {{ $institution->location }}</p>

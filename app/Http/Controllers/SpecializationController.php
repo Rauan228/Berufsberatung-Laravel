@@ -10,7 +10,7 @@ class SpecializationController extends Controller
 {
     public function index(Request $request)
 {
-    $query = Specialization::with('qualification');
+        $query = Specialization::with(['qualification.globalSpecialty']);
 
     if ($request->filled('search')) {
         $query->where('name', 'like', '%' . $request->search . '%');
@@ -22,7 +22,7 @@ class SpecializationController extends Controller
 
     $specializations = $query->paginate(48);
 
-    $qualifications = Qualification::all(); // Получаем список всех квалификаций
+        $qualifications = Qualification::with('globalSpecialty')->get(); // Получаем список всех квалификаций с их специальностями
     $admin = Auth::guard('admin')->user();
 
     return view('specializations.index', compact('admin', 'specializations', 'qualifications'));

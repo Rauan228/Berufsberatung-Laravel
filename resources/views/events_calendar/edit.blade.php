@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit event</title>
+    <title>Редактировать событие</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -96,18 +96,18 @@
 
 <body>
     <div class="container">
-        <h2>Edit event</h2>
+        <h2>Редактировать событие</h2>
         <form action="{{ route('events.update', $event->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <label for="event_name">Event name:</label>
+            <label for="event_name">Название события:</label>
             <input type="text" name="event_name" value="{{ $event->event_name }}" required>
 
-            <label for="event_date">Event date:</label>
+            <label for="event_date">Дата и время:</label>
             <input type="datetime-local" name="event_date" value="{{ $event->event_date }}" required>
 
-            <label for="institution_id">Institution:</label>
+            <label for="institution_id">Учреждение:</label>
             <select name="institution_id">
                 @foreach ($institutions as $institution)
                     <option value="{{ $institution->id }}" 
@@ -117,10 +117,10 @@
                 @endforeach
             </select>
 
-            <label for="description">Discription:</label>
+            <label for="description">Описание:</label>
             <textarea name="description" rows="3">{{ $event->description }}</textarea>
 
-            <button type="submit">Update</button>
+            <button type="submit">Обновить</button>
         </form>
     </div>
 </body>

@@ -1,18 +1,18 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('content')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <div class="main-content">
-        <h1>University Applications</h1>
+        <h1>Заявки университетов</h1>
         <form method="GET" action="{{ route('applications.institution_applications.index') }}" class="filter-form">
-            <label for="status_filter">Filter by Status:</label>
+            <label for="status_filter">Фильтр по статусу:</label>
             <select name="verified" id="status_filter" onchange="this.form.submit()">
-                <option value="">All Statuses</option>
-                <option value="pending" {{ request('verified') == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="accepted" {{ request('verified') == 'accepted' ? 'selected' : '' }}>Accepted</option>
-                <option value="rejected" {{ request('verified') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                <option value="">Все статусы</option>
+                <option value="pending" {{ request('verified') == 'pending' ? 'selected' : '' }}>В ожидании</option>
+                <option value="accepted" {{ request('verified') == 'accepted' ? 'selected' : '' }}>Принято</option>
+                <option value="rejected" {{ request('verified') == 'rejected' ? 'selected' : '' }}>Отклонено</option>
             </select>
         </form>
         
@@ -21,7 +21,7 @@
                 <div class="grid-item">
                     <strong style="font-size: 22px">{{ $application->institution_name }}</strong>
                     <span style="font-size: 18px">- {{ $application->email }}</span><br>
-                    Status: {{ $application->verified }}
+                    Статус: {{ $application->verified }}
 
                     <!-- Кнопки для изменения статуса -->
                     <div class="status-buttons">
@@ -30,20 +30,20 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="verified" value="accepted">
-                                <button type="submit" class="btn btn-accept">Accept</button>
+                                <button type="submit" class="btn btn-accept">Принять</button>
                             </form>
                             <form action="{{ route('institution-applications.update-verified-status', $application->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="verified" value="rejected">
-                                <button type="submit" class="btn btn-reject">Reject</button>
+                                <button type="submit" class="btn btn-reject">Отклонить</button>
                             </form>
                         @else
                             <form action="{{ route('institution-applications.update-verified-status', $application->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="verified" value="pending">
-                                <button type="submit" class="btn btn-cancel">Cancel</button>
+                                <button type="submit" class="btn btn-cancel">Отменить</button>
                             </form>
                         @endif
                     </div>
@@ -67,8 +67,9 @@
 
         .main-content {
             flex-grow: 1;
-            padding: 20px;
-            margin: 0 0 0 300px;
+            padding: 20px 40px;
+            margin-left: 300px;
+            width: calc(100% - 300px);
         }
 
         h1 {
@@ -83,7 +84,7 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),2fr));
             gap: 20px;
             padding: 20px;
         }
